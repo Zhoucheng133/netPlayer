@@ -31,7 +31,7 @@ async function createWindow() {
 ipcMain.on("loginRequest", async (event, arg) => {
 
 	var resp=undefined;
-	await axios.post("http://192.168.101.231:4533/rest/ping.view?v=1.13.0&c=myApp&f=json&u=zhoucheng&p=1313zC133")
+	await axios.post("http://192.168.101.231:4533/rest/ping.view?v=1.13.0&c=myApp&f=json&u=zhoucheng&p=123456")
 	.then((response)=>{
 		resp=response.data;
 	})
