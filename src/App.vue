@@ -1,28 +1,34 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+	<div id="app">
+		<a-button @click="test">测试按钮</a-button>
+	</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import { ipcRenderer } from 'electron';
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+	methods: {
+		test(){
+			ipcRenderer.send('loginRequest');
+		}
+	},
+	mounted() {
+
+	},
 }
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+	font-family: Avenir, Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-align: center;
+	color: #2c3e50;
+	margin: 0;
+}
+
+body{
+	margin: 0;
 }
 </style>
