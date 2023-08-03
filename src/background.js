@@ -30,12 +30,13 @@ async function createWindow() {
 
 ipcMain.on("loginRequest", async (event, arg) => {
 
-	axios.post("http://192.168.101.231:4533/rest/ping.view?v=1.13.0&c=myApp&f=json&u=zhoucheng&p=133zC133")
+	var resp=undefined;
+	await axios.post("http://192.168.101.231:4533/rest/ping.view?v=1.13.0&c=myApp&f=json&u=zhoucheng&p=1313zC133")
 	.then((response)=>{
-		console.log(response);
+		resp=response.data;
 	})
 
-	// event.reply('ElectronMainResult', 'Feedback!');
+	event.reply('loginResult', resp);
 });
 
 app.on('window-all-closed', () => {
