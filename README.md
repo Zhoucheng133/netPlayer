@@ -1,4 +1,4 @@
-# net-player
+# netPlayer
 
 ## Project setup
 ```
