@@ -9,14 +9,9 @@ import { ipcRenderer } from 'electron';
 export default {
 	methods: {
 		test(){
-			ipcRenderer.send('loginRequest');
 		},
-		loginResult(event, arg_back){
-			console.log(arg_back['subsonic-response']);
-		}
 	},
 	mounted() {
-		ipcRenderer.on('loginResult', this.loginResult);
 	},
 }
 </script>
