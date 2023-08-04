@@ -29,6 +29,7 @@
 
 <script>
 const {ipcRenderer, shell} = require('electron')
+const CryptoJS =require('crypto-js');
 export default {
     beforeDestroy() {
         // 在组件销毁前设置标志位为 true
@@ -45,6 +46,18 @@ export default {
         }
     },
     methods: {
+        // 生成随机数
+        generateRandomString(length) {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                result += characters.charAt(randomIndex);
+            }
+
+            return result;
+        },
         loginController(){
             if(this.loginDestroyed){
                 return;
@@ -66,18 +79,28 @@ export default {
             if(this.inputArea.url.slice(-1)=='/'){
                 this.inputArea.url=this.inputArea.url.slice(0,-1);
             }
-            ipcRenderer.send('loginRequest', this.inputArea.url, this.inputArea.username, this.inputArea.password);
+
+            // 校验码，随机
+            const salt = this.generateRandomString(6);
+            const token = CryptoJS.MD5(this.inputArea.password + salt).toString();
+
+            ipcRenderer.send('loginRequest', this.inputArea.url, this.inputArea.username, salt, token);
         },
-        loginResult(event, response){
+        loginResult(event, response, salt, token){
             if(response==null){
                 this.$message.error('请求失败，检查URL地址是否正确');
                 return;
             }
-            var status=response['subsonic-response'].status
+            var status=response['subsonic-response'].status;
             if(status=='ok'){
                 this.$message.success("登录成功!")
 
                 this.$emit("getLogin", true);
+
+                localStorage.setItem("username", this.inputArea.username);
+                localStorage.setItem("salt", salt);
+                localStorage.setItem("token", token);
+                localStorage.setItem("url", this.inputArea.url)
             }else{
                 this.$message.error('用户名或者密码错误!');
                 return;
@@ -91,7 +114,7 @@ export default {
         ipcRenderer.on('loginResult', this.loginResult);
     },
     created() {
-        
+
     },
 }
 </script>

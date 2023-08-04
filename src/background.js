@@ -30,10 +30,10 @@ async function createWindow() {
 	}
 }
 
-// 登录请求
-ipcMain.on("loginRequest", async (event, url, username, password) => {
+// 自动登录请求
+ipcMain.on("autoLoginRequest", async (event, url, username, salt, token) => {
 	var resp=undefined;
-	await axios.post(url+"/rest/ping.view?v=1.13.0&c=netPlayer&f=json&u="+username+"&p="+password)
+	await axios.post(url+"/rest/ping.view?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token)
 	.then((response)=>{
 		resp=response.data;
 	})
@@ -41,7 +41,22 @@ ipcMain.on("loginRequest", async (event, url, username, password) => {
 		resp=null;
 	})
 
-	event.reply('loginResult', resp);
+	event.reply('autoLoginResult', resp);
+});
+
+
+// 登录请求
+ipcMain.on("loginRequest", async (event, url, username, salt, token) => {
+	var resp=undefined;
+	await axios.post(url+"/rest/ping.view?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token)
+	.then((response)=>{
+		resp=response.data;
+	})
+	.catch(()=>{
+		resp=null;
+	})
+
+	event.reply('loginResult', resp, salt, token);
 });
 
 app.on('window-all-closed', () => {
