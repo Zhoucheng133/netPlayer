@@ -19,6 +19,10 @@
                 </div>
             </div>
             <div class="loginButton"><a-icon type="arrow-right" /></div>
+            <div class="help">
+                <div>需要帮助？</div>
+                <div class="useTip">点击这里跳转到使用说明</div>
+            </div>
         </div>
     </div>
 </template>
@@ -49,6 +53,21 @@ export default {
 </script>
 
 <style scoped>
+.useTip:hover{
+    color: #4a79e7;
+    cursor: pointer;
+}
+.useTip{
+    transition: all ease-in-out .2s;
+}
+.help{
+    display: flex;
+   position: absolute;
+   bottom: 30px;
+   margin: 0 auto;
+   left: 50%;
+   transform: translateX(-50%);
+}
 .loginButton:hover{
     background-color: #325bba;
     cursor: pointer;
