@@ -85,6 +85,9 @@ export default {
 	text-align: center;
 	color: #2c3e50;
 	margin: 0;
+	height: 100vh;
+	width: 100vw;
+	background-color: rgb(242, 242, 242);
 }
 
 body{
