@@ -76,6 +76,8 @@ export default {
             var status=response['subsonic-response'].status
             if(status=='ok'){
                 this.$message.success("登录成功!")
+
+                this.$emit("getLogin", true);
             }else{
                 this.$message.error('用户名或者密码错误!');
                 return;

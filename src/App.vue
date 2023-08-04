@@ -2,7 +2,7 @@
 	<div id="app">
 		<div class="dragArea"></div>
 		<mainView v-if="isLogin" />
-		<loginView v-else />
+		<loginView v-else @getLogin="getLogin" />
 	</div>
 </template>
 
@@ -20,7 +20,9 @@ export default {
 		}
 	},
 	methods: {
-		
+		getLogin(val){
+			this.isLogin=val;
+		}
 	},
 	mounted() {
 	},
