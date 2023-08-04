@@ -1,11 +1,16 @@
 <template>
     <div class="bg" :style="{'opacity': bgOpacity}">
+        <sideBar class="sideBar_style"/>
         测试内容
     </div>
 </template>
 
 <script>
+import sideBar from './sideBar.vue';
 export default {
+    components:{
+        sideBar
+    },
     data() {
         return {
             bgOpacity: 0,
@@ -38,6 +43,10 @@ export default {
 </script>
 
 <style scoped>
+.sideBar_style{
+    position: fixed;
+    top: 0;
+}
 .bg{
     height: 100vh;
     widows: 100vw;

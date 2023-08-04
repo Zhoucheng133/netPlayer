@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main">
         
     </div>
 </template>
@@ -24,5 +24,9 @@ export default {
 </script>
 
 <style scoped>
-
+.main{
+    width: 200px;
+    height: 100vh;
+    background-color: rgb(242, 242, 242);
+}
 </style>
