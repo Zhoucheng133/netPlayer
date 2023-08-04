@@ -88,7 +88,7 @@ export default {
         },
         loginResult(event, response, salt, token){
             if(response==null){
-                this.$message.error('请求失败，检查URL地址是否正确');
+                this.$message.error('请求失败，请检查URL地址是否正确');
                 return;
             }
             var status=response['subsonic-response'].status;

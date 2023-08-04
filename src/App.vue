@@ -33,7 +33,7 @@ export default {
 		},
 		autoLoginResult(event, response){
             if(response==null){
-                this.$message.error('请求失败，检查服务器状态');
+                this.$message.error('请求失败，请检查服务器状态');
 				localStorage.clear();
 				this.isLogin=false;
                 return;
