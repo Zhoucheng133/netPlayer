@@ -11,11 +11,11 @@
                 </div>
                 <div class="formItem">
                     <div class="f_label">用户名</div>
-                    <a-input placeholder="输入用户名" />
+                    <a-input placeholder="输入用户名" v-model="inputArea.username" />
                 </div>
                 <div class="formItem">
                     <div class="f_label">密码</div>
-                    <a-input-password placeholder="输入密码" />
+                    <a-input-password placeholder="输入密码" v-model="inputArea.password" />
                 </div>
             </div>
             <div class="loginButton"><a-icon type="arrow-right" /></div>
