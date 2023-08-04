@@ -1,19 +1,42 @@
 <template>
 	<div id="app">
-		<a-button @click="test">测试按钮</a-button>
+		<div class="dragArea"></div>
+		<mainView v-if="isLogin" />
+		<loginView v-else />
 	</div>
 </template>
 
 <script>
+import _mainView from '@/components/_mainView.vue';
+import loginView from '@/components/loginView.vue';
 export default {
+	components: {
+		mainView: _mainView,
+		loginView,
+	},
+	data() {
+		return {
+			isLogin: false,
+		}
+	},
 	methods: {
-		test(){
-		},
+		
 	},
 	mounted() {
 	},
 }
 </script>
+
+<style scoped>
+.dragArea{
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 30px;
+	width: 100%;
+	-webkit-app-region: drag;
+}
+</style>
 
 <style>
 #app {
