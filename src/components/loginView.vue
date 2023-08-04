@@ -18,7 +18,7 @@
                     <a-input-password placeholder="输入密码" />
                 </div>
             </div>
-            <div class="loginButton"><a-icon type="right" /></div>
+            <div class="loginButton"><a-icon type="arrow-right" /></div>
         </div>
     </div>
 </template>
@@ -60,12 +60,13 @@ export default {
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: all ease-in-out .2s;
+    border-top-left-radius: 10px;
 }
 .f_label{
     display: flex;
