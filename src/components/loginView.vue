@@ -18,7 +18,8 @@
                     <a-input-password placeholder="输入密码" v-model="inputArea.password" />
                 </div>
             </div>
-            <div class="loginButton" @click="loginController"><a-icon type="arrow-right" /></div>
+            <div class="loginButton_loading" v-if="loading"><a-icon type="loading" /></div>
+            <div class="loginButton" @click="loginController" v-else><a-icon type="arrow-right" /></div> 
             <div class="help">
                 <div>需要帮助？</div>
                 <div class="useTip" @click="toHelp">点击这里跳转到使用说明</div>
@@ -41,6 +42,7 @@ export default {
                 username: "",
                 password: "",
             },
+            loading:false,
         }
     },
     methods: {
@@ -70,6 +72,7 @@ export default {
                 this.$message.error('密码不能为空');
                 return;
             }
+            this.loading=true;
             // 如果最后带/，去掉
             if(this.inputArea.url.slice(-1)=='/'){
                 this.inputArea.url=this.inputArea.url.slice(0,-1);
@@ -82,7 +85,8 @@ export default {
             ipcRenderer.send('loginRequest', this.inputArea.url, this.inputArea.username, salt, token);
         },
         loginResult(event, response, salt, token){
-            if(response==null){
+            this.loading=false;
+            if(response==null || response['subsonic-response']==undefined){
                 this.$message.error('请求失败，请检查URL地址是否正确');
                 return;
             }
@@ -117,6 +121,24 @@ export default {
 </script>
 
 <style scoped>
+.loginButton_loading:hover{
+    cursor: not-allowed;
+}
+.loginButton_loading{
+    background-color: #71baff;
+    color: white;
+    font-size: 28px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all ease-in-out .2s;
+    border-top-left-radius: 10px;
+}
 .useTip:hover{
     color: #0061bc;
     cursor: pointer;
@@ -180,6 +202,7 @@ export default {
     width: 500px;
     height: 400px;
     background-color: white;
+    backdrop-filter: blur(15px);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -195,6 +218,7 @@ export default {
     justify-content: center;
     align-items: center;
     display: flex;
-    background-image: linear-gradient( 135deg, white 10%, #1890ff 100%);
+    /* background-image: linear-gradient( 135deg, white 10%, #1890ff 100%); */
+    /* background-color: rgb(242, 242, 242); */
 }
 </style>
