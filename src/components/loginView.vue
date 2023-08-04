@@ -87,6 +87,9 @@ export default {
             ipcRenderer.send('loginRequest', this.inputArea.url, this.inputArea.username, salt, token);
         },
         loginResult(event, response, salt, token){
+            if(this.loginDestroyed){
+                return;
+            }
             if(response==null){
                 this.$message.error('请求失败，请检查URL地址是否正确');
                 return;
