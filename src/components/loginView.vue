@@ -46,6 +46,9 @@ export default {
     },
     methods: {
         loginController(){
+            if(this.loginDestroyed){
+                return;
+            }
             if(this.inputArea.url==""){
                 this.$message.error('URL地址不能为空');
                 return;
@@ -66,11 +69,8 @@ export default {
             ipcRenderer.send('loginRequest', this.inputArea.url, this.inputArea.username, this.inputArea.password);
         },
         loginResult(event, response){
-            if(this.loginDestroyed){
-                return;
-            }
             if(response==null){
-                this.$message.error('请求失败，检查服务器状态!');
+                this.$message.error('请求失败，检查URL地址是否正确');
                 return;
             }
             var status=response['subsonic-response'].status
