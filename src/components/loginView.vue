@@ -1,5 +1,5 @@
 <template>
-    <div class="bg">
+    <div class="bg" :style="{'opacity': bgOpacity}">
         <div class="container">
             <div class="title">
                 <a-icon type="right" style="margin-right: 5px;"/> 连接到你的音乐库
@@ -42,7 +42,8 @@ export default {
                 username: "",
                 password: "",
             },
-            loading:false,
+            loading: false,
+            bgOpacity: 0,
         }
     },
     methods: {
@@ -93,8 +94,11 @@ export default {
             var status=response['subsonic-response'].status;
             if(status=='ok'){
                 this.$message.success("登录成功!")
+                this.bgOpacity=0;
 
-                this.$emit("getLogin", true);
+                setTimeout(() => {
+                    this.$emit("getLogin", true);
+                }, 300);
 
                 localStorage.setItem("username", this.inputArea.username);
                 localStorage.setItem("salt", salt);
@@ -107,11 +111,26 @@ export default {
         },
         toHelp(){
             shell.openExternal("https://gitee.com/Ryan-zhou/net-player");
+        },
+        startAnimation(){
+            const duration = 300;
+            const interval = 10;
+            const steps = duration / interval;
+            let step = 0;
+            const increment = 1 / steps;
+            const animateOpacity = setInterval(() => {
+                step++;
+                this.bgOpacity += increment;
+
+                if (step >= steps) {
+                    clearInterval(animateOpacity);
+                }
+            }, interval);
         }
     },
     mounted() {
+        this.startAnimation();
         ipcRenderer.removeAllListeners('loginResult');
-
         ipcRenderer.on('loginResult', this.loginResult);
     },
     created() {
@@ -218,7 +237,7 @@ export default {
     justify-content: center;
     align-items: center;
     display: flex;
-    /* background-image: linear-gradient( 135deg, white 10%, #1890ff 100%); */
-    /* background-color: rgb(242, 242, 242); */
+    background-color: rgb(242, 242, 242);
+    transition: all ease-in-out .3s;
 }
 </style>
