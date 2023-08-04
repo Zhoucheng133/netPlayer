@@ -32,8 +32,7 @@ const {ipcRenderer, shell} = require('electron')
 const CryptoJS =require('crypto-js');
 export default {
     beforeDestroy() {
-        // 在组件销毁前设置标志位为 true
-        this.loginDestroyed = true
+        ipcRenderer.removeAllListeners('loginResult');
     },
     data() {
         return {
@@ -42,7 +41,6 @@ export default {
                 username: "",
                 password: "",
             },
-            loginDestroyed: false,
         }
     },
     methods: {
@@ -59,9 +57,6 @@ export default {
             return result;
         },
         loginController(){
-            if(this.loginDestroyed){
-                return;
-            }
             if(this.inputArea.url==""){
                 this.$message.error('URL地址不能为空');
                 return;
@@ -87,9 +82,7 @@ export default {
             ipcRenderer.send('loginRequest', this.inputArea.url, this.inputArea.username, salt, token);
         },
         loginResult(event, response, salt, token){
-            if(this.loginDestroyed){
-                return;
-            }
+            console.log("请求结果#");
             if(response==null){
                 this.$message.error('请求失败，请检查URL地址是否正确');
                 return;
@@ -114,6 +107,8 @@ export default {
         }
     },
     mounted() {
+        ipcRenderer.removeAllListeners('loginResult');
+
         ipcRenderer.on('loginResult', this.loginResult);
     },
     created() {

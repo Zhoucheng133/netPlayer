@@ -14,8 +14,7 @@ const {ipcRenderer} = require('electron')
 
 export default {
 	beforeDestroy() {
-        // 在组件销毁前设置标志位为 true
-        this.loginDestroyed = true
+        ipcRenderer.removeAllListeners('autoLoginResult');
     },
 	components: {
 		mainView: _mainView,
@@ -24,7 +23,6 @@ export default {
 	data() {
 		return {
 			isLogin: undefined,
-			loginDestroyed: false,	
 		}
 	},
 	methods: {
@@ -32,9 +30,7 @@ export default {
 			this.isLogin=val;
 		},
 		autoLoginResult(event, response){
-			if(this.loginDestroyed){
-                return;
-            }
+			console.log("请求结果*");
             if(response==null){
                 this.$message.error('请求失败，请检查服务器状态');
 				localStorage.clear();
@@ -53,6 +49,8 @@ export default {
         },
 	},
 	mounted() {
+		ipcRenderer.removeAllListeners('autoLoginResult');
+
 		ipcRenderer.on('autoLoginResult', this.autoLoginResult);
 	},
 	created() {
@@ -61,9 +59,6 @@ export default {
         var token=localStorage.getItem("token");
         var url=localStorage.getItem("url");
         if(token!=null && username!=null && salt!=null && url!=null){
-			if(this.loginDestroyed){
-                return;
-            }
             ipcRenderer.send('autoLoginRequest', url, username, salt, token);
         }else{
 			this.isLogin=false;
