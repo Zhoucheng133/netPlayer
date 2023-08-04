@@ -56,7 +56,7 @@ export default {
 .loginButton{
     background-color: #4a79e7;
     color: white;
-    font-size: 30px;
+    font-size: 28px;
     position: absolute;
     bottom: 0;
     right: 0;
@@ -102,6 +102,7 @@ export default {
     padding: 30px 20px 20px 20px;
     overflow: hidden;
     position: relative;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 .bg{
     padding-top: 30px;
