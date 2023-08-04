@@ -30,7 +30,6 @@ export default {
 			this.isLogin=val;
 		},
 		autoLoginResult(event, response){
-			console.log("请求结果*");
             if(response==null){
                 this.$message.error('请求失败，请检查服务器状态');
 				localStorage.clear();
