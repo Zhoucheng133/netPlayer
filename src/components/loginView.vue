@@ -7,7 +7,7 @@
             <div class="form">
                 <div class="formItem">
                     <div class="f_label">URL地址</div>
-                    <a-input placeholder="输入URL地址" />
+                    <a-input placeholder="输入URL地址" v-model="inputArea.url" />
                 </div>
                 <div class="formItem">
                     <div class="f_label">用户名</div>
@@ -18,7 +18,7 @@
                     <a-input-password placeholder="输入密码" />
                 </div>
             </div>
-            <a-button>测试按钮</a-button>
+            <div class="loginButton"><a-icon type="right" /></div>
         </div>
     </div>
 </template>
@@ -35,7 +35,9 @@ export default {
         }
     },
     methods: {
-        
+        test(){
+            console.log(this.inputArea.url);
+        }
     },
     mounted() {
         
@@ -47,6 +49,24 @@ export default {
 </script>
 
 <style scoped>
+.loginButton:hover{
+    background-color: #325bba;
+    cursor: pointer;
+}
+.loginButton{
+    background-color: #4a79e7;
+    color: white;
+    font-size: 30px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all ease-in-out .2s;
+}
 .f_label{
     display: flex;
     align-items: center;
@@ -61,7 +81,7 @@ export default {
 }
 .form{
     user-select: none;
-    margin-top: 50px;
+    margin-top: 70px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -80,6 +100,8 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 30px 20px 20px 20px;
+    overflow: hidden;
+    position: relative;
 }
 .bg{
     padding-top: 30px;
