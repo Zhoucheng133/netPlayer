@@ -118,7 +118,7 @@ export default {
 
 <style scoped>
 .useTip:hover{
-    color: #4a79e7;
+    color: #0061bc;
     cursor: pointer;
 }
 .useTip{
@@ -133,11 +133,11 @@ export default {
    transform: translateX(-50%);
 }
 .loginButton:hover{
-    background-color: #325bba;
+    background-color: #0061bc;
     cursor: pointer;
 }
 .loginButton{
-    background-color: #4a79e7;
+    background-color: #1890ff;
     color: white;
     font-size: 28px;
     position: absolute;
@@ -195,6 +195,6 @@ export default {
     justify-content: center;
     align-items: center;
     display: flex;
-    background-image: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+    background-image: linear-gradient( 135deg, white 10%, #1890ff 100%);
 }
 </style>
