@@ -18,33 +18,75 @@
                     <a-input-password placeholder="输入密码" v-model="inputArea.password" />
                 </div>
             </div>
-            <div class="loginButton"><a-icon type="arrow-right" /></div>
+            <div class="loginButton" @click="loginController"><a-icon type="arrow-right" /></div>
             <div class="help">
                 <div>需要帮助？</div>
-                <div class="useTip">点击这里跳转到使用说明</div>
+                <div class="useTip" @click="toHelp">点击这里跳转到使用说明</div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+const {ipcRenderer, shell} = require('electron')
 export default {
+    beforeDestroy() {
+        // 在组件销毁前设置标志位为 true
+        this.loginDestroyed = true
+    },
     data() {
         return {
             inputArea: {
                 url: "",
                 username: "",
                 password: "",
-            }
+            },
+            loginDestroyed: false,
         }
     },
     methods: {
-        test(){
-            console.log(this.inputArea.url);
+        loginController(){
+            if(this.inputArea.url==""){
+                this.$message.error('URL地址不能为空');
+                return;
+            }else if(!(this.inputArea.url.startsWith("http://") || (this.inputArea.url.startsWith("https://")))){
+                this.$message.error('不合法的URL地址');
+                return;
+            }else if(this.inputArea.username==""){
+                this.$message.error('用户名不能为空');
+                return;
+            }else if(this.inputArea.password==""){
+                this.$message.error('密码不能为空');
+                return;
+            }
+            // 如果最后带/，去掉
+            if(this.inputArea.url.slice(-1)=='/'){
+                this.inputArea.url=this.inputArea.url.slice(0,-1);
+            }
+            ipcRenderer.send('loginRequest', this.inputArea.url, this.inputArea.username, this.inputArea.password);
+        },
+        loginResult(event, response){
+            if(this.loginDestroyed){
+                return;
+            }
+            if(response==null){
+                this.$message.error('请求失败，检查服务器状态!');
+                return;
+            }
+            var status=response['subsonic-response'].status
+            if(status=='ok'){
+                this.$message.success("登录成功!")
+            }else{
+                this.$message.error('用户名或者密码错误!');
+                return;
+            }
+        },
+        toHelp(){
+            shell.openExternal("https://gitee.com/Ryan-zhou/net-player");
         }
     },
     mounted() {
-        
+        ipcRenderer.on('loginResult', this.loginResult);
     },
     created() {
         

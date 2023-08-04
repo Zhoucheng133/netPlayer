@@ -11,6 +11,7 @@ async function createWindow() {
 	const win = new BrowserWindow({
 		width: 1100,
 		height: 770,
+		// 注意对于Windows系统需要修改frame
 		// frame: false,
 		titleBarStyle: 'hiddenInset',
 		// resizable: false,
@@ -29,12 +30,16 @@ async function createWindow() {
 	}
 }
 
+// 登录请求
 ipcMain.on("loginRequest", async (event, url, username, password) => {
 
 	var resp=undefined;
 	await axios.post(url+"/rest/ping.view?v=1.13.0&c=netPlayer&f=json&u="+username+"&p="+password)
 	.then((response)=>{
 		resp=response.data;
+	})
+	.catch(()=>{
+		resp=null;
 	})
 
 	event.reply('loginResult', resp);
