@@ -72,6 +72,7 @@ export default {
             var that=this;
             this.$confirm({
                 title: '你确定要注销吗?',
+                centered: true,
                 cancelText: '取消',
                 okText: '确定',
                 onOk() {
