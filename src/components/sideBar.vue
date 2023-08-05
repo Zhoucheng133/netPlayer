@@ -12,15 +12,15 @@
         <div class="aboutButton" @click="toPage('about')">关于netPlayer</div>
 
         <div class="menu">
-            <div class="item" style="margin-top: 30px;">
+            <div @click="toPage('albums')" :class="nowPage=='albums'?'itemSelected':'item'" style="margin-top: 30px;">
                 <svg class="icon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="18" stroke="#333" stroke-width="4"/><path d="M13 24C13 17.9249 17.9249 13 24 13" stroke="#333" stroke-width="4" stroke-linecap="round"/><circle cx="24" cy="24" r="5" fill="none" stroke="#333" stroke-width="4"/></svg>
                 专辑
             </div>
-            <div class="item">
+            <div @click="toPage('artists')" :class="nowPage=='artists'?'itemSelected':'item'">
                 <svg class="icon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="17" y="4" width="14" height="27" rx="7" fill="none" stroke="#333" stroke-width="4" stroke-linejoin="round"/><path d="M9 23C9 31.2843 15.7157 38 24 38C32.2843 38 39 31.2843 39 23" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 38V44" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 艺人
-            </div>
-            <div class="item">
+            </div >
+            <div @click="toPage('songStyles')" :class="nowPage=='songStyles'?'itemSelected':'item'">
                 <svg class="icon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M34 10V4H8V38L14 35" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 44V10H40V44L27 37.7273L14 44Z" fill="none" stroke="#333" stroke-width="4" stroke-linejoin="round"/></svg>
                 歌曲流派
             </div>
