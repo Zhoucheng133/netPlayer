@@ -2,7 +2,10 @@
 	"name": "net-player",
 	"version": "0.1.0",
 	"private": true,
-	"displayName": "netPlayer",
+	"productName": "netPlayer",
+	"author": {
+		"name": "zhouc"
+	},
 	"scripts": {
 		"serve": "vue-cli-service serve",
 		"build": "vue-cli-service build",
@@ -16,7 +19,6 @@
 	"dependencies": {
 		"ant-design-vue": "1.7.8",
 		"axios": "^1.4.0",
-		"bootstrap-icons": "^1.10.5",
 		"core-js": "^3.8.3",
 		"crypto-js": "^4.1.1",
 		"vue": "^2.6.14"

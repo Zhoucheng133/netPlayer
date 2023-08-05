@@ -1,15 +1,19 @@
 <template>
     <div class="bg" :style="{'opacity': bgOpacity}">
         <sideBar class="sideBar_style"/>
-        测试内容
+        <div class="mainSide">
+            <aboutView/>
+        </div>
     </div>
 </template>
 
 <script>
 import sideBar from './sideBar.vue';
+import aboutView from './aboutView.vue';
 export default {
     components:{
-        sideBar
+        sideBar,
+        aboutView,
     },
     data() {
         return {
@@ -43,6 +47,10 @@ export default {
 </script>
 
 <style scoped>
+.mainSide{
+    padding-left: 200px;
+    padding-top: 30px;
+}
 .sideBar_style{
     position: fixed;
     top: 0;

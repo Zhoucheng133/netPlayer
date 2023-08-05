@@ -1,6 +1,6 @@
 <template>
     <div>
-        
+        {{ version }}
     </div>
 </template>
 
@@ -8,7 +8,7 @@
 export default {
     data() {
         return {
-            
+            version: "",
         }
     },
     methods: {
@@ -18,7 +18,7 @@ export default {
         
     },
     created() {
-        
+        this.version = process.env.VUE_APP_VERSION
     },
 }
 </script>

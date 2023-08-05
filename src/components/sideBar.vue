@@ -12,14 +12,34 @@
         <div class="aboutButton">关于netPlayer</div>
 
         <div class="menu">
-            <div class="item" style="margin-top: 30px;"><i class="bi bi-vinyl icon"></i>专辑</div>
-            <div class="item"><i class="bi bi-mic icon"></i>艺人</div>
-            <div class="item"><i class="bi bi-bookmark icon"></i>歌曲流派</div>
-            <div class="item"><i class="bi bi-music-note-list icon"></i>所有歌曲</div>
-            <div class="item"><i class="bi bi-heart icon"></i>喜欢的歌曲</div>
+            <div class="item" style="margin-top: 30px;">
+                <svg class="icon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="18" stroke="#333" stroke-width="4"/><path d="M13 24C13 17.9249 17.9249 13 24 13" stroke="#333" stroke-width="4" stroke-linecap="round"/><circle cx="24" cy="24" r="5" fill="none" stroke="#333" stroke-width="4"/></svg>
+                专辑
+            </div>
+            <div class="item">
+                <svg class="icon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="17" y="4" width="14" height="27" rx="7" fill="none" stroke="#333" stroke-width="4" stroke-linejoin="round"/><path d="M9 23C9 31.2843 15.7157 38 24 38C32.2843 38 39 31.2843 39 23" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 38V44" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                艺人
+            </div>
+            <div class="item">
+                <svg class="icon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M34 10V4H8V38L14 35" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 44V10H40V44L27 37.7273L14 44Z" fill="none" stroke="#333" stroke-width="4" stroke-linejoin="round"/></svg>
+                歌曲流派
+            </div>
+            <div class="item">
+                <svg class="icon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 19H40" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 10H40" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 38H40" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 28H40" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 10L16 15L8 20V10Z" fill="none" stroke="#333" stroke-width="4" stroke-linejoin="round"/></svg>
+                所有歌曲
+            </div>
+            <div class="item">
+                <svg class="icon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                喜欢的歌曲
+            </div>
             <div class="divLine"></div>
             <div class="listText">创建的歌单</div>
-            <div class="item"><i class="bi bi-list-ul icon"></i><div class="itemContainer">歌单123123123123</div></div>
+            <div class="item">
+                <svg class="icon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="4" width="32" height="40" rx="2" fill="none" stroke="#333" stroke-width="4" stroke-linejoin="round"/><path d="M21 14H33" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 24H33" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 34H33" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15 16C16.1046 16 17 15.1046 17 14C17 12.8954 16.1046 12 15 12C13.8954 12 13 12.8954 13 14C13 15.1046 13.8954 16 15 16Z" fill="#333"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15 26C16.1046 26 17 25.1046 17 24C17 22.8954 16.1046 22 15 22C13.8954 22 13 22.8954 13 24C13 25.1046 13.8954 26 15 26Z" fill="#333"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15 36C16.1046 36 17 35.1046 17 34C17 32.8954 16.1046 32 15 32C13.8954 32 13 32.8954 13 34C13 35.1046 13.8954 36 15 36Z" fill="#333"/></svg>
+                <div class="itemContainer">
+                    歌单123123123123
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -87,7 +107,6 @@ export default {
     overflow: scroll;
 }
 .icon{
-    font-size: 16px;
     margin-right: 8px;
 }
 .item:hover{
@@ -96,6 +115,7 @@ export default {
 }
 .item{
     display: flex;
+    align-items: center;
     font-size: 16px;
     width: 180px;
     padding: 10px 10px 10px 20px;
