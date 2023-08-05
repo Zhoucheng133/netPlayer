@@ -6,7 +6,7 @@
         </div>
         <div class="userOp">
             <div class="changepButton">修改密码</div>
-            <div class="logoutButton">注销</div>
+            <div class="logoutButton" @click="logoutController">注销</div>
         </div>
 
         <div class="aboutButton">关于netPlayer</div>
@@ -52,7 +52,9 @@ export default {
         }
     },
     methods: {
-        
+        logoutController(){
+            this.$emit("logoutMain");
+        }
     },
     mounted() {
         

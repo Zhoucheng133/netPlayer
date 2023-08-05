@@ -1,6 +1,6 @@
 <template>
     <div class="bg" :style="{'opacity': bgOpacity}">
-        <sideBar class="sideBar_style"/>
+        <sideBar class="sideBar_style" @logoutMain="logoutMain" />
         <div class="mainSide">
             <aboutView/>
         </div>
@@ -21,6 +21,12 @@ export default {
         }
     },
     methods: {
+        logoutMain(){
+            this.bgOpacity=0;
+            setTimeout(() => {
+                this.$emit("logoutApp")
+            }, 300);
+        },
         startAnimation(){
             const duration = 300;
             const interval = 10;
@@ -59,5 +65,6 @@ export default {
     height: 100vh;
     widows: 100vw;
     background-color: white;
+    transition: all ease-in-out .3s;
 }
 </style>

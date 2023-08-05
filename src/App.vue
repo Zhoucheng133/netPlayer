@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<div class="dragArea"></div>
-		<mainView v-if="isLogin==true" />
+		<mainView v-if="isLogin==true" @logoutApp="logoutApp"/>
 		<loginView v-else-if="isLogin==false" @getLogin="getLogin" />
 	</div>
 </template>
@@ -26,6 +26,10 @@ export default {
 		}
 	},
 	methods: {
+		logoutApp(){
+			localStorage.clear();
+			this.isLogin=false;
+		},
 		getLogin(val){
 			this.isLogin=val;
 		},
