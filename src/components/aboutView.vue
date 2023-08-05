@@ -24,6 +24,7 @@ export default {
                 title: 'Open source licenses',
                 content: h('div', {}, [
                     h('div', 'Vue.js (MIT License)'),
+                    h('div', 'Electron (MIT License)'),
                     h('div', 'Ant Design Vue (MIT License)'),
                     h('div', 'axios (MIT License)'),
                     h('div', 'crypto-js (MIT License)'),
