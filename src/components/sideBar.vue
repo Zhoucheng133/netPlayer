@@ -53,12 +53,13 @@ export default {
     },
     methods: {
         logoutController(){
+            var that=this;
             this.$confirm({
                 title: '你确定要注销吗?',
                 cancelText: '取消',
                 okText: '确定',
                 onOk() {
-                    this.$emit("logoutMain");
+                    that.$emit("logoutMain");
                 },
                 onCancel() {
                 },
