@@ -1,24 +1,11 @@
 # netPlayer
 
-## Project setup
-```
-yarn install
-```
+开发进度：
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- [x] Electron框架
+- [x] 登录页面
+- [x] 登录功能
+- [ ] 侧边栏设计
+- [ ] 播放栏设计
+- [ ] 播放列表设计
+- [ ] 播放列表功能
