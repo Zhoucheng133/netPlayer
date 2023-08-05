@@ -44,6 +44,21 @@ ipcMain.on("autoLoginRequest", async (event, url, username, salt, token) => {
 	event.reply('autoLoginResult', resp);
 });
 
+// 加载所有的歌单
+ipcMain.on("playlistRequest", async (event, url, username, salt, token) => {
+	var resp=undefined;
+
+	await axios.post(url+"/rest/getPlaylists?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token)
+	.then((response)=>{
+		resp=response.data['subsonic-response'];
+	})
+	.catch(()=>{
+		resp=null;
+	})
+
+	event.reply('playlistResult', resp, salt, token);
+});
+
 
 // 登录请求
 ipcMain.on("loginRequest", async (event, url, username, salt, token) => {
