@@ -9,7 +9,7 @@
             <div class="logoutButton" @click="logoutController">注销</div>
         </div>
 
-        <div class="aboutButton">关于netPlayer</div>
+        <div class="aboutButton" @click="toPage('about')">关于netPlayer</div>
 
         <div class="menu">
             <div class="item" style="margin-top: 30px;">
@@ -24,17 +24,17 @@
                 <svg class="icon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M34 10V4H8V38L14 35" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 44V10H40V44L27 37.7273L14 44Z" fill="none" stroke="#333" stroke-width="4" stroke-linejoin="round"/></svg>
                 歌曲流派
             </div>
-            <div class="item">
+            <div @click="toPage('allSongs')" :class="nowPage=='allSongs'?'itemSelected':'item'">
                 <svg class="icon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 19H40" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 10H40" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 38H40" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 28H40" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 10L16 15L8 20V10Z" fill="none" stroke="#333" stroke-width="4" stroke-linejoin="round"/></svg>
                 所有歌曲
             </div>
-            <div class="item">
+            <div @click="toPage('lovedSongs')" :class="nowPage=='lovedSongs'?'itemSelected':'item'">
                 <svg class="icon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 喜欢的歌曲
             </div>
             <div class="divLine"></div>
             <div class="listText">创建的歌单</div>
-            <div class="item" v-for="(item,index) in playlist" :key="index">
+            <div class="item" v-for="(item,index) in playlist" :key="index" @click="toPage('playList', item.id)" :class="nowPage=='playList' && listId==item.id ? 'itemSelected':'item'">
                 <svg class="icon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="4" width="32" height="40" rx="2" fill="none" stroke="#333" stroke-width="4" stroke-linejoin="round"/><path d="M21 14H33" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 24H33" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 34H33" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15 16C16.1046 16 17 15.1046 17 14C17 12.8954 16.1046 12 15 12C13.8954 12 13 12.8954 13 14C13 15.1046 13.8954 16 15 16Z" fill="#333"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15 26C16.1046 26 17 25.1046 17 24C17 22.8954 16.1046 22 15 22C13.8954 22 13 22.8954 13 24C13 25.1046 13.8954 26 15 26Z" fill="#333"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15 36C16.1046 36 17 35.1046 17 34C17 32.8954 16.1046 32 15 32C13.8954 32 13 32.8954 13 34C13 35.1046 13.8954 36 15 36Z" fill="#333"/></svg>
                 <div class="itemContainer">
                     {{ item.name }}
@@ -56,7 +56,18 @@ export default {
             playlist: [],
         }
     },
+    props:{
+        nowPage: String,
+        listId: String,
+    },
     methods: {
+        toPage(pageName, id){
+            if(pageName!='playList'){
+                this.$emit("toPage",pageName);
+                return;
+            }
+            this.$emit('toPlayList',id);
+        },
         logoutController(){
             var that=this;
             this.$confirm({
@@ -76,7 +87,6 @@ export default {
                 this.$message.error('请求播放列表失败!');
                 return;
             }
-            console.log("加载歌单完成");
             this.playlist=response.playlists.playlist;
         }
     },
@@ -139,8 +149,26 @@ export default {
     margin-right: 8px;
 }
 .item:hover{
-    background-color: rgb(225, 225, 225);
+    background-color: rgb(220, 220, 220);
     cursor: pointer;
+}
+.itemSelected:hover{
+    cursor: not-allowed;
+}
+.itemSelected{
+    background-color: rgb(230, 230, 230);
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    width: 180px;
+    padding: 10px 10px 10px 20px;
+    border-radius: 10px;
+    user-select: none;
+    transition: all ease-in-out .3s;
+    text-align: left;
+    white-space: nowrap;
+    justify-content: flex-start;
+    text-overflow: ellipsis;
 }
 .item{
     display: flex;

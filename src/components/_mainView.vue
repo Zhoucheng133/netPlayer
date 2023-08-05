@@ -1,8 +1,16 @@
 <template>
     <div class="bg" :style="{'opacity': bgOpacity}">
-        <sideBar class="sideBar_style" @logoutMain="logoutMain" />
+        <sideBar
+            class="sideBar_style"
+            @logoutMain="logoutMain" 
+            @toPage="toPage" 
+            @toPlayList="toPlayList"
+            :nowPage="nowPage" 
+            :listId="listId" />
+        <!-- 主要内容在下面 -->
         <div class="mainSide">
-            <aboutView/>
+            <aboutView v-if="nowPage=='about'" />
+            <listView v-else />
         </div>
     </div>
 </template>
@@ -10,17 +18,29 @@
 <script>
 import sideBar from './sideBar.vue';
 import aboutView from './aboutView.vue';
+import listView from './listView.vue';
 export default {
     components:{
         sideBar,
         aboutView,
+        listView,
     },
     data() {
         return {
             bgOpacity: 0,
+            
+            nowPage: 'allSongs',
+            listId: ''
         }
     },
     methods: {
+        toPlayList(id){
+            this.nowPage='playList';
+            this.listId=id;
+        },
+        toPage(pageName){
+            this.nowPage=pageName;
+        },
         logoutMain(){
             this.bgOpacity=0;
             setTimeout(() => {
