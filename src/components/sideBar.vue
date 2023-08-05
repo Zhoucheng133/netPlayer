@@ -9,7 +9,7 @@
             <div class="logoutButton">注销</div>
         </div>
 
-        <div class="aboutButton"></div>
+        <div class="aboutButton">关于netPlayer</div>
 
         <div class="menu">
             <div class="item" style="margin-top: 30px;"><i class="bi bi-vinyl icon"></i>专辑</div>
@@ -44,6 +44,19 @@ export default {
 </script>
 
 <style scoped>
+.aboutButton:hover{
+    color: #1890ff;
+    cursor: pointer;
+}
+.aboutButton{
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    color: grey;
+    user-select: none;
+    transform: translateX(-50%);
+    transition: all ease-in-out .3s;
+}
 .itemContainer{
     width: 100%;
     overflow: hidden;
