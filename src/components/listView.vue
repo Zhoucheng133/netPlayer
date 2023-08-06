@@ -27,6 +27,11 @@
                 </div>
             </div>
         </div>
+
+        <div v-else-if="nowPage=='albums'">
+
+        </div>
+
     </div>
 </template>
 
@@ -84,7 +89,16 @@ export default {
         listResult(event, resp){
             this.needRequest=false;
             this.shownList=resp.playlist.entry;
-            console.log(resp.playlist.entry);
+            // console.log(resp.playlist.entry);
+        },
+        pageTurn(){
+            this.titleController();
+            if(this.nowPage=='playList'){
+                this.requestList();
+            }else{
+                // 临时代码，注意修改
+                this.needRequest=false;
+            }
         }
     },
     mounted() {
@@ -95,21 +109,17 @@ export default {
         this.titleController();
     },
     watch: {
-        playList: function(){
+        playList: function(newVal){
             this.needRequest=true;
+            localStorage.setItem("playList",JSON.stringify(newVal));
         },
-        nowPage: function(){
+        nowPage: function(newVal){
             this.needRequest=true;
+            localStorage.setItem("nowPage",newVal);
         },
         needRequest: function(newVal, oldVal){
             if(newVal==true && oldVal==false){
-                this.titleController();
-                if(this.nowPage=='playList'){
-                    this.requestList();
-                }else{
-                    // 临时代码，注意修改
-                    this.needRequest=false;
-                }
+                this.pageTurn();
             }
         }
     },
@@ -138,13 +148,16 @@ export default {
     grid-template-columns: 50px auto 150px 70px 50px;
     width: 100%;
     height: 50px;
+    transition: all ease-in-out .2s;
+}
+.mainArea > .container:hover{
+    background-color: rgb(220, 220, 220);
 }
 .item{
     display: flex;
     align-items: center;
     padding-left: 10px;
     font-size: 15px;
-
 }
 .bg{
     user-select: none;

@@ -14,6 +14,7 @@
         <div class="mainSide">
             <aboutView v-if="nowPage=='about'" />
             <listView 
+                ref="listPart" 
                 :nowPage="nowPage" 
                 :playList="playList" 
                 v-else />
@@ -39,6 +40,9 @@ export default {
             
             nowPage: 'allSongs',
             playList: {},
+
+            nowPlayList:[],
+            nowPlay:{},
         }
     },
     methods: {
@@ -73,9 +77,27 @@ export default {
     },
     mounted() {
         this.startAnimation();
+        if(localStorage.getItem("nowPage")!=null){
+            this.nowPage=localStorage.getItem("nowPage");
+            if(this.nowPage=='playList'){
+                this.playList=JSON.parse(localStorage.getItem("playList"));
+            }else{
+                // 注意还有剩余代码
+            }
+        }
     },
     created() {
         
+    },
+    watch: {
+        nowPage:function(newVal,oldVal){
+            if(oldVal=='about'){
+                var that=this;
+                this.$nextTick(()=>{
+                    that.$refs.listPart.pageTurn();
+                })
+            }
+        }
     },
 }
 </script>
