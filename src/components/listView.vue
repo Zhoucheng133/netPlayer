@@ -83,11 +83,15 @@ export default {
             }
         },
         requestLovedSongs(){
-            this.shownList=[];
+            ipcRenderer.send('lovedSongsRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
         },
-        lovedSongsResult(){},
+        lovedSongsResult(event, resp){
+            this.needRequest=false;
+            this.shownList=resp.starred.song;
+            this.subTitle="合计"+resp.starred.song.length+"首歌";
+        },
         requestSongStyles(){
-            this.shownList=[];
+            
         },
         songStylesResult(){},
         requestArtists(){
@@ -144,7 +148,9 @@ export default {
     },
     mounted() {
         ipcRenderer.removeAllListeners('listResult');
+        ipcRenderer.removeAllListeners('lovedSongsResult');
         ipcRenderer.on('listResult', this.listResult);
+        ipcRenderer.on('lovedSongsResult', this.lovedSongsResult);
     },
     created() {
         this.titleController();

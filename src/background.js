@@ -44,6 +44,20 @@ ipcMain.on("autoLoginRequest", async (event, url, username, salt, token) => {
 	event.reply('autoLoginResult', resp);
 });
 
+ipcMain.on("lovedSongsRequest", async (event, url, username, salt, token) => {
+	var resp=undefined;
+
+	await axios.post(url+"/rest/getStarred?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token)
+	.then((response)=>{
+		resp=response.data['subsonic-response'];
+	})
+	.catch(()=>{
+		resp=null;
+	})
+
+	event.reply('lovedSongsResult', resp);
+});
+
 // 加载歌单
 ipcMain.on("listRequest", async (event, url, username, salt, token, id) => {
 	var resp=undefined;
