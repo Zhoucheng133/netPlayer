@@ -84,7 +84,7 @@ export default {
 .playbar{
     position: fixed;
     bottom: 0;
-    margin-left: 224px;
+    margin-left: 240px;
     margin-bottom: 10px;
     z-index: 100;
 }

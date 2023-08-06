@@ -44,6 +44,22 @@ ipcMain.on("autoLoginRequest", async (event, url, username, salt, token) => {
 	event.reply('autoLoginResult', resp);
 });
 
+// 加载歌单
+ipcMain.on("listRequest", async (event, url, username, salt, token, id) => {
+	var resp=undefined;
+
+	await axios.post(url+"/rest/getPlaylist?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&id="+id)
+	.then((response)=>{
+		resp=response.data['subsonic-response'];
+	})
+	.catch(()=>{
+		resp=null;
+	})
+
+	event.reply('listResult', resp);
+});
+
+
 // 加载所有的歌单
 ipcMain.on("playlistRequest", async (event, url, username, salt, token) => {
 	var resp=undefined;

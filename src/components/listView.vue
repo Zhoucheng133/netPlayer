@@ -16,14 +16,26 @@
             </div>
 
             <div class="mainArea">
-
+                <div class="container" v-for="(item, index) in shownList" :key="index">
+                    <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.title }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.artist }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.duration }}</div></div>
+                    <div class="item">
+                        <svg width="15" height="15" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { ipcRenderer } from 'electron';
 export default {
+    beforeDestroy() {
+        ipcRenderer.removeAllListeners('listResult');
+    },
     props:{
         nowPage: String,
         playList: Object,
@@ -32,6 +44,9 @@ export default {
         return {
             shownTitle: "",
             subTitle: "",
+
+            needRequest: false,
+            shownList:[],
         }
     },
     methods: {
@@ -62,38 +77,65 @@ export default {
                     this.subTitle="合计"+this.playList.songCount+"首歌";
                     break;
             }
+        },
+        requestList(){
+            ipcRenderer.send('listRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.playList.id);
+        },
+        listResult(event, resp){
+            this.needRequest=false;
+            this.shownList=resp.playlist.entry;
+            console.log(resp.playlist.entry);
         }
     },
     mounted() {
-        
+        ipcRenderer.removeAllListeners('listResult');
+        ipcRenderer.on('listResult', this.listResult);
     },
     created() {
         this.titleController();
     },
     watch: {
         playList: function(){
-            this.titleController();
+            this.needRequest=true;
         },
         nowPage: function(){
-            this.titleController();
+            this.needRequest=true;
+        },
+        needRequest: function(newVal, oldVal){
+            if(newVal==true && oldVal==false){
+                this.titleController();
+                if(this.nowPage=='playList'){
+                    this.requestList();
+                }else{
+                    // 临时代码，注意修改
+                    this.needRequest=false;
+                }
+            }
         }
     },
 }
 </script>
 
 <style scoped>
+.itemContent{
+    width: 100%;
+    overflow: hidden;
+	text-overflow: ellipsis;
+    text-align: left;
+    white-space:nowrap;
+}
 .mainArea{
+    overflow: scroll;
     position: fixed;
     margin-top: 50px;
     width: calc(100% - 248px);
     height: calc(100vh - 30px - 64px - 50px);
-    background-color: lightcyan;
     margin-left: 24px;
+    padding-bottom: 130px;
 }
 .container{
-    margin-left: 24px;
     display: grid;
-    grid-template-columns: 50px auto 100px 50px 50px;
+    grid-template-columns: 50px auto 150px 70px 50px;
     width: 100%;
     height: 50px;
 }
@@ -102,6 +144,7 @@ export default {
     align-items: center;
     padding-left: 10px;
     font-size: 15px;
+
 }
 .bg{
     user-select: none;
@@ -111,7 +154,7 @@ export default {
     position: fixed;
     margin-left: 24px;
     display: grid;
-    grid-template-columns: 50px auto 100px 50px 50px;
+    grid-template-columns: 50px auto 150px 70px 50px;
     width: calc(100% - 248px);
     background-color: rgb(242, 242, 242);
     height: 50px;
