@@ -22,6 +22,7 @@ export default {
             const h = this.$createElement;
             this.$info({
                 title: 'Open source licenses',
+                centered: true,
                 content: h('div', {}, [
                     h('div', 'Vue.js (MIT License)'),
                     h('div', 'Electron (MIT License)'),
