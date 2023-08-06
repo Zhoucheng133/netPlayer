@@ -10,7 +10,7 @@
 export default {
     props:{
         nowPage: String,
-        listId: String,
+        playList: Object,
     },
     data() {
         return {
@@ -36,9 +36,8 @@ export default {
                     this.shownTitle="喜欢的歌曲";
                     break;
                 case 'playList':
-                    this.shownTitle="歌单";
+                    this.shownTitle=this.playList.name;
                     break;
-
             }
         }
     },
@@ -49,6 +48,9 @@ export default {
         this.titleController();
     },
     watch: {
+        playList: function(){
+            this.titleController();
+        },
         nowPage: function(){
             this.titleController();
         }

@@ -6,13 +6,13 @@
             @toPage="toPage" 
             @toPlayList="toPlayList"
             :nowPage="nowPage" 
-            :listId="listId" />
+            :playList="playList" />
         <!-- 主要内容在下面 -->
         <div class="mainSide">
             <aboutView v-if="nowPage=='about'" />
             <listView 
                 :nowPage="nowPage" 
-                :listId="listId" 
+                :playList="playList" 
                 v-else />
         </div>
     </div>
@@ -33,13 +33,13 @@ export default {
             bgOpacity: 0,
             
             nowPage: 'allSongs',
-            listId: ''
+            playList: {},
         }
     },
     methods: {
-        toPlayList(id){
+        toPlayList(item){
             this.nowPage='playList';
-            this.listId=id;
+            this.playList=item;
         },
         toPage(pageName){
             this.nowPage=pageName;
