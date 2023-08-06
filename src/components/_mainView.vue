@@ -84,7 +84,9 @@ export default {
 .playbar{
     position: fixed;
     bottom: 0;
-    margin-left: 200px;
+    margin-left: 224px;
+    margin-bottom: 10px;
+    z-index: 100;
 }
 .mainSide{
     padding-left: 200px;

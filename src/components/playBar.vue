@@ -26,7 +26,8 @@ export default {
 <style scoped>
 .bar{
     height: 100px;
-    background-color: red;
-    width: 100%;
+    background-color: rgb(242, 242, 242);
+    /* width: 100vw; */
+    width: calc(100vw - 224px - 24px);
 }
 </style>

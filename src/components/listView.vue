@@ -85,7 +85,7 @@ export default {
     position: fixed;
     margin-top: 50px;
     width: calc(100% - 248px);
-    height: calc(100vh - 30px - 64px - 50px - 100px);
+    height: calc(100vh - 30px - 64px - 50px);
     background-color: lightcyan;
     margin-left: 24px;
 }
