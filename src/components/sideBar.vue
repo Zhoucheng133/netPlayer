@@ -84,7 +84,7 @@ export default {
             });
         },
         playlistResult(event, response){
-            console.log("请求: RequestList");
+            console.log("侧边栏的请求: 获取歌单列表");
             if(response==null){
                 this.$message.error('请求播放列表失败!');
                 return;
@@ -105,9 +105,6 @@ export default {
         this.requestList();
     },
     watch: {
-        playList:function(){
-            this.requestList();
-        }
     },
 }
 </script>

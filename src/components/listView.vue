@@ -28,7 +28,7 @@
             </div>
         </div>
 
-        <div v-else-if="nowPage=='albums'">
+        <div v-else>
 
         </div>
 
@@ -79,23 +79,64 @@ export default {
                     break;
                 case 'playList':
                     this.shownTitle=this.playList.name;
-                    this.subTitle="合计"+this.playList.songCount+"首歌";
                     break;
             }
         },
+        requestLovedSongs(){
+            this.shownList=[];
+        },
+        lovedSongsResult(){},
+        requestSongStyles(){
+            this.shownList=[];
+        },
+        songStylesResult(){},
+        requestArtists(){
+            this.shownList=[];
+        },
+        artistsResult(){},
+        requestAllSongs(){
+            this.shownList=[];
+        },
+        allSongsResult(){},
+        requetAlbums(){
+            this.shownList=[];
+        },
+        albumsResult(){},
         requestList(){
             ipcRenderer.send('listRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.playList.id);
         },
         listResult(event, resp){
             this.needRequest=false;
             this.shownList=resp.playlist.entry;
-            // console.log(resp.playlist.entry);
+            this.subTitle="合计"+resp.playlist.songCount+"首歌";
         },
         pageTurn(){
             this.titleController();
             if(this.nowPage=='playList'){
                 this.requestList();
-            }else{
+            }else if(this.nowPage=='albums'){
+                this.requetAlbums();
+
+                // 临时代码，注意修改
+                this.needRequest=false;
+            }else if(this.nowPage=='artists'){
+                this.requestArtists();
+
+                // 临时代码，注意修改
+                this.needRequest=false;
+            }else if(this.nowPage=='songStyles'){
+                this.requestSongStyles();
+
+                // 临时代码，注意修改
+                this.needRequest=false;
+            }else if(this.nowPage=='allSongs'){
+                this.requestAllSongs();
+
+                // 临时代码，注意修改
+                this.needRequest=false;
+            }else if(this.nowPage=='lovedSongs'){
+                this.requestLovedSongs();
+
                 // 临时代码，注意修改
                 this.needRequest=false;
             }
@@ -107,6 +148,7 @@ export default {
     },
     created() {
         this.titleController();
+        this.pageTurn();
     },
     watch: {
         playList: function(newVal){
