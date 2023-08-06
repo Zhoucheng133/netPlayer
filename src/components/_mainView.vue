@@ -10,7 +10,10 @@
         <!-- 主要内容在下面 -->
         <div class="mainSide">
             <aboutView v-if="nowPage=='about'" />
-            <listView v-else />
+            <listView 
+                :nowPage="nowPage" 
+                :listId="listId" 
+                v-else />
         </div>
     </div>
 </template>
