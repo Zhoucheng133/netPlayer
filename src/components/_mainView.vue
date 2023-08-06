@@ -7,6 +7,9 @@
             @toPlayList="toPlayList"
             :nowPage="nowPage" 
             :playList="playList" />
+        
+        <playBar class="playbar"/>
+        
         <!-- 主要内容在下面 -->
         <div class="mainSide">
             <aboutView v-if="nowPage=='about'" />
@@ -22,11 +25,13 @@
 import sideBar from './sideBar.vue';
 import aboutView from './aboutView.vue';
 import listView from './listView.vue';
+import playBar from './playBar.vue';
 export default {
     components:{
         sideBar,
         aboutView,
         listView,
+        playBar,
     },
     data() {
         return {
@@ -76,6 +81,11 @@ export default {
 </script>
 
 <style scoped>
+.playbar{
+    position: fixed;
+    bottom: 0;
+    margin-left: 200px;
+}
 .mainSide{
     padding-left: 200px;
     padding-top: 30px;

@@ -1,5 +1,5 @@
 <template>
-    <div class="bg">
+    <div class="bar">
         
     </div>
 </template>
@@ -24,5 +24,9 @@ export default {
 </script>
 
 <style scoped>
-
+.bar{
+    height: 100px;
+    background-color: red;
+    width: 100%;
+}
 </style>
