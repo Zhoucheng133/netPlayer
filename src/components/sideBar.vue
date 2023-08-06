@@ -54,6 +54,7 @@ export default {
         return {
             username: "",
             playlist: [],
+            needRequest: false,
         }
     },
     props:{
@@ -84,21 +85,38 @@ export default {
             });
         },
         playlistResult(event, response){
+            this.needRequest=false;
             if(response==null){
                 this.$message.error('请求播放列表失败!');
                 return;
             }
             this.playlist=response.playlists.playlist;
+        },
+        requestList(){
+            ipcRenderer.send('playlistRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
         }
     },
     mounted() {
+        ipcRenderer.removeAllListeners('playlistResult');
         ipcRenderer.on('playlistResult', this.playlistResult);
     },
     created() {
         this.username=localStorage.getItem("username");
 
-        ipcRenderer.removeAllListeners('playlistResult');
-        ipcRenderer.send('playlistRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
+        this.requestList();
+    },
+    watch: {
+        playList:function(){
+            this.needRequest=true;
+        },
+        nowPage:function(){
+            this.needRequest=true;
+        },
+        needRequest:function(newValue){
+            if(newValue==true){
+                this.requestList();
+            }
+        }
     },
 }
 </script>

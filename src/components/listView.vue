@@ -55,6 +55,7 @@ export default {
                     break;
                 case 'lovedSongs':
                     this.shownTitle="喜欢的歌曲";
+                    this.subTitle="";
                     break;
                 case 'playList':
                     this.shownTitle=this.playList.name;
