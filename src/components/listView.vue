@@ -1,8 +1,11 @@
 <template>
     <div>
-    <a-page-header
-        :title="shownTitle"
-        :sub-title="subTitle" />
+        <a-page-header
+            :title="shownTitle"
+            :sub-title="subTitle" />
+        
+        <div></div>
+        
     </div>
 </template>
 
