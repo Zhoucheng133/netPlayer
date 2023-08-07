@@ -30,6 +30,21 @@ async function createWindow() {
 	}
 }
 
+// 加载歌曲封面
+ipcMain.on("songCoverRequest", async (event, url, username, salt, token, id) => {
+	var resp=undefined;
+	await axios.post(url+"/rest/getCoverArt?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&id="+id)
+	.then((response)=>{
+		resp=response;
+	})
+	.catch(()=>{
+		resp=null;
+	})
+
+	event.reply('songCoverResult', resp);
+});
+
+
 // 自动登录请求
 ipcMain.on("autoLoginRequest", async (event, url, username, salt, token) => {
 	var resp=undefined;
@@ -44,6 +59,7 @@ ipcMain.on("autoLoginRequest", async (event, url, username, salt, token) => {
 	event.reply('autoLoginResult', resp);
 });
 
+// 加载我喜爱的歌曲
 ipcMain.on("lovedSongsRequest", async (event, url, username, salt, token) => {
 	var resp=undefined;
 
