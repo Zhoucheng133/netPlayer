@@ -13,7 +13,7 @@
             </div>
 
             <div class="mainArea">
-                <div class="container" v-for="(item, index) in shownList" :key="index">
+                <div class="container" v-for="(item, index) in shownList" :key="index" @dblclick="playSong(index)">
                     <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.title }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.artist }}</div></div>
@@ -46,9 +46,19 @@ export default {
 
             needRequest: false,
             shownList:[],
+
+            listID:'',
         }
     },
     methods: {
+        playSong(index){
+            var nowPlay={
+                index: index,
+                nowPlayList: this.shownList,
+                id: this.listID,
+            }
+            this.$emit('playSong',nowPlay)
+        },
         getSongTime(duration){
             var min=parseInt(duration/60);
             var sec=duration%60;
@@ -111,6 +121,7 @@ export default {
         listResult(event, resp){
             this.needRequest=false;
             this.shownList=resp.playlist.entry;
+            this.listID=resp.playlist.id;
             this.subTitle="合计"+resp.playlist.songCount+"首歌";
         },
         pageTurn(){
@@ -139,9 +150,6 @@ export default {
                 this.needRequest=false;
             }else if(this.nowPage=='lovedSongs'){
                 this.requestLovedSongs();
-
-                // 临时代码，注意修改
-                this.needRequest=false;
             }
         }
     },

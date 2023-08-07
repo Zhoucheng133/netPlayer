@@ -6,15 +6,19 @@
             @toPage="toPage" 
             @toPlayList="toPlayList"
             :nowPage="nowPage" 
-            :playList="playList" />
+            :playList="playList"
+            :nowPlay="nowPlay" />
         
-        <playBar class="playbar"/>
+        <playBar class="playbar" 
+            :nowPlay="nowPlay"
+            />
         
         <!-- 主要内容在下面 -->
         <div class="mainSide">
             <aboutView v-if="nowPage=='about'" />
             <listView 
                 ref="listPart" 
+                @playSong="playSong"
                 :nowPage="nowPage" 
                 :playList="playList" 
                 v-else />
@@ -41,11 +45,17 @@ export default {
             nowPage: 'allSongs',
             playList: {},
 
-            nowPlayList:[],
-            nowPlay:{},
+            nowPlay:{
+                index: 0,
+                nowPlayList: [],
+                id: "",
+            },
         }
     },
     methods: {
+        playSong(nowPlay){
+            this.nowPlay=nowPlay;
+        },
         toPlayList(item){
             this.nowPage='playList';
             this.playList=item;
