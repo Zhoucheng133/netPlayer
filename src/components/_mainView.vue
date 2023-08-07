@@ -10,7 +10,9 @@
             :nowPlay="nowPlay" />
         
         <playBar class="playbar" 
+            ref="player"
             :nowPlay="nowPlay"
+            @nextSong="nextSong"
             />
         
         <!-- 主要内容在下面 -->
@@ -54,8 +56,13 @@ export default {
         }
     },
     methods: {
+        nextSong(){
+            this.nowPlay.index=(this.nowPlay.index+1+this.nowPlay.nowPlayList.length)%this.nowPlay.nowPlayList.length;
+            this.$refs.player.playSong();
+        },
         playSong(nowPlay){
             this.nowPlay=nowPlay;
+            this.$refs.player.playSong();
         },
         toPlayList(item){
             this.nowPage='playList';

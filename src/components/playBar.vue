@@ -8,9 +8,9 @@
             <div class="title">{{ nowPlay.nowPlayList.length==0 ? "" : nowPlay.nowPlayList[nowPlay.index].title }}</div>
             <div class="artist">{{ nowPlay.nowPlayList.length==0 ? "" : nowPlay.nowPlayList[nowPlay.index].artist }}</div>
         </div>
+        <a-button @click="nextSong">测试按钮</a-button>
 
-
-        <audio controls :src="songStream" :ref="audioPlayer"></audio>
+        <audio controls :src="songStream" ref="audioPlayer" @ended="nextSong"></audio>
     </div>
 </template>
 
@@ -31,6 +31,9 @@ export default {
         }
     },
     methods: {
+        nextSong(){
+            this.$emit("nextSong");
+        },
         getSongStream(){
             var username=localStorage.getItem("username");
             var salt=localStorage.getItem("salt");
@@ -38,7 +41,6 @@ export default {
             var url=localStorage.getItem("url");
             
             this.songStream=url+"/rest/stream?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&id="+this.nowPlay.nowPlayList[this.nowPlay.index].id;
-            console.log(this.songStream);
         },
         getSongCover(){
             var username=localStorage.getItem("username");
@@ -47,8 +49,20 @@ export default {
             var url=localStorage.getItem("url");
             this.shownCoverLink=url+"/rest/getCoverArt?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&id="+this.nowPlay.nowPlayList[this.nowPlay.index].id;
         },
+        playSong(){
+            this.$nextTick(()=>{
+                this.getSongCover();
+                this.getSongStream();
+                this.$refs.audioPlayer.src = this.songStream;
+                this.$nextTick(() => {
+                    this.audioPlayer.play();
+                });
+                // this.audioPlayer.play();
+            })
+        }
     },
     mounted() {
+        this.audioPlayer = this.$refs.audioPlayer;
         if(this.nowPlay.nowPlayList.length!=0){
             this.getSongCover();
             this.getSongStream();
@@ -58,10 +72,7 @@ export default {
 
     },
     watch: {
-        nowPlay: function(){
-            this.getSongCover();
-            this.getSongStream();
-        }
+
     },
 }
 </script>
