@@ -20,6 +20,7 @@
                 ref="listPart" 
                 @playSong="playSong"
                 :nowPage="nowPage" 
+                :nowPlay="nowPlay"
                 :playList="playList" 
                 v-else />
         </div>
@@ -48,7 +49,7 @@ export default {
             nowPlay:{
                 index: 0,
                 nowPlayList: [],
-                id: "",
+                id: ""
             },
         }
     },

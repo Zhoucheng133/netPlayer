@@ -13,7 +13,7 @@
             </div>
 
             <div class="mainArea">
-                <div class="container" v-for="(item, index) in shownList" :key="index" @dblclick="playSong(index)">
+                <div v-for="(item, index) in shownList" :key="index" @dblclick="playSong(index)" :class="isPlaying(index)?'container_playing':'container'">
                     <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.title }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.artist }}</div></div>
@@ -38,6 +38,7 @@ export default {
     props:{
         nowPage: String,
         playList: Object,
+        nowPlay: Object,
     },
     data() {
         return {
@@ -51,6 +52,12 @@ export default {
         }
     },
     methods: {
+        isPlaying(index){
+            if(index==this.nowPlay.index && this.listID==this.nowPlay.id){
+                return true;
+            }
+            return false;
+        },
         playSong(index){
             var nowPlay={
                 index: index,
@@ -197,6 +204,14 @@ export default {
     height: calc(100vh - 30px - 64px - 50px);
     margin-left: 24px;
     padding-bottom: 130px;
+}
+.container_playing{
+    display: grid;
+    grid-template-columns: 50px auto 150px 70px;
+    width: 100%;
+    height: 50px;
+    transition: all ease-in-out .2s;
+    background-color: rgb(230, 230, 230);;
 }
 .container{
     display: grid;
