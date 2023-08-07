@@ -1,7 +1,7 @@
 <template>
     <div class="bar">
         <div class="cover">
-            
+            <img :src="shownCoverLink==''?'':shownCoverLink" alt="" width="80px">
         </div>
 
         <div class="name">
@@ -12,24 +12,39 @@
 </template>
 
 <script>
+// import { ipcRenderer } from 'electron';
 export default {
+    beforeDestroy() {
+
+    },
     props:{
         nowPlay: Object,
     },
     data() {
         return {
-            
+            shownCoverLink: ""
         }
     },
     methods: {
-        
+        getSongCover(){
+            var username=localStorage.getItem("username");
+            var salt=localStorage.getItem("salt");
+            var token=localStorage.getItem("token");
+            var url=localStorage.getItem("url");
+            this.shownCoverLink=url+"/rest/getCoverArt?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&id="+this.nowPlay.nowPlayList[this.nowPlay.index].id
+        },
     },
     mounted() {
-        
+        if(this.nowPlay.nowPlayList.length!=0){
+            this.getSongCover();
+        }
     },
     created() {
     },
     watch: {
+        nowPlay: function(){
+            this.getSongCover();
+        }
     },
 }
 </script>
