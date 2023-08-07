@@ -8,6 +8,9 @@
             <div class="title">{{ nowPlay.nowPlayList.length==0 ? "" : nowPlay.nowPlayList[nowPlay.index].title }}</div>
             <div class="artist">{{ nowPlay.nowPlayList.length==0 ? "" : nowPlay.nowPlayList[nowPlay.index].artist }}</div>
         </div>
+
+
+        <audio controls :src="songStream" :ref="audioPlayer"></audio>
     </div>
 </template>
 
@@ -22,28 +25,42 @@ export default {
     },
     data() {
         return {
-            shownCoverLink: ""
+            shownCoverLink: "",
+            songStream: "",
+            audioPlayer:"",
         }
     },
     methods: {
+        getSongStream(){
+            var username=localStorage.getItem("username");
+            var salt=localStorage.getItem("salt");
+            var token=localStorage.getItem("token");
+            var url=localStorage.getItem("url");
+            
+            this.songStream=url+"/rest/stream?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&id="+this.nowPlay.nowPlayList[this.nowPlay.index].id;
+            console.log(this.songStream);
+        },
         getSongCover(){
             var username=localStorage.getItem("username");
             var salt=localStorage.getItem("salt");
             var token=localStorage.getItem("token");
             var url=localStorage.getItem("url");
-            this.shownCoverLink=url+"/rest/getCoverArt?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&id="+this.nowPlay.nowPlayList[this.nowPlay.index].id
+            this.shownCoverLink=url+"/rest/getCoverArt?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&id="+this.nowPlay.nowPlayList[this.nowPlay.index].id;
         },
     },
     mounted() {
         if(this.nowPlay.nowPlayList.length!=0){
             this.getSongCover();
+            this.getSongStream();
         }
     },
     created() {
+
     },
     watch: {
         nowPlay: function(){
             this.getSongCover();
+            this.getSongStream();
         }
     },
 }
