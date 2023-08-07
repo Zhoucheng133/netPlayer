@@ -4,8 +4,9 @@
             
         </div>
 
-        <div class="title">
-            {{ nowPlay.nowPlayList[nowPlay.index].title }}
+        <div class="name">
+            <div class="title">{{ nowPlay.nowPlayList.length==0 ? "" : nowPlay.nowPlayList[nowPlay.index].title }}</div>
+            <div class="artist">{{ nowPlay.nowPlayList.length==0 ? "" : nowPlay.nowPlayList[nowPlay.index].artist }}</div>
         </div>
     </div>
 </template>
@@ -27,25 +28,35 @@ export default {
         
     },
     created() {
-        
     },
     watch: {
-        nowPlay: function(newVal){
-            console.log(newVal.nowPlayList[newVal.index]);
-        }
     },
 }
 </script>
 
 <style scoped>
+.artist{
+    font-size: 15px;
+    text-align: left;
+    color: grey;
+}
 .title{
-    
+    font-size: 18px;
+    font-weight: bold;
+    text-align: left;
+    max-width: 250px;
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+}
+.name{
+    margin-left: 20px;
+    font-size: 18px;
 }
 .cover{
     width: 80px;
     height: 80px;
     background-color: red;
-
 }
 .bar{
     display: flex;
