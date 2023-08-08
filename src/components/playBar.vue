@@ -89,11 +89,29 @@ export default {
 <style scoped>
 .toggleSong{
     font-size: 26px;
-    margin-right: 20px;
-    margin-left: 20px;
+    margin-right: 15px;
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    transition: all ease-in-out .2s;
+}
+.songBack:hover, .songForward:hover, .toggleSong:hover{
+    background-color: rgb(220, 220, 220);
+    cursor: pointer;
 }
 .songBack, .songForward{
     font-size: 20px;
+    border-radius: 40px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all ease-in-out .2s;
 }
 .tools{
     display: flex;
