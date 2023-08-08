@@ -231,7 +231,7 @@ export default {
     /* width: 100vw; */
     width: calc(100vw - 240px - 40px);
     border-radius: 10px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
     /* border: 1px solid; */
     overflow: hidden;
 }
