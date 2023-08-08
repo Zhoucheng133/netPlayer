@@ -19,6 +19,8 @@
             </div>
             <div class="songForward" @click="nextSong"><a-icon type="step-forward" /></div>
         </div>
+
+        <div class="progressBar"></div>
     </div>
 </template>
 
@@ -50,12 +52,24 @@ export default {
             });
         },
         toggleSong(){
+            if (this.nowPlay.nowPlayList.length==0) {
+                this.$message.error("播放列表为空!");
+                return;
+            }
             this.$emit("toggleSong");
         },
         backSong(){
+            if (this.nowPlay.nowPlayList.length==0) {
+                this.$message.error("播放列表为空!");
+                return;
+            }
             this.$emit("backSong");
         },
         nextSong(){
+            if (this.nowPlay.nowPlayList.length==0) {
+                this.$message.error("播放列表为空!");
+                return;
+            }
             this.$emit("nextSong");
         },
         getSongStream(){
@@ -106,6 +120,15 @@ export default {
 </script>
 
 <style scoped>
+.progressBar{
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background-color: #1890ff;
+    border: 1px solid #1890ff;
+    margin-left: -10px;
+    bottom: 0px;
+}
 .songToggle{
     font-size: 26px;
     margin-right: 15px;
@@ -162,6 +185,7 @@ export default {
     /* background-color: white; */
 }
 .bar{
+    position: absolute;
     display: flex;
     align-items: center;
     padding-left: 10px;
@@ -174,5 +198,6 @@ export default {
     border-radius: 10px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     /* border: 1px solid; */
+    overflow: hidden;
 }
 </style>
