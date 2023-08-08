@@ -12,7 +12,9 @@
         <playBar class="playbar" 
             ref="player"
             :nowPlay="nowPlay"
-            @nextSong="nextSong"
+            @nextSong="nextSong" 
+            @backSong="backSong" 
+            @toggleSong="toggleSong"
             />
         
         <!-- 主要内容在下面 -->
@@ -51,14 +53,29 @@ export default {
             nowPlay:{
                 index: 0,
                 nowPlayList: [],
-                id: ""
+                id: "",
+                isPlay: false,
             },
         }
     },
     methods: {
+        toggleSong(){
+            if(this.nowPlay.isPlay==false){
+                this.$refs.player.playSongController();
+            }else{
+                this.$refs.player.pauseSongController();
+            }
+            this.nowPlay.isPlay=!this.nowPlay.isPlay;
+        },
+        backSong(){
+            this.nowPlay.index=(this.nowPlay.index-1+this.nowPlay.nowPlayList.length)%this.nowPlay.nowPlayList.length;
+            this.$refs.player.playSong();
+            this.nowPlay.isPlay=true;
+        },
         nextSong(){
             this.nowPlay.index=(this.nowPlay.index+1+this.nowPlay.nowPlayList.length)%this.nowPlay.nowPlayList.length;
             this.$refs.player.playSong();
+            this.nowPlay.isPlay=true;
         },
         playSong(nowPlay){
             this.nowPlay=nowPlay;

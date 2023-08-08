@@ -63,6 +63,7 @@ export default {
                 index: index,
                 nowPlayList: this.shownList,
                 id: this.listID,
+                isPlay: false,
             }
             this.$emit('playSong',nowPlay)
         },

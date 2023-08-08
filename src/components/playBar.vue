@@ -12,9 +12,9 @@
         <audio controls :src="songStream" ref="audioPlayer" @ended="nextSong" style="display: none;"></audio>
 
         <div class="tools">
-            <div class="songBack"><a-icon type="step-backward" /></div>
-            <div class="toggleSong"><a-icon type="pause" /></div>
-            <div class="songForward"><a-icon type="step-forward" /></div>
+            <div class="songBack" @click="backSong"><a-icon type="step-backward" /></div>
+            <div class="songToggle" @click="toggleSong"><a-icon type="pause" /></div>
+            <div class="songForward" @click="nextSong"><a-icon type="step-forward" /></div>
         </div>
     </div>
 </template>
@@ -36,6 +36,22 @@ export default {
         }
     },
     methods: {
+        pauseSongController(){
+            this.$nextTick(() => {
+                this.audioPlayer.pause();
+            });
+        },
+        playSongController(){
+            this.$nextTick(() => {
+                this.audioPlayer.play();
+            });
+        },
+        toggleSong(){
+            this.$emit("toggleSong");
+        },
+        backSong(){
+            this.$emit("backSong");
+        },
         nextSong(){
             this.$emit("nextSong");
         },
@@ -62,9 +78,8 @@ export default {
                 this.$nextTick(() => {
                     this.audioPlayer.play();
                 });
-                // this.audioPlayer.play();
             })
-        }
+        },
     },
     mounted() {
         this.audioPlayer = this.$refs.audioPlayer;
@@ -87,7 +102,7 @@ export default {
 </script>
 
 <style scoped>
-.toggleSong{
+.songToggle{
     font-size: 26px;
     margin-right: 15px;
     margin-left: 15px;
@@ -99,7 +114,7 @@ export default {
     border-radius: 40px;
     transition: all ease-in-out .2s;
 }
-.songBack:hover, .songForward:hover, .toggleSong:hover{
+.songBack:hover, .songForward:hover, .songToggle:hover{
     background-color: rgb(220, 220, 220);
     cursor: pointer;
 }
