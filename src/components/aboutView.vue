@@ -1,5 +1,5 @@
 <template>
-    <div class="bg">
+    <div class="aboutbg">
         <div class="container">
             <img src="@/assets/icon.png" alt="" width="200px">
             <div class="name">netPlayer</div>
@@ -68,7 +68,7 @@ export default {
     justify-content: center;
     align-items: center;
 }
-.bg{
+.aboutbg{
     user-select: none;
     display: flex;
     height: calc(100vh - 30px);
