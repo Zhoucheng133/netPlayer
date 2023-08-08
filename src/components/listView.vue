@@ -113,21 +113,29 @@ export default {
             this.listID='loved';
         },
         requestSongStyles(){
-            
+            this.shownList=[];
+            console.log("需要请求: 歌曲风格");
         },
-        songStylesResult(){},
+        songStylesResult(){
+
+        },
         requestArtists(){
+            console.log("需要请求: 艺术家");
             this.shownList=[];
         },
         artistsResult(){},
         requestAllSongs(){
             this.shownList=[];
+            console.log("需要请求: 所有歌曲");
         },
         allSongsResult(){},
         requetAlbums(){
             this.shownList=[];
+            console.log("需要请求: 专辑");
         },
-        albumsResult(){},
+        albumsResult(){
+            this.shownList=[];
+        },
         requestList(){
             ipcRenderer.send('listRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.playList.id);
         },
