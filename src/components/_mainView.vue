@@ -38,6 +38,9 @@ import aboutView from './aboutView.vue';
 import listView from './listView.vue';
 import playBar from './playBar.vue';
 export default {
+    beforeDestroy(){
+        window.removeEventListener('keydown', this.handleKeyDown);
+    },
     components:{
         sideBar,
         aboutView,
@@ -60,6 +63,16 @@ export default {
         }
     },
     methods: {
+        handleKeyDown(event) {
+			if (event.key === ' ' &&  event.target.tagName !== "INPUT") {
+				event.preventDefault(); // 阻止默认的滚动行为
+                if (this.nowPlay.nowPlayList.length==0) {
+                    this.$message.error("播放列表为空!");
+                    return;
+                }
+				this.toggleSong();
+			}
+		},
         isPlaying(){
             this.nowPlay.isPlay=true;
         },
@@ -124,6 +137,7 @@ export default {
                 // 注意还有剩余代码
             }
         }
+        window.addEventListener('keydown', this.handleKeyDown);
     },
     created() {
         
