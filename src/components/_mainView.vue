@@ -15,6 +15,7 @@
             @nextSong="nextSong" 
             @backSong="backSong" 
             @toggleSong="toggleSong"
+            @isPlaying="isPlaying"
             />
         
         <!-- 主要内容在下面 -->
@@ -59,6 +60,9 @@ export default {
         }
     },
     methods: {
+        isPlaying(){
+            this.nowPlay.isPlay=true;
+        },
         toggleSong(){
             if(this.nowPlay.isPlay==false){
                 this.$refs.player.playSongController();

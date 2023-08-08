@@ -13,7 +13,10 @@
 
         <div class="tools">
             <div class="songBack" @click="backSong"><a-icon type="step-backward" /></div>
-            <div class="songToggle" @click="toggleSong"><a-icon type="pause" /></div>
+            <div class="songToggle" @click="toggleSong">
+                <a-icon type="pause" v-if="nowPlay.isPlay" />
+                <a-icon type="caret-right" v-else />
+            </div>
             <div class="songForward" @click="nextSong"><a-icon type="step-forward" /></div>
         </div>
     </div>
@@ -78,6 +81,7 @@ export default {
                 this.$nextTick(() => {
                     this.audioPlayer.play();
                 });
+                this.$emit("isPlaying");
             })
         },
     },
