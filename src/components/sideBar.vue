@@ -139,8 +139,9 @@ export default {
 .divLine{
     margin-top: 5px;
     margin-bottom: 5px;
-    border: 1px solid lightgrey;
+    border: .5px solid lightgrey;
     background-color: lightgrey;
+    opacity: .5;
     width: 80%;
 }
 .menu{
