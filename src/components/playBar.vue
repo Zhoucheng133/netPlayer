@@ -9,7 +9,7 @@
             <div class="artist">{{ nowPlay.nowPlayList.length==0 ? "" : nowPlay.nowPlayList[nowPlay.index].artist }}</div>
         </div>
 
-        <audio controls :src="songStream" ref="audioPlayer" @ended="nextSong" style="display: none;"></audio>
+        <audio controls :src="songStream" ref="audioPlayer" @ended="nextSong" style="display: none;" @timeupdate="handleTimeUpdate" ></audio>
 
         <div class="tools">
             <div class="songBack" @click="backSong"><a-icon type="step-backward" /></div>
@@ -20,7 +20,7 @@
             <div class="songForward" @click="nextSong"><a-icon type="step-forward" /></div>
         </div>
 
-        <div class="progressBar"></div>
+        <div class="progressBar" :style="{width: (curTime/nowSongTime*100)+'%'}"></div>
     </div>
 </template>
 
@@ -38,9 +38,16 @@ export default {
             shownCoverLink: "",
             songStream: "",
             audioPlayer:"",
+
+            curTime: 0,
+            nowSongTime: 0,
         }
     },
     methods: {
+        handleTimeUpdate(){
+			this.curTime=this.audioPlayer.currentTime;
+			this.nowSongTime=this.audioPlayer.duration;
+		},
         pauseSongController(){
             this.$nextTick(() => {
                 this.audioPlayer.pause();
