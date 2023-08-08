@@ -12,6 +12,9 @@
         <audio controls :src="songStream" ref="audioPlayer" @ended="nextSong" style="display: none;" @timeupdate="handleTimeUpdate" ></audio>
 
         <div class="tools">
+            <div class="time">
+                {{ showTime() }}
+            </div>
             <div class="songBack" @click="backSong"><a-icon type="step-backward" /></div>
             <div class="songToggle" @click="toggleSong">
                 <a-icon type="pause" v-if="nowPlay.isPlay" />
@@ -44,6 +47,14 @@ export default {
         }
     },
     methods: {
+        showTime(){
+            if(isNaN(parseInt(this.nowSongTime/60))){
+                return "";
+            }
+            var realCurTime=(parseInt(this.curTime/60)<10?'0'+parseInt(this.curTime/60):parseInt(this.curTime/60))+":"+(parseInt(this.curTime%60)<10?'0'+parseInt(this.curTime%60):parseInt(this.curTime%60));
+            var realSongTime=(parseInt(this.nowSongTime/60)<10?'0'+parseInt(this.nowSongTime/60):parseInt(this.nowSongTime/60))+":"+(parseInt(this.nowSongTime%60)<10?'0'+parseInt(this.nowSongTime%60):parseInt(this.nowSongTime%60));
+            return realCurTime+"/"+realSongTime;
+        },
         handleTimeUpdate(){
 			this.curTime=this.audioPlayer.currentTime;
 			this.nowSongTime=this.audioPlayer.duration;
@@ -127,6 +138,11 @@ export default {
 </script>
 
 <style scoped>
+.time{
+    margin-right: 10px;
+    color: grey;
+    font-size: 13px;
+}
 .progressBar{
     position: absolute;
     width: 100%;
@@ -163,6 +179,7 @@ export default {
     transition: all ease-in-out .2s;
 }
 .tools{
+    user-select: none;
     display: flex;
     margin-left: auto;
     align-items: center;
