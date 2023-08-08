@@ -173,7 +173,7 @@ export default {
 }
 .bg{
     height: 100vh;
-    widows: 100vw;
+    width: 100vw;
     background-color: white;
     transition: all ease-in-out .3s;
 }
