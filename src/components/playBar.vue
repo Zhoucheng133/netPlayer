@@ -4,17 +4,20 @@
             <img :src="shownCoverLink==''?'':shownCoverLink" alt="" width="80px">
         </div>
 
-        <div class="name">
-            <div class="title">{{ nowPlay.nowPlayList.length==0 ? "" : nowPlay.nowPlayList[nowPlay.index].title }}</div>
-            <div class="artist">{{ nowPlay.nowPlayList.length==0 ? "" : nowPlay.nowPlayList[nowPlay.index].artist }}</div>
+        <div class="textArea">
+            <div class="name">
+                <div class="title">{{ nowPlay.nowPlayList.length==0 ? "" : nowPlay.nowPlayList[nowPlay.index].title }}</div>
+                <div class="artist">-</div>
+                <div class="artist">{{ nowPlay.nowPlayList.length==0 ? "" : nowPlay.nowPlayList[nowPlay.index].artist }}</div>
+            </div>
+            <div class="time">
+                {{ showTime() }}
+            </div>
         </div>
 
         <audio controls :src="songStream" ref="audioPlayer" @ended="nextSong" style="display: none;" @timeupdate="handleTimeUpdate" ></audio>
 
         <div class="tools">
-            <div class="time">
-                {{ showTime() }}
-            </div>
             <div class="songBack" @click="backSong"><a-icon type="step-backward" /></div>
             <div class="songToggle" @click="toggleSong">
                 <a-icon type="pause" v-if="nowPlay.isPlay" />
@@ -49,7 +52,7 @@ export default {
     methods: {
         showTime(){
             if(isNaN(parseInt(this.nowSongTime/60))){
-                return "";
+                return "/";
             }
             var realCurTime=(parseInt(this.curTime/60)<10?'0'+parseInt(this.curTime/60):parseInt(this.curTime/60))+":"+(parseInt(this.curTime%60)<10?'0'+parseInt(this.curTime%60):parseInt(this.curTime%60));
             var realSongTime=(parseInt(this.nowSongTime/60)<10?'0'+parseInt(this.nowSongTime/60):parseInt(this.nowSongTime/60))+":"+(parseInt(this.nowSongTime%60)<10?'0'+parseInt(this.nowSongTime%60):parseInt(this.nowSongTime%60));
@@ -138,6 +141,10 @@ export default {
 </script>
 
 <style scoped>
+.textArea{
+    text-align: left;
+    padding-left: 20px;
+}
 .time{
     margin-right: 10px;
     color: grey;
@@ -186,6 +193,7 @@ export default {
     margin-right: 30px;
 }
 .artist{
+    margin-left: 5px;
     font-size: 15px;
     text-align: left;
     color: grey;
@@ -200,12 +208,15 @@ export default {
     text-overflow: ellipsis;
 }
 .name{
-    margin-left: 20px;
+    display: flex;
     font-size: 18px;
+    align-items: center;
 }
 .cover{
     width: 80px;
     height: 80px;
+    border-radius: 10px;
+    overflow: hidden;
     /* background-color: white; */
 }
 .bar{
