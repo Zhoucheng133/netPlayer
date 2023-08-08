@@ -8,9 +8,14 @@
             <div class="title">{{ nowPlay.nowPlayList.length==0 ? "" : nowPlay.nowPlayList[nowPlay.index].title }}</div>
             <div class="artist">{{ nowPlay.nowPlayList.length==0 ? "" : nowPlay.nowPlayList[nowPlay.index].artist }}</div>
         </div>
-        <a-button @click="nextSong">测试按钮</a-button>
 
-        <audio controls :src="songStream" ref="audioPlayer" @ended="nextSong"></audio>
+        <audio controls :src="songStream" ref="audioPlayer" @ended="nextSong" style="display: none;"></audio>
+
+        <div class="tools">
+            <div class="songBack"><a-icon type="step-backward" /></div>
+            <div class="toggleSong"><a-icon type="pause" /></div>
+            <div class="songForward"><a-icon type="step-forward" /></div>
+        </div>
     </div>
 </template>
 
@@ -69,7 +74,11 @@ export default {
         }
     },
     created() {
-
+        var username=localStorage.getItem("username");
+        var salt=localStorage.getItem("salt");
+        var token=localStorage.getItem("token");
+        var url=localStorage.getItem("url");
+        this.shownCoverLink=url+"/rest/getCoverArt?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token;
     },
     watch: {
 
@@ -78,6 +87,20 @@ export default {
 </script>
 
 <style scoped>
+.toggleSong{
+    font-size: 26px;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+.songBack, .songForward{
+    font-size: 20px;
+}
+.tools{
+    display: flex;
+    margin-left: auto;
+    align-items: center;
+    margin-right: 30px;
+}
 .artist{
     font-size: 15px;
     text-align: left;
@@ -99,7 +122,7 @@ export default {
 .cover{
     width: 80px;
     height: 80px;
-    background-color: red;
+    /* background-color: white; */
 }
 .bar{
     display: flex;
