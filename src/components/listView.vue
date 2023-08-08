@@ -110,7 +110,7 @@ export default {
             }else{
                 this.subTitle="合计"+resp.starred.song.length+"首歌";
             }
-            
+            this.listID='loved';
         },
         requestSongStyles(){
             
