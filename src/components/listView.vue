@@ -105,7 +105,12 @@ export default {
         lovedSongsResult(event, resp){
             this.needRequest=false;
             this.shownList=resp.starred.song;
-            this.subTitle="合计"+resp.starred.song.length+"首歌";
+            if(resp.starred.song==undefined){
+                this.subTitle="合计0首歌";
+            }else{
+                this.subTitle="合计"+resp.starred.song.length+"首歌";
+            }
+            
         },
         requestSongStyles(){
             
