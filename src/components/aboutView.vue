@@ -5,7 +5,7 @@
             <div class="name">netPlayer</div>
             <div class="version">v{{ version }}&nbsp;Dev</div>
             <div class="copyright">Developed by zhouc</div>
-            <div class="opensource" @click="showLicenses">About the open source licenses</div>
+            <div class="opensource" @click="showLicenses">About the licenses</div>
         </div>
     </div>
 </template>
@@ -21,9 +21,11 @@ export default {
         showLicenses(){
             const h = this.$createElement;
             this.$info({
-                title: 'Open source licenses',
+                title: 'Licenses',
                 centered: true,
                 content: h('div', {}, [
+                    h('div', 'API from © Subsonic AS'),
+                    h('hr'),
                     h('div', 'Vue.js (MIT License)'),
                     h('div', 'Electron (MIT License)'),
                     h('div', 'Ant Design Vue (MIT License)'),
