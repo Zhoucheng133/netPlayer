@@ -60,6 +60,7 @@ export default {
         },
         playSong(index){
             var nowPlay={
+                listName: this.nowPage,
                 index: index,
                 nowPlayList: this.shownList,
                 id: this.listID,
@@ -110,7 +111,7 @@ export default {
             }else{
                 this.subTitle="合计"+resp.starred.song.length+"首歌";
             }
-            this.listID='loved';
+            this.listID='';
         },
         requestSongStyles(){
             this.shownList=[];

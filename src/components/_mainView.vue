@@ -55,6 +55,7 @@ export default {
             playList: {},
 
             nowPlay:{
+                listName: "",
                 index: 0,
                 nowPlayList: [],
                 id: "",
@@ -97,6 +98,7 @@ export default {
         playSong(nowPlay){
             this.nowPlay=nowPlay;
             this.$refs.player.playSong();
+            console.log(this.nowPlay);
         },
         toPlayList(item){
             this.nowPage='playList';
