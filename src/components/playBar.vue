@@ -25,8 +25,10 @@
             </div>
             <div class="songForward" @click="nextSong"><a-icon type="step-forward" /></div>
         </div>
-
-        <div class="progressBar" :style="{width: (curTime/nowSongTime*100)+'%'}"></div>
+        <div class="progressBarContainer" @click="jumpStream">
+            <div class="progressBar" :style="{width: (curTime/nowSongTime*100)+'%'}"></div>
+        </div>
+        
     </div>
 </template>
 
@@ -50,6 +52,18 @@ export default {
         }
     },
     methods: {
+        jumpStream(event){
+            if (this.nowPlay.nowPlayList.length==0) {
+                return;
+            }
+            const element = event.currentTarget;
+            const clickX = event.clientX - element.getBoundingClientRect().left;
+            const elementWidth = element.offsetWidth;
+            const clickPercentage = clickX / elementWidth;
+            
+            var jumpTime=parseInt(this.nowSongTime*clickPercentage);
+            this.$refs.audioPlayer.currentTime=jumpTime;
+        },
         handlePause(){
             this.$emit("handlePause");
         },
@@ -163,14 +177,35 @@ export default {
     color: grey;
     font-size: 13px;
 }
-.progressBar{
+.progressBarContainer:hover{
+    cursor: pointer;
+}
+.progressBarContainer:hover .progressBar{
+    height: 10px;
+    cursor: pointer;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.progressBarContainer{
+    margin-left: -10px;
     position: absolute;
     width: 100%;
+    bottom: 0px;
+}
+/* .progressBar:hover{
+    height: 10px;
+    cursor: pointer;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+} */
+.progressBar{
     height: 3px;
     background-color: #1890ff;
     border: 1px solid #1890ff;
-    margin-left: -10px;
-    bottom: 0px;
+    /* margin-left: -10px; */
+    border-top-right-radius: 1.5px;
+    border-bottom-right-radius: 1.5px;
+    transition: all ease-in-out .2s;
 }
 .songToggle{
     font-size: 26px;
