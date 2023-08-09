@@ -173,6 +173,7 @@ export default {
     padding-left: 20px;
 }
 .time{
+    user-select: none;
     margin-right: 10px;
     color: grey;
     font-size: 13px;
