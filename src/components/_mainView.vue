@@ -148,11 +148,15 @@ export default {
         window.addEventListener('keydown', this.handleKeyDown);
 
         if(localStorage.getItem('nowPlay')!=null){
-            this.nowPlay=JSON.parse(localStorage.getItem('nowPlay'));
-            this.nowPlay.isPlay=false;
-            this.$nextTick(()=>{
-                this.$refs.player.loadSong();
-            })
+            var tmp=JSON.parse(localStorage.getItem('nowPlay'));
+            if(tmp.listName!='allSongs'){
+                this.nowPlay=tmp;
+                this.nowPlay.isPlay=false;
+                this.$nextTick(()=>{
+                    this.$refs.player.loadSong();
+                })
+            }
+            
         }
     },
     created() {
