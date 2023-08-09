@@ -34,6 +34,8 @@ import { ipcRenderer } from 'electron';
 export default {
     beforeDestroy() {
         ipcRenderer.removeAllListeners('listResult');
+        ipcRenderer.removeAllListeners('lovedSongsResult');
+        ipcRenderer.removeAllListeners('allSongsResult');
     },
     props:{
         nowPage: String,
@@ -49,11 +51,13 @@ export default {
             shownList:[],
 
             listID:'',
+            
+            allSongsList: [],
         }
     },
     methods: {
         isPlaying(index){
-            if(index==this.nowPlay.index && this.listID==this.nowPlay.id){
+            if(index==this.nowPlay.index && this.listID==this.nowPlay.id && this.nowPlay.listName==this.nowPage){
                 return true;
             }
             return false;
@@ -126,10 +130,23 @@ export default {
         },
         artistsResult(){},
         requestAllSongs(){
-            this.shownList=[];
-            console.log("需要请求: 所有歌曲");
+            if(this.allSongsList.length==0){
+                ipcRenderer.send('allSongsRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.playList.id);
+            }else{
+                this.needRequest=false;
+                this.shownList=this.allSongsList;
+                this.listID="";
+                this.subTitle="合计"+this.allSongsList.length+"首歌";
+            }
+            
         },
-        allSongsResult(){},
+        allSongsResult(event, resp){
+            this.needRequest=false;
+            this.allSongsList=resp.randomSongs.song;
+            this.shownList=resp.randomSongs.song;
+            this.listID="";
+            this.subTitle="合计"+resp.randomSongs.song.length+"首歌";
+        },
         requetAlbums(){
             this.shownList=[];
             console.log("需要请求: 专辑");
@@ -167,9 +184,6 @@ export default {
                 this.needRequest=false;
             }else if(this.nowPage=='allSongs'){
                 this.requestAllSongs();
-
-                // 临时代码，注意修改
-                this.needRequest=false;
             }else if(this.nowPage=='lovedSongs'){
                 this.requestLovedSongs();
             }
@@ -178,11 +192,14 @@ export default {
     mounted() {
         ipcRenderer.removeAllListeners('listResult');
         ipcRenderer.removeAllListeners('lovedSongsResult');
+        ipcRenderer.removeAllListeners('allSongsResult');
         ipcRenderer.on('listResult', this.listResult);
         ipcRenderer.on('lovedSongsResult', this.lovedSongsResult);
+        ipcRenderer.on('allSongsResult', this.allSongsResult);
     },
     created() {
         this.titleController();
+        // this.requestAllSongs();
         this.pageTurn();
     },
     watch: {
@@ -196,6 +213,7 @@ export default {
         },
         needRequest: function(newVal, oldVal){
             if(newVal==true && oldVal==false){
+                console.log("切换页面");
                 this.pageTurn();
             }
         }

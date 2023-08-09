@@ -30,6 +30,21 @@ async function createWindow() {
 	}
 }
 
+// 随机获取歌曲
+ipcMain.on("allSongsRequest", async (event, url, username, salt, token) => {
+	var resp=undefined;
+	await axios.post(url+"/rest/getRandomSongs?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&size=500")
+	.then((response)=>{
+		resp=response.data['subsonic-response'];
+	})
+	.catch(()=>{
+		resp=null;
+	})
+
+	event.reply('allSongsResult', resp);
+});
+
+
 // 自动登录请求
 ipcMain.on("autoLoginRequest", async (event, url, username, salt, token) => {
 	var resp=undefined;

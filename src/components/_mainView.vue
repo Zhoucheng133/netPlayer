@@ -51,7 +51,7 @@ export default {
         return {
             bgOpacity: 0,
             
-            nowPage: 'allSongs',
+            nowPage: '',
             playList: {},
 
             nowPlay:{
@@ -142,7 +142,7 @@ export default {
             if(this.nowPage=='playList'){
                 this.playList=JSON.parse(localStorage.getItem("playList"));
             }else{
-                // 注意还有剩余代码
+                this.nowPage="allSongs"
             }
         }
         window.addEventListener('keydown', this.handleKeyDown);
