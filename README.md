@@ -1,13 +1,10 @@
 # netPlayer
 
 ## 简介
-<center>
 
 ![vue](https://img.shields.io/badge/vue.js-2.6-green?logo=vue.js)
 ![Electron](https://img.shields.io/badge/Electron-13-white?logo=electron)
 ![License](https://img.shields.io/badge/License-MIT-dark_green)
-
-</center>
 
 基于Subsonic API的桌面端播放器
 
