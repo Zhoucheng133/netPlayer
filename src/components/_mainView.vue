@@ -15,7 +15,8 @@
             @nextSong="nextSong" 
             @backSong="backSong" 
             @toggleSong="toggleSong"
-            @isPlaying="isPlaying"
+            @isPlaying="isPlaying" 
+            @handlePause="handlePause"
             />
         
         <!-- 主要内容在下面 -->
@@ -64,6 +65,9 @@ export default {
         }
     },
     methods: {
+        handlePause(){
+            this.nowPlay.isPlay=false;
+        },
         saveNowPlay(){
             localStorage.setItem("nowPlay", JSON.stringify(this.nowPlay));
         },
@@ -103,7 +107,7 @@ export default {
         playSong(nowPlay){
             this.nowPlay=nowPlay;
             this.$refs.player.playSong();
-            console.log(this.nowPlay);
+            // console.log(this.nowPlay);
             this.saveNowPlay();
         },
         toPlayList(item){

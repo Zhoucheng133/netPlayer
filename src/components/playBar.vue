@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <audio controls :src="songStream" ref="audioPlayer" @ended="nextSong" style="display: none;" @timeupdate="handleTimeUpdate" ></audio>
+        <audio controls :src="songStream" ref="audioPlayer" @ended="nextSong" style="display: none;" @timeupdate="handleTimeUpdate" @play="handlePlay" @pause="handlePause"></audio>
 
         <div class="tools">
             <div class="songBack" @click="backSong"><a-icon type="step-backward" /></div>
@@ -50,6 +50,12 @@ export default {
         }
     },
     methods: {
+        handlePause(){
+            this.$emit("handlePause");
+        },
+        handlePlay(){
+            this.$emit("isPlaying");
+        },
         showTime(){
             if(isNaN(parseInt(this.nowSongTime/60))){
                 return "/";
