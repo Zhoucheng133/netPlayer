@@ -136,7 +136,7 @@ export default {
                 this.needRequest=false;
                 this.shownList=this.allSongsList;
                 this.listID="";
-                this.subTitle="合计"+this.allSongsList.length+"首歌";
+                this.subTitle="随机的"+this.allSongsList.length+"首歌";
             }
             
         },
@@ -145,7 +145,7 @@ export default {
             this.allSongsList=resp.randomSongs.song;
             this.shownList=resp.randomSongs.song;
             this.listID="";
-            this.subTitle="合计"+resp.randomSongs.song.length+"首歌";
+            this.subTitle="随机的"+resp.randomSongs.song.length+"首歌";
         },
         requetAlbums(){
             this.shownList=[];
