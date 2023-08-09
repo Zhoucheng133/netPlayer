@@ -244,7 +244,8 @@ export default {
     width: 100%;
     height: 50px;
     transition: all ease-in-out .2s;
-    background-color: rgb(230, 230, 230);;
+    background-color: rgb(235, 235, 235);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
 }
 .container{
     display: grid;
