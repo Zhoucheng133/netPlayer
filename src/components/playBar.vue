@@ -119,6 +119,13 @@ export default {
                 this.$emit("isPlaying");
             })
         },
+        loadSong(){
+            this.$nextTick(()=>{
+                this.getSongCover();
+                this.getSongStream();
+                this.$refs.audioPlayer.src = this.songStream;
+            })
+        }
     },
     mounted() {
         this.audioPlayer = this.$refs.audioPlayer;

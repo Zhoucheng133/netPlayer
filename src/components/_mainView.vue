@@ -64,6 +64,9 @@ export default {
         }
     },
     methods: {
+        saveNowPlay(){
+            localStorage.setItem("nowPlay", JSON.stringify(this.nowPlay));
+        },
         handleKeyDown(event) {
 			if (event.key === ' ' &&  event.target.tagName !== "INPUT") {
 				event.preventDefault(); // 阻止默认的滚动行为
@@ -89,16 +92,19 @@ export default {
             this.nowPlay.index=(this.nowPlay.index-1+this.nowPlay.nowPlayList.length)%this.nowPlay.nowPlayList.length;
             this.$refs.player.playSong();
             this.nowPlay.isPlay=true;
+            this.saveNowPlay();
         },
         nextSong(){
             this.nowPlay.index=(this.nowPlay.index+1+this.nowPlay.nowPlayList.length)%this.nowPlay.nowPlayList.length;
             this.$refs.player.playSong();
             this.nowPlay.isPlay=true;
+            this.saveNowPlay();
         },
         playSong(nowPlay){
             this.nowPlay=nowPlay;
             this.$refs.player.playSong();
             console.log(this.nowPlay);
+            this.saveNowPlay();
         },
         toPlayList(item){
             this.nowPage='playList';
@@ -140,6 +146,14 @@ export default {
             }
         }
         window.addEventListener('keydown', this.handleKeyDown);
+
+        if(localStorage.getItem('nowPlay')!=null){
+            this.nowPlay=JSON.parse(localStorage.getItem('nowPlay'));
+            this.nowPlay.isPlay=false;
+            this.$nextTick(()=>{
+                this.$refs.player.loadSong();
+            })
+        }
     },
     created() {
         
