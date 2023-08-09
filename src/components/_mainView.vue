@@ -20,14 +20,14 @@
         
         <!-- 主要内容在下面 -->
         <div class="mainSide">
-            <aboutView v-if="nowPage=='about'" />
+            <aboutView v-show="nowPage=='about'" />
             <listView 
                 ref="listPart" 
                 @playSong="playSong"
                 :nowPage="nowPage" 
                 :nowPlay="nowPlay"
                 :playList="playList" 
-                v-else />
+                />
         </div>
     </div>
 </template>
