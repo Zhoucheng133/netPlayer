@@ -20,10 +20,6 @@
                 <svg class="icon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="17" y="4" width="14" height="27" rx="7" fill="none" stroke="#333" stroke-width="4" stroke-linejoin="round"/><path d="M9 23C9 31.2843 15.7157 38 24 38C32.2843 38 39 31.2843 39 23" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 38V44" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 艺人
             </div >
-            <div @click="toPage('songStyles')" :class="nowPage=='songStyles'?'itemSelected':'item'">
-                <svg class="icon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M34 10V4H8V38L14 35" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 44V10H40V44L27 37.7273L14 44Z" fill="none" stroke="#333" stroke-width="4" stroke-linejoin="round"/></svg>
-                歌曲流派
-            </div>
             <div @click="toPage('allSongs')" :class="nowPage=='allSongs'?'itemSelected':'item'">
                 <svg class="icon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 19H40" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 10H40" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 38H40" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 28H40" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 10L16 15L8 20V10Z" fill="none" stroke="#333" stroke-width="4" stroke-linejoin="round"/></svg>
                 所有歌曲

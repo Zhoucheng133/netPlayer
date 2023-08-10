@@ -30,6 +30,20 @@ async function createWindow() {
 	}
 }
 
+// 获取所有艺人
+ipcMain.on("artistsRequest", async (event, url, username, salt, token) => {
+	var resp=undefined;
+	await axios.post(url+"/rest/getIndexes?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token)
+	.then((response)=>{
+		resp=response.data['subsonic-response'];
+	})
+	.catch(()=>{
+		resp=null;
+	})
+
+	event.reply('artistsResult', resp);
+});
+
 // 随机获取歌曲
 ipcMain.on("allSongsRequest", async (event, url, username, salt, token) => {
 	var resp=undefined;

@@ -4,7 +4,7 @@
             :title="shownTitle"
             :sub-title="subTitle" />
 
-        <div v-if="nowPage!='albums' && nowPage!='artists' && nowPage!='songStyles'">
+        <div v-if="nowPage!='albums' && nowPage!='artists'">
             <div class="container_fix">
                 <div class="item">序号</div>
                 <div class="item">歌曲名</div>
@@ -91,10 +91,6 @@ export default {
                     this.shownTitle="艺人";
                     this.subTitle="";
                     break;
-                case 'songStyles':
-                    this.shownTitle="歌曲流派";
-                    this.subTitle="";
-                    break;
                 case 'lovedSongs':
                     this.shownTitle="喜欢的歌曲";
                     this.subTitle="";
@@ -116,13 +112,6 @@ export default {
                 this.subTitle="合计"+resp.starred.song.length+"首歌";
             }
             this.listID='';
-        },
-        requestSongStyles(){
-            this.shownList=[];
-            console.log("需要请求: 歌曲风格");
-        },
-        songStylesResult(){
-
         },
         requestArtists(){
             console.log("需要请求: 艺术家");
@@ -174,11 +163,6 @@ export default {
                 this.needRequest=false;
             }else if(this.nowPage=='artists'){
                 this.requestArtists();
-
-                // 临时代码，注意修改
-                this.needRequest=false;
-            }else if(this.nowPage=='songStyles'){
-                this.requestSongStyles();
 
                 // 临时代码，注意修改
                 this.needRequest=false;
