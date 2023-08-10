@@ -145,9 +145,9 @@ export default {
             this.nowPage=localStorage.getItem("nowPage");
             if(this.nowPage=='playList'){
                 this.playList=JSON.parse(localStorage.getItem("playList"));
-            }else{
-                this.nowPage="allSongs"
             }
+        }else{
+            this.nowPage="allSongs"
         }
         window.addEventListener('keydown', this.handleKeyDown);
 
