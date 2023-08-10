@@ -36,6 +36,7 @@ export default {
         ipcRenderer.removeAllListeners('listResult');
         ipcRenderer.removeAllListeners('lovedSongsResult');
         ipcRenderer.removeAllListeners('allSongsResult');
+        ipcRenderer.removeAllListeners('artistsResult');
     },
     props:{
         nowPage: String,
@@ -114,10 +115,12 @@ export default {
             this.listID='';
         },
         requestArtists(){
-            console.log("需要请求: 艺术家");
             this.shownList=[];
+            ipcRenderer.send('artistsRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
         },
-        artistsResult(){},
+        artistsResult(event, resp){
+            console.log(resp.indexes);
+        },
         requestAllSongs(){
             if(this.allSongsList.length==0){
                 ipcRenderer.send('allSongsRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.playList.id);
@@ -177,9 +180,11 @@ export default {
         ipcRenderer.removeAllListeners('listResult');
         ipcRenderer.removeAllListeners('lovedSongsResult');
         ipcRenderer.removeAllListeners('allSongsResult');
+        ipcRenderer.removeAllListeners('artistsResult');
         ipcRenderer.on('listResult', this.listResult);
         ipcRenderer.on('lovedSongsResult', this.lovedSongsResult);
         ipcRenderer.on('allSongsResult', this.allSongsResult);
+        ipcRenderer.on('artistsResult', this.artistsResult);
     },
     created() {
         this.titleController();
