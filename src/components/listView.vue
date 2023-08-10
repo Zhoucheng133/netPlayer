@@ -22,10 +22,20 @@
             </div>
         </div>
 
-        <div v-else>
-
+        <div v-else-if="nowPage=='artists'">
+            <div class="container_fix_artist">
+                <div class="item">序号</div>
+                <div class="item">艺人</div>
+                <div class="item">专辑数量</div>
+            </div>
         </div>
-
+        <div class="mainArea">
+            <div class="container_artist"  v-for="(item, index) in shownList" :key="index">
+                <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
+                <div class="item"><div class="itemContent">{{ item.name }}</div></div>
+                <div class="item"><div class="itemContent">{{ item.albumCount }}</div></div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -119,7 +129,14 @@ export default {
             ipcRenderer.send('artistsRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
         },
         artistsResult(event, resp){
-            console.log(resp.indexes);
+            var tmp=[];
+            for(var item of resp.indexes.index){
+                for(var insideItem of item.artist){
+                    tmp.push(insideItem);
+                }
+            }
+            this.shownList=tmp;
+            this.subTitle="合计"+tmp.length+"位艺人";
         },
         requestAllSongs(){
             if(this.allSongsList.length==0){
@@ -255,6 +272,22 @@ export default {
 .bg{
     user-select: none;
     height: calc(100vh - 30px) !important;
+}
+.container_artist{
+    display: grid;
+    grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 100px) 100px;
+    width: 100%;
+    height: 50px;
+    transition: all ease-in-out .2s;
+}
+.container_fix_artist{
+    position: fixed;
+    margin-left: 24px;
+    display: grid;
+    grid-template-columns: 50px auto 100px;
+    width: calc(100% - 248px);
+    background-color: rgb(242, 242, 242);
+    height: 50px;
 }
 .container_fix{
     position: fixed;
