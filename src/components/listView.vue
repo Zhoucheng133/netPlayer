@@ -115,11 +115,13 @@ export default {
         artistAlbumResult(event, resp){
             // console.log(resp);
             this.shownList=resp.artist.album;
+            this.subTitle="共计"+resp.artist.album.length+"首歌"
         },
         showArtistContent(item){
             this.artistContent.enable=true;
             this.artistContent.artistID=item.id;
             this.shownList=[];
+            this.shownTitle="艺人/"+item.name;
             ipcRenderer.send('artistAlbumRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.artistContent.artistID);
         },
         isPlaying(index){
