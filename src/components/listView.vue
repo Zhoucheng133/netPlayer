@@ -1,8 +1,15 @@
 <template>
     <div class="bg">
         <a-page-header
+        v-if="artistContent.enable==false && albumContent.enable==false"
             :title="shownTitle"
             :sub-title="subTitle" />
+
+        <a-page-header
+            v-else 
+            :title="shownTitle"
+            :sub-title="subTitle" 
+            @back="back"/>
 
         <div v-if="nowPage!='albums' && nowPage!='artists'">
             <div class="container_fix">
@@ -22,17 +29,32 @@
             </div>
         </div>
 
-        <div v-else-if="nowPage=='artists'">
+        <div v-else-if="nowPage=='artists' && artistContent.enable==false">
             <div class="container_fix_artist">
                 <div class="item">序号</div>
                 <div class="item">艺人</div>
                 <div class="item">专辑数量</div>
             </div>
             <div class="mainArea">
-                <div class="container_artist"  v-for="(item, index) in shownList" :key="index">
+                <div class="container_artist"  v-for="(item, index) in shownList" :key="index" @dblclick="showArtistContent(item)">
                     <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.name }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.albumCount }}</div></div>
+                </div>
+            </div>
+        </div>
+
+        <div v-else-if="nowPage=='artists' && artistContent.enable==true">
+            <div class="container_fix_artist">
+                <div class="item">序号</div>
+                <div class="item">专辑名称</div>
+                <div class="item">歌曲数</div>
+            </div>
+            <div class="mainArea">
+                <div class="container_artist"  v-for="(item, index) in shownList" :key="index">
+                    <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.title }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.songCount }}</div></div>
                 </div>
             </div>
         </div>
@@ -47,6 +69,7 @@ export default {
         ipcRenderer.removeAllListeners('lovedSongsResult');
         ipcRenderer.removeAllListeners('allSongsResult');
         ipcRenderer.removeAllListeners('artistsResult');
+        ipcRenderer.removeAllListeners('artistAlbumResult');
     },
     props:{
         nowPage: String,
@@ -64,9 +87,34 @@ export default {
             listID:'',
             
             allSongsList: [],
+
+            artistContent: {
+                enable: false,
+                artistID: "",
+            },
+
+            albumContent: {
+                enable: false,
+                albumID: "",
+            }
         }
     },
     methods: {
+        back(){
+            this.artistContent.enable=false;
+            this.albumContent.enable=false;
+            this.pageTurn();
+        },
+        artistAlbumResult(event, resp){
+            // console.log(resp);
+            this.shownList=resp.artist.album;
+        },
+        showArtistContent(item){
+            this.artistContent.enable=true;
+            this.artistContent.artistID=item.id;
+            this.shownList=[];
+            ipcRenderer.send('artistAlbumRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.artistContent.artistID);
+        },
         isPlaying(index){
             if(index==this.nowPlay.index && this.listID==this.nowPlay.id && this.nowPlay.listName==this.nowPage){
                 return true;
@@ -140,7 +188,7 @@ export default {
         },
         requestAllSongs(){
             if(this.allSongsList.length==0){
-                ipcRenderer.send('allSongsRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.playList.id);
+                ipcRenderer.send('allSongsRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
             }else{
                 this.needRequest=false;
                 this.shownList=this.allSongsList;
@@ -198,10 +246,12 @@ export default {
         ipcRenderer.removeAllListeners('lovedSongsResult');
         ipcRenderer.removeAllListeners('allSongsResult');
         ipcRenderer.removeAllListeners('artistsResult');
+        ipcRenderer.removeAllListeners('artistAlbumResult');
         ipcRenderer.on('listResult', this.listResult);
         ipcRenderer.on('lovedSongsResult', this.lovedSongsResult);
         ipcRenderer.on('allSongsResult', this.allSongsResult);
         ipcRenderer.on('artistsResult', this.artistsResult);
+        ipcRenderer.on('artistAlbumResult', this.artistAlbumResult);
     },
     created() {
         this.titleController();
