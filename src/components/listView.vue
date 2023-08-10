@@ -28,12 +28,12 @@
                 <div class="item">艺人</div>
                 <div class="item">专辑数量</div>
             </div>
-        </div>
-        <div class="mainArea">
-            <div class="container_artist"  v-for="(item, index) in shownList" :key="index">
-                <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
-                <div class="item"><div class="itemContent">{{ item.name }}</div></div>
-                <div class="item"><div class="itemContent">{{ item.albumCount }}</div></div>
+            <div class="mainArea">
+                <div class="container_artist"  v-for="(item, index) in shownList" :key="index">
+                    <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.name }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.albumCount }}</div></div>
+                </div>
             </div>
         </div>
     </div>
@@ -261,6 +261,9 @@ export default {
     transition: all ease-in-out .2s;
 }
 .mainArea > .container:hover{
+    background-color: rgb(220, 220, 220);
+}
+.mainArea > .container_artist:hover{
     background-color: rgb(220, 220, 220);
 }
 .item{
