@@ -51,7 +51,7 @@
                 <div class="item">歌曲数</div>
             </div>
             <div class="mainArea">
-                <div class="container_artist"  v-for="(item, index) in shownList" :key="index">
+                <div class="container_artist"  v-for="(item, index) in shownList" :key="index" @dblclick="showAlbumContent(item)">
                     <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.title }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.songCount }}</div></div>
@@ -100,6 +100,13 @@ export default {
         }
     },
     methods: {
+        showAlbumContent(item){
+            this.artistContent.enable=false;
+            this.albumContent.enable=true;
+            this.albumContent.albumID=item.id;
+            this.$emit("toPage",'albums');
+            // 请求专辑信息...
+        },
         back(){
             this.artistContent.enable=false;
             this.albumContent.enable=false;

@@ -24,6 +24,7 @@
             <aboutView v-show="nowPage=='about'" />
             <listView 
                 ref="listPart" 
+                @toPage="toPage" 
                 @playSong="playSong"
                 :nowPage="nowPage" 
                 :nowPlay="nowPlay"
