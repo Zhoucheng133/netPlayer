@@ -3,13 +3,25 @@
         <a-page-header
         v-if="artistContent.enable==false && albumContent.enable==false"
             :title="shownTitle"
-            :sub-title="subTitle" />
+            :sub-title="subTitle" >
+            <template slot="extra">
+                <a-button icon="redo" type="primary" shape="round" @click="reloadList">
+                <!-- Operation -->
+                </a-button>
+            </template>
+        </a-page-header>
 
         <a-page-header
             v-else 
             :title="shownTitle"
             :sub-title="subTitle" 
-            @back="back"/>
+            @back="back" >
+            <template slot="extra">
+                <a-button icon="redo" type="primary" shape="round" @click="reloadList">
+                <!-- Operation -->
+                </a-button>
+            </template>
+        </a-page-header>
 
         <div v-if="nowPage!='albums' && nowPage!='artists'">
             <div class="container_fix">
@@ -138,6 +150,32 @@ export default {
         }
     },
     methods: {
+        reloadList(){
+            this.artistContent.enable=false;
+            this.albumContent.enable=false;
+            if(this.nowPage=='allSongs' && this.nowPlay.listName=='allSongs'){
+                var that=this;
+                this.$confirm({
+                    title: '刷新所有歌曲?',
+                    content: '注意，这会重置播放列表',
+                    centered: true,
+                    cancelText: '取消',
+                    okText: '确定',
+                    onOk() {
+                        console.log("请求所有歌曲(Req)");
+                        ipcRenderer.send('allSongsRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
+                        that.$emit("stopAudio");
+                    },
+                    onCancel() {
+                    },
+                });
+            }else if(this.nowPage=='allSongs'){
+                console.log("请求所有歌曲(Req)");
+                ipcRenderer.send('allSongsRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
+            }else{
+                this.pageTurn();
+            }
+        },
         albumContentResult(event, resp){
             console.log("请求专辑内容(Rlt)");
             this.shownTitle="专辑/"+resp.album.name;
@@ -251,7 +289,7 @@ export default {
             this.subTitle="合计"+tmp.length+"位艺人";
         },
         requestAllSongs(){
-            console.log("请求所有歌手(Req)");
+            console.log("请求所有歌曲(Req)");
             if(this.allSongsList.length==0){
                 ipcRenderer.send('allSongsRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
             }else{
@@ -263,7 +301,7 @@ export default {
             
         },
         allSongsResult(event, resp){
-            console.log("请求所有歌手(Rlt)");
+            console.log("请求所有歌曲(Rlt)");
             this.needRequest=false;
             this.allSongsList=resp.randomSongs.song;
             this.shownList=resp.randomSongs.song;
@@ -287,11 +325,11 @@ export default {
             this.shownList=resp.albumList.album;
         },
         requestList(){
-            console.log("请求所有(Req)");
+            console.log("请求列表(Req)");
             ipcRenderer.send('listRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.playList.id);
         },
         listResult(event, resp){
-            console.log("请求所有(Rlt)");
+            console.log("请求列表(Rlt)");
             this.needRequest=false;
             this.shownList=resp.playlist.entry;
             this.listID=resp.playlist.id;
@@ -359,6 +397,9 @@ export default {
 </script>
 
 <style scoped>
+.ant-page-header{
+    width: calc(100vw - 200px);
+}
 .itemContent{
     width: 100%;
     overflow: hidden;

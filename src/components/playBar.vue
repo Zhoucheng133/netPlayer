@@ -128,6 +128,17 @@ export default {
             var url=localStorage.getItem("url");
             this.shownCoverLink=url+"/rest/getCoverArt?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&id="+this.nowPlay.nowPlayList[this.nowPlay.index].id;
         },
+        stopAudio(){
+            console.log("停止播放器");
+            this.audioPlayer.pause();
+            this.audioPlayer.curTime=0;
+            this.audioPlayer.src="";
+            var username=localStorage.getItem("username");
+            var salt=localStorage.getItem("salt");
+            var token=localStorage.getItem("token");
+            var url=localStorage.getItem("url");
+            this.shownCoverLink=url+"/rest/getCoverArt?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token;
+        },
         playSong(){
             this.$nextTick(()=>{
                 this.getSongCover();

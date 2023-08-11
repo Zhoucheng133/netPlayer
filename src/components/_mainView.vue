@@ -26,6 +26,7 @@
                 ref="listPart" 
                 @toPage="toPage" 
                 @playSong="playSong"
+                @stopAudio="stopAudio"
                 :nowPage="nowPage" 
                 :nowPlay="nowPlay"
                 :playList="playList" 
@@ -66,6 +67,16 @@ export default {
         }
     },
     methods: {
+        stopAudio(){
+            this.$refs.player.stopAudio();
+            this.nowPlay={
+                listName: "",
+                index: 0,
+                nowPlayList: [],
+                id: "",
+                isPlay: false,
+            };
+        },
         handlePause(){
             this.nowPlay.isPlay=false;
         },
