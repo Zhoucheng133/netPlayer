@@ -144,10 +144,12 @@ export default {
             this.shownList=resp.album.song;
         },
         showAlbumContent(item){
+            if(this.artistContent.enable){
+                this.cancelRequest=true;
+            }
             this.artistContent.enable=false;
             this.albumContent.enable=true;
             this.albumContent.albumID=item.id;
-            this.cancelRequest=true;
             this.$emit("toPage",'albums');
             console.log(this.albumContent);
             this.shownTitle="专辑/"+item.name;
@@ -267,11 +269,12 @@ export default {
             this.subTitle="随机的"+resp.randomSongs.song.length+"首歌";
         },
         requetAlbums(){
+            console.log("请求所有专辑(Req)");
             if(this.cancelRequest){
                 this.cancelRequest=false;
+                console.log("取消请求所有专辑");
                 return;
             }
-            console.log("请求所有专辑(Req)");
             this.shownList=[];
             ipcRenderer.send('albumsRequst', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
         },
