@@ -33,7 +33,7 @@ async function createWindow() {
 // 获取所有专辑
 ipcMain.on("albumsRequst", async (event, url, username, salt, token) => {
 	var resp=undefined;
-	await axios.post(url+"/rest/getAlbumList?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token)
+	await axios.post(url+"/rest/getAlbumList?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&type=newest&size=500")
 	.then((response)=>{
 		resp=response.data['subsonic-response'];
 	})
