@@ -1,4 +1,4 @@
-import { app, protocol, BrowserWindow, ipcMain } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain, Menu } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 import axios from 'axios';
@@ -7,12 +7,13 @@ protocol.registerSchemesAsPrivileged([
 	{ scheme: 'app', privileges: { secure: true, standard: true } }
 ])
 
+let win;
+
 async function createWindow() {
-	const win = new BrowserWindow({
+	win = new BrowserWindow({
 		width: 1100,
 		height: 770,
-		// 注意对于Windows系统需要修改frame
-		// frame: false,
+		frame: false,
 		titleBarStyle: 'hiddenInset',
 		// resizable: false,
 		webPreferences: {
@@ -27,6 +28,99 @@ async function createWindow() {
 	} else {
 		createProtocol('app')
 		win.loadURL('app://./index.html')
+	}
+}
+
+function createMenu() {
+	const template = [
+		{
+			label: 'File',
+			submenu: [
+				{
+					label:"关于",
+					// role: "about",
+					click: () => {
+						// 在这里向Vue应用发送消息
+						win.webContents.send('toAbout');
+					},
+				},
+				{
+					label:"隐藏",
+					role:"hide"
+				},
+				{
+					label: '退出',
+					accelerator: 'CmdOrCtrl+Q',
+					click() {
+						app.quit();
+					}
+				}
+			]
+		},
+		{
+			label: '编辑',
+			submenu: [
+				{ type: 'separator' },
+				{
+					label: "全选",
+					role: 'selectAll'
+				},
+				{
+					label: "重做",
+					role: 'redo'
+				},
+				{ type: 'separator' },
+				{
+					label: "剪切",
+					role: 'cut'
+				},
+				{
+					label: "复制",
+					role: 'copy'
+				},
+				{
+					label: "粘贴",
+					role: 'paste'
+				}
+			]
+		},
+		{
+			label: "操作",
+			submenu: [
+				{
+					label: "暂停",
+					// role:"minimize"
+				},
+				{
+					label: "下一首",
+					// role:"zoom",
+				},
+				{
+					label: "上一首",
+				}
+			]
+		},
+		{
+			label: "窗口",
+			submenu: [
+				{
+					label:"最小化",
+					role:"minimize"
+				},
+				{
+					label:"缩放",
+					role:"zoom",
+				}
+			]
+		}
+	];
+
+	const isMac = process.platform === 'darwin';
+	const menu = Menu.buildFromTemplate(template);
+	if (isMac) {
+		Menu.setApplicationMenu(menu);
+	} else {
+		Menu.setApplicationMenu(null);
 	}
 }
 
@@ -187,7 +281,8 @@ app.on('activate', () => {
 })
 
 app.on('ready', async () => {
-	createWindow()
+	createWindow();
+	createMenu();
 })
 
 if (isDevelopment) {

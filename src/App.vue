@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<div class="dragArea"></div>
-		<mainView v-if="isLogin==true" @logoutApp="logoutApp"/>
+		<mainView v-if="isLogin==true" @logoutApp="logoutApp" ref="mainView"/>
 		<loginView v-else-if="isLogin==false" @getLogin="getLogin" />
 	</div>
 </template>
@@ -15,6 +15,7 @@ const {ipcRenderer} = require('electron')
 export default {
 	beforeDestroy() {
         ipcRenderer.removeAllListeners('autoLoginResult');
+		ipcRenderer.removeAllListeners('toAbout');
     },
 	components: {
 		mainView: _mainView,
@@ -53,8 +54,13 @@ export default {
 	},
 	mounted() {
 		ipcRenderer.removeAllListeners('autoLoginResult');
-
 		ipcRenderer.on('autoLoginResult', this.autoLoginResult);
+		ipcRenderer.removeAllListeners('toAbout');
+
+		ipcRenderer.on('toAbout', () => {
+			this.$refs.mainView.toPage('about');
+			// console.log("hello?");
+		});
 	},
 	created() {
 		var username=localStorage.getItem("username");
