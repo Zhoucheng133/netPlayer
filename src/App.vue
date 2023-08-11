@@ -19,6 +19,7 @@ export default {
 
 		ipcRenderer.removeAllListeners('nextSong');
 		ipcRenderer.removeAllListeners('forwSong');
+		ipcRenderer.removeAllListeners('toggleSong');
     },
 	components: {
 		mainView: _mainView,
@@ -62,8 +63,10 @@ export default {
 		ipcRenderer.removeAllListeners('toAbout');
 		ipcRenderer.removeAllListeners('nextSong');
 		ipcRenderer.removeAllListeners('forwSong');
+		ipcRenderer.removeAllListeners('toggleSong');
 
 		ipcRenderer.on('autoLoginResult', this.autoLoginResult);
+
 		ipcRenderer.on('toAbout', () => {
 			this.$refs.mainView.toPage('about');
 		});
@@ -72,6 +75,9 @@ export default {
 		});
 		ipcRenderer.on('forwSong', () => {
 			this.$refs.mainView.backSong();
+		});
+		ipcRenderer.on('toggleSong', () => {
+			this.$refs.mainView.toggleSong();
 		});
 	},
 	created() {

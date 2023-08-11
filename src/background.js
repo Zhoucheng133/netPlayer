@@ -1,4 +1,4 @@
-import { app, protocol, BrowserWindow, ipcMain, Menu } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain, Menu, globalShortcut } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 import axios from 'axios';
@@ -21,6 +21,8 @@ async function createWindow() {
 			contextIsolation: false
 		}
 	})
+
+	registerMediaKeyShortcuts();
 
 	if (process.env.WEBPACK_DEV_SERVER_URL) {
 		await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
@@ -129,6 +131,23 @@ function createMenu() {
 	}
 }
 
+function registerMediaKeyShortcuts() {
+	// 播放/暂停
+	globalShortcut.register('MediaPlayPause', () => {
+		win.webContents.send('toggleSong');
+	});
+
+	// 上一首
+	globalShortcut.register('MediaPreviousTrack', () => {
+		win.webContents.send('forwSong');
+	});
+
+	// 下一首
+	globalShortcut.register('MediaNextTrack', () => {
+		win.webContents.send('nextSong');
+	});
+}
+
 // 获取专辑信息
 ipcMain.on("albumContentRequest", async (event, url, username, salt, token, id) => {
 	var resp=undefined;
@@ -198,7 +217,6 @@ ipcMain.on("allSongsRequest", async (event, url, username, salt, token) => {
 
 	event.reply('allSongsResult', resp);
 });
-
 
 // 自动登录请求
 ipcMain.on("autoLoginRequest", async (event, url, username, salt, token) => {
@@ -305,6 +323,7 @@ app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
 		app.quit()
 	}
+	globalShortcut.unregisterAll();
 })
 
 app.on('activate', () => {
