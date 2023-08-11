@@ -203,15 +203,27 @@ ipcMain.on("allSongsRequest", async (event, url, username, salt, token) => {
 // 自动登录请求
 ipcMain.on("autoLoginRequest", async (event, url, username, salt, token) => {
 	var resp=undefined;
-	await axios.post(url+"/rest/ping.view?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token)
-	.then((response)=>{
-		resp=response.data;
+	const request=new Promise((resolve)=>{
+		axios.post(url+"/rest/ping.view?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token)
+		.then((response)=>{
+			resp=response.data;
+			resolve(resp);
+		})
+		.catch(()=>{
+			resp=null;
+			resolve(resp);
+		})
 	})
-	.catch(()=>{
-		resp=null;
+	const timeout=new Promise((resolve)=>{
+		setTimeout(() => {
+			resp=null;
+			resolve(resp);
+		}, 2000);
 	})
 
-	event.reply('autoLoginResult', resp);
+	Promise.race([request, timeout]).then((value) => {
+		event.reply('autoLoginResult', value);
+	});
 });
 
 // 加载我喜爱的歌曲
@@ -264,15 +276,29 @@ ipcMain.on("playlistRequest", async (event, url, username, salt, token) => {
 // 登录请求
 ipcMain.on("loginRequest", async (event, url, username, salt, token) => {
 	var resp=undefined;
-	await axios.post(url+"/rest/ping.view?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token)
-	.then((response)=>{
-		resp=response.data;
+	const request=new Promise((resolve)=>{
+		axios.post(url+"/rest/ping.view?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token)
+		.then((response)=>{
+			resp=response.data;
+			// event.reply('loginResult', resp, salt, token);
+			resolve({resp: resp, salt: salt, token: token});
+		})
+		.catch(()=>{
+			resp=null;
+			resolve({resp: resp, salt: salt, token: token});
+			// event.reply('loginResult', resp, salt, token);
+		})
 	})
-	.catch(()=>{
-		resp=null;
+	const timeout=new Promise((resolve)=>{
+		setTimeout(() => {
+			resp=null;
+			resolve({resp: resp, salt: salt, token: token});
+		}, 2000);
 	})
 
-	event.reply('loginResult', resp, salt, token);
+	Promise.race([request, timeout]).then((value) => {
+		event.reply('loginResult', value.resp, value.salt, value.token);
+	});
 });
 
 app.on('window-all-closed', () => {
