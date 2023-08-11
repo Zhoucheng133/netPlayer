@@ -30,6 +30,20 @@ async function createWindow() {
 	}
 }
 
+// 获取专辑信息
+ipcMain.on("albumContentRequest", async (event, url, username, salt, token, id) => {
+	var resp=undefined;
+	await axios.post(url+"/rest/getAlbum?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&id="+id)
+	.then((response)=>{
+		resp=response.data['subsonic-response'];
+	})
+	.catch(()=>{
+		resp=null;
+	})
+
+	event.reply('albumContentResult', resp);
+});
+
 // 获取所有专辑
 ipcMain.on("albumsRequst", async (event, url, username, salt, token) => {
 	var resp=undefined;
