@@ -38,9 +38,7 @@ function createMenu() {
 			submenu: [
 				{
 					label:"关于",
-					// role: "about",
 					click: () => {
-						// 在这里向Vue应用发送消息
 						win.webContents.send('toAbout');
 					},
 				},
@@ -89,14 +87,21 @@ function createMenu() {
 			submenu: [
 				{
 					label: "暂停",
-					// role:"minimize"
+					accelerator: "Space",
 				},
 				{
 					label: "下一首",
-					// role:"zoom",
+					accelerator: "CmdOrCtrl+Right",
+					click: () => {
+						win.webContents.send('nextSong');
+					},
 				},
 				{
 					label: "上一首",
+					accelerator: "CmdOrCtrl+Left",
+					click: () => {
+						win.webContents.send('forwSong');
+					},
 				}
 			]
 		},

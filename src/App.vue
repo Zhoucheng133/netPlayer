@@ -16,6 +16,9 @@ export default {
 	beforeDestroy() {
         ipcRenderer.removeAllListeners('autoLoginResult');
 		ipcRenderer.removeAllListeners('toAbout');
+
+		ipcRenderer.removeAllListeners('nextSong');
+		ipcRenderer.removeAllListeners('forwSong');
     },
 	components: {
 		mainView: _mainView,
@@ -53,13 +56,22 @@ export default {
         },
 	},
 	mounted() {
-		ipcRenderer.removeAllListeners('autoLoginResult');
-		ipcRenderer.on('autoLoginResult', this.autoLoginResult);
-		ipcRenderer.removeAllListeners('toAbout');
+		
 
+		ipcRenderer.removeAllListeners('autoLoginResult');
+		ipcRenderer.removeAllListeners('toAbout');
+		ipcRenderer.removeAllListeners('nextSong');
+		ipcRenderer.removeAllListeners('forwSong');
+
+		ipcRenderer.on('autoLoginResult', this.autoLoginResult);
 		ipcRenderer.on('toAbout', () => {
 			this.$refs.mainView.toPage('about');
-			// console.log("hello?");
+		});
+		ipcRenderer.on('nextSong', () => {
+			this.$refs.mainView.nextSong();
+		});
+		ipcRenderer.on('forwSong', () => {
+			this.$refs.mainView.backSong();
 		});
 	},
 	created() {
