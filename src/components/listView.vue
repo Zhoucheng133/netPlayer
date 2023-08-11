@@ -73,6 +73,25 @@
                 </div>
             </div>
         </div>
+
+        <div v-else-if="nowPage=='albums' && albumContent.enable==true">
+            <div class="container_fix">
+                <div class="item">序号</div>
+                <div class="item">歌曲名</div>
+                <div class="item">歌手</div>
+                <div class="item">时长</div>
+            </div>
+
+            <div class="mainArea">
+                <div v-for="(item, index) in shownList" :key="index" @dblclick="playSong(index)" :class="isPlaying(index)?'container_playing':'container'">
+                    <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.title }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.artist }}</div></div>
+                    <div class="item"><div class="itemContent">{{ getSongTime(item.duration) }}</div></div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -86,6 +105,7 @@ export default {
         ipcRenderer.removeAllListeners('artistsResult');
         ipcRenderer.removeAllListeners('artistAlbumResult');
         ipcRenderer.removeAllListeners('albumsResult');
+        ipcRenderer.removeAllListeners('albumContentResult');
     },
     props:{
         nowPage: String,
@@ -112,16 +132,26 @@ export default {
             albumContent: {
                 enable: false,
                 albumID: "",
-            }
+            },
+
+            cancelRequest: false,
         }
     },
     methods: {
+        albumContentResult(event, resp){
+            console.log("请求专辑内容(Rlt)");
+            this.shownList=resp.album.song;
+        },
         showAlbumContent(item){
             this.artistContent.enable=false;
             this.albumContent.enable=true;
             this.albumContent.albumID=item.id;
+            this.cancelRequest=true;
             this.$emit("toPage",'albums');
-            // 请求专辑信息...
+            console.log(this.albumContent);
+            this.shownTitle="专辑/"+item.name;
+            console.log("请求专辑内容(Req)");
+            ipcRenderer.send('albumContentRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.albumContent.albumID);
         },
         back(){
             this.artistContent.enable=false;
@@ -185,9 +215,11 @@ export default {
             }
         },
         requestLovedSongs(){
+            console.log("请求所有喜欢的歌曲(Req)");
             ipcRenderer.send('lovedSongsRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
         },
         lovedSongsResult(event, resp){
+            console.log("请求所有喜欢的歌曲(Rlt)");
             this.needRequest=false;
             this.shownList=resp.starred.song;
             if(resp.starred.song==undefined){
@@ -198,10 +230,12 @@ export default {
             this.listID='';
         },
         requestArtists(){
+            console.log("请求所有艺人(Req)");
             this.shownList=[];
             ipcRenderer.send('artistsRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
         },
         artistsResult(event, resp){
+            console.log("请求所有艺人(Rlt)");
             var tmp=[];
             for(var item of resp.indexes.index){
                 for(var insideItem of item.artist){
@@ -212,6 +246,7 @@ export default {
             this.subTitle="合计"+tmp.length+"位艺人";
         },
         requestAllSongs(){
+            console.log("请求所有歌手(Req)");
             if(this.allSongsList.length==0){
                 ipcRenderer.send('allSongsRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
             }else{
@@ -223,6 +258,7 @@ export default {
             
         },
         allSongsResult(event, resp){
+            console.log("请求所有歌手(Rlt)");
             this.needRequest=false;
             this.allSongsList=resp.randomSongs.song;
             this.shownList=resp.randomSongs.song;
@@ -230,17 +266,25 @@ export default {
             this.subTitle="随机的"+resp.randomSongs.song.length+"首歌";
         },
         requetAlbums(){
+            if(this.cancelRequest){
+                this.cancelRequest=false;
+                return;
+            }
+            console.log("请求所有专辑(Req)");
             this.shownList=[];
             ipcRenderer.send('albumsRequst', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
         },
         albumsResult(event, resp){
+            console.log("请求所有专辑(Rlt)");
             this.shownList=[];
             this.shownList=resp.albumList.album
         },
         requestList(){
+            console.log("请求所有(Req)");
             ipcRenderer.send('listRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.playList.id);
         },
         listResult(event, resp){
+            console.log("请求所有(Rlt)");
             this.needRequest=false;
             this.shownList=resp.playlist.entry;
             this.listID=resp.playlist.id;
@@ -274,12 +318,14 @@ export default {
         ipcRenderer.removeAllListeners('artistsResult');
         ipcRenderer.removeAllListeners('artistAlbumResult');
         ipcRenderer.removeAllListeners('albumsResult');
+        ipcRenderer.removeAllListeners('albumContentResult');
         ipcRenderer.on('listResult', this.listResult);
         ipcRenderer.on('lovedSongsResult', this.lovedSongsResult);
         ipcRenderer.on('allSongsResult', this.allSongsResult);
         ipcRenderer.on('artistsResult', this.artistsResult);
         ipcRenderer.on('artistAlbumResult', this.artistAlbumResult);
         ipcRenderer.on('albumsResult', this.albumsResult);
+        ipcRenderer.on('albumContentResult', this.albumContentResult);
     },
     created() {
         this.titleController();
