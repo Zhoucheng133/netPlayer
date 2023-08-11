@@ -5,7 +5,7 @@
             <div class="name">{{ username }}</div>
         </div>
         <div class="userOp">
-            <div class="changepButton">修改密码</div>
+            <div class="openInBrower" @click="openBrower">浏览器打开</div>
             <div class="logoutButton" @click="logoutController">注销</div>
         </div>
 
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-const {ipcRenderer} = require('electron')
+const {ipcRenderer, shell} = require('electron')
 export default {
     beforeDestroy() {
         ipcRenderer.removeAllListeners('playlistResult');
@@ -89,6 +89,9 @@ export default {
         },
         requestList(){
             ipcRenderer.send('playlistRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
+        },
+        openBrower(){
+            shell.openExternal(localStorage.getItem("url"));
         }
     },
     mounted() {
@@ -188,13 +191,13 @@ export default {
     justify-content: flex-start;
     text-overflow: ellipsis;
 }
-.changepButton:hover{
+.openInBrower:hover{
     color: #1890ff;
 }
-.logoutButton:hover, .changepButton:hover{
+.logoutButton:hover, .openInBrower:hover{
     cursor: pointer;
 }
-.logoutButton, .changepButton{
+.logoutButton, .openInBrower{
     user-select: none;
     transition: all ease-in-out .3s;
 }
@@ -206,10 +209,10 @@ export default {
 }
 .userOp{
     display: flex;
+    justify-content: center;
     position: absolute;
     bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
+    width: 200px;
 }
 .name{
     margin-left: 5px;
