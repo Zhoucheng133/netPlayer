@@ -85,6 +85,7 @@ export default {
         ipcRenderer.removeAllListeners('allSongsResult');
         ipcRenderer.removeAllListeners('artistsResult');
         ipcRenderer.removeAllListeners('artistAlbumResult');
+        ipcRenderer.removeAllListeners('albumsResult');
     },
     props:{
         nowPage: String,
@@ -230,10 +231,11 @@ export default {
         },
         requetAlbums(){
             this.shownList=[];
-            console.log("需要请求: 专辑");
+            ipcRenderer.send('albumsRequst', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
         },
-        albumsResult(){
+        albumsResult(event, resp){
             this.shownList=[];
+            console.log(resp);
         },
         requestList(){
             ipcRenderer.send('listRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.playList.id);
@@ -271,11 +273,13 @@ export default {
         ipcRenderer.removeAllListeners('allSongsResult');
         ipcRenderer.removeAllListeners('artistsResult');
         ipcRenderer.removeAllListeners('artistAlbumResult');
+        ipcRenderer.removeAllListeners('albumsResult');
         ipcRenderer.on('listResult', this.listResult);
         ipcRenderer.on('lovedSongsResult', this.lovedSongsResult);
         ipcRenderer.on('allSongsResult', this.allSongsResult);
         ipcRenderer.on('artistsResult', this.artistsResult);
         ipcRenderer.on('artistAlbumResult', this.artistAlbumResult);
+        ipcRenderer.on('albumsResult', this.albumsResult);
     },
     created() {
         this.titleController();

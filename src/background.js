@@ -31,9 +31,9 @@ async function createWindow() {
 }
 
 // 获取所有专辑
-ipcMain.on("albunmsRequst", async (event, url, username, salt, token) => {
+ipcMain.on("albumsRequst", async (event, url, username, salt, token) => {
 	var resp=undefined;
-	await axios.post(url+"/rest/getArtist?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token)
+	await axios.post(url+"/rest/getAlbumList?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token)
 	.then((response)=>{
 		resp=response.data['subsonic-response'];
 	})
@@ -41,7 +41,7 @@ ipcMain.on("albunmsRequst", async (event, url, username, salt, token) => {
 		resp=null;
 	})
 
-	event.reply('albunmsResult', resp);
+	event.reply('albumsResult', resp);
 });
 
 // 获取某个艺人的专辑
