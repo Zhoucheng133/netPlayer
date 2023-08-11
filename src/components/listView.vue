@@ -58,6 +58,21 @@
                 </div>
             </div>
         </div>
+
+        <div v-else-if="nowPage=='albums' && albumContent.enable==false">
+            <div class="container_fix_artist">
+                <div class="item">序号</div>
+                <div class="item">专辑名称</div>
+                <div class="item">歌曲数</div>
+            </div>
+            <div class="mainArea">
+                <div class="container_artist"  v-for="(item, index) in shownList" :key="index" @dblclick="showAlbumContent(item)">
+                    <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.title }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.songCount }}</div></div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
