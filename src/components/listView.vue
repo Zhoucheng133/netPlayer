@@ -336,6 +336,7 @@ export default {
             this.subTitle="合计"+resp.playlist.songCount+"首歌";
         },
         pageTurn(){
+            this.shownList=[];
             this.titleController();
             if(this.nowPage=='playList'){
                 this.requestList();
