@@ -235,7 +235,7 @@ export default {
         },
         albumsResult(event, resp){
             this.shownList=[];
-            console.log(resp);
+            this.shownList=resp.albumList.album
         },
         requestList(){
             ipcRenderer.send('listRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.playList.id);
