@@ -140,6 +140,8 @@ export default {
     methods: {
         albumContentResult(event, resp){
             console.log("请求专辑内容(Rlt)");
+            this.shownTitle="专辑/"+resp.album.name;
+            this.subTitle="专辑内含"+resp.album.song.length+"首歌";
             this.listID=resp.album.id;
             this.shownList=resp.album.song;
         },
@@ -164,7 +166,7 @@ export default {
         artistAlbumResult(event, resp){
             // console.log(resp);
             this.shownList=resp.artist.album;
-            this.subTitle="共计"+resp.artist.album.length+"首歌"
+            this.subTitle="共计"+resp.artist.album.length+"个专辑"
         },
         showArtistContent(item){
             this.artistContent.enable=true;
@@ -279,9 +281,10 @@ export default {
             ipcRenderer.send('albumsRequst', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
         },
         albumsResult(event, resp){
-            console.log("请求所有专辑(Rlt)");
             this.shownList=[];
-            this.shownList=resp.albumList.album
+            console.log("请求所有专辑(Rlt)");
+            this.subTitle="由新到旧显示的"+resp.albumList.album.length+"个专辑";
+            this.shownList=resp.albumList.album;
         },
         requestList(){
             console.log("请求所有(Req)");
