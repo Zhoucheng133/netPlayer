@@ -140,6 +140,7 @@ export default {
     methods: {
         albumContentResult(event, resp){
             console.log("请求专辑内容(Rlt)");
+            this.listID=resp.album.id;
             this.shownList=resp.album.song;
         },
         showAlbumContent(item){
