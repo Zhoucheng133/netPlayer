@@ -4,6 +4,10 @@
 
 ## 支持的设备
 
+- Windows系统 (64位操作系统)
+- macOS系统 (包括Intel的Mac和Apple Silicon的Mac)
+- 类Linux系统
+
 ## 如何使用
 
 ## 常见问题
@@ -31,6 +35,10 @@
 # Help
 
 ## Support device
+
+- Windows (64bit system)
+- macOS (Including Mac based on Intel and Apple Silicon)
+- Linux like system
 
 ## How to use
 
