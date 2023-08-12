@@ -3,7 +3,7 @@
         <div class="container">
             <img src="@/assets/icon.png" alt="" width="200px">
             <div class="name">netPlayer</div>
-            <div class="version">v{{ version }}&nbsp;Dev</div>
+            <div class="version">v{{ version }}&nbsp;Release</div>
             <div class="copyright">Developed by zhouc</div>
             <div class="showingit">
                 <div class="gitItem" style="margin-right: 10px;" @click="openWeb('github')">See in Github</div>
