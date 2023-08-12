@@ -16,8 +16,7 @@ async function createWindow() {
 		height: 770,
 		frame: false,
 		titleBarStyle: 'hiddenInset',
-		// resizable: false,
-		icon: path.join(__dirname, 'src/assets/icon.png'),
+		icon: path.join(__dirname, 'build/icon.png'),
 		webPreferences: {
 			nodeIntegration: true,
 			contextIsolation: false
