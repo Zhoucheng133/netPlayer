@@ -55,17 +55,12 @@ export default {
 				ipcRenderer.send('winRestore');
 				this.isMax=false;
 			}
-			
-			
 		},
 		minWin(){
 			ipcRenderer.send('winMin');
 		},
 		getSysResult(event, resp){
-			// console.log(resp);
 			if(resp!='macOS'){
-				this.shownWindowBar=false;
-			}else{
 				this.shownWindowBar=true;
 			}
 		},
