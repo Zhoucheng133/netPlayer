@@ -40,17 +40,18 @@ function createMenu() {
 			label: 'File',
 			submenu: [
 				{
-					label:"关于",
+					label:"关于 netPlayer",
 					click: () => {
 						win.webContents.send('toAbout');
 					},
 				},
 				{
-					label:"隐藏",
-					role:"hide"
+					label:"隐藏 netPlayer",
+					role:"hide",
+					accelerator: "CmdOrCtrl+H",
 				},
 				{
-					label: '退出',
+					label: '退出 netPlayer',
 					accelerator: 'CmdOrCtrl+Q',
 					click() {
 						app.quit();
