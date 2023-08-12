@@ -1,7 +1,5 @@
 # 帮助文档
 
-**You can slide down to see the English version**
-
 ## 支持的设备
 
 - Windows系统 (64位操作系统)
@@ -9,6 +7,11 @@
 - 类Linux系统
 
 ## 如何使用
+
+1. 首先，你需要搭建一个服务器，运行任何系统的都可以 (如果你希望在公网中访问，注意你的网络环境，尤其是家庭网络)
+2. 安装Navidrome，[点击这里](https://www.navidrome.org/docs/installation/)查看官方文档中的安装具体步骤
+3. 打开Navidrome服务，完成初始化设置，注册账号并绑定服务器中的音乐路径等操作
+4. 使用本软件，打开后输入服务器地址，用户名和密码即可
 
 ## 常见问题
 
@@ -31,36 +34,3 @@
 
 >所有歌曲列表中的歌曲数量有上限？
 >>是的，因为这个API获取的数量的上限就是500首歌
-
-# Help
-
-## Support device
-
-- Windows (64bit system)
-- macOS (Including Mac based on Intel and Apple Silicon)
-- Linux like system
-
-## How to use
-
-## Q&A
-
->Why request failed when login?
->>This condition may caused by:
->>1. Your device can't connect to server's network
->>2. The server is faulty and cannot be connected
->>3. Can not connect through public network. Please contact your telecom operator to solve it
->>4. Your router or modem block the port when you connect by public network. Please check the setting of your router or modem to ensure the port is opened in public network
-
->Is the software secure to use?
->>I do not collect any infomation from you. If there is any serious vulnerability in this project, please let me know as soon as posible.  
->>All the request are encrypted with MD5 according to offical API document.
-
->Is my login status always valid?
->>Yes. If you never change your password, The login status is always valid.
-
->Why "All the songs" list's sequence is different each time?
->>Because Subsonic don't have the API of "get all the songs", but it has the API to get random songs
-
->Is there a maximum number of "All the songs" list?
->>Yes, because this API have the size limit, and the max number is 500.
-
