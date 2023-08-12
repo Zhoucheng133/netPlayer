@@ -291,7 +291,6 @@ ipcMain.on("playlistRequest", async (event, url, username, salt, token) => {
 	event.reply('playlistResult', resp, salt, token);
 });
 
-
 // 登录请求
 ipcMain.on("loginRequest", async (event, url, username, salt, token) => {
 	var resp=undefined;
@@ -318,6 +317,16 @@ ipcMain.on("loginRequest", async (event, url, username, salt, token) => {
 	Promise.race([request, timeout]).then((value) => {
 		event.reply('loginResult', value.resp, value.salt, value.token);
 	});
+});
+
+ipcMain.on("getSysRequest",async(event)=>{
+	if(process.platform == 'darwin'){
+		event.reply('getSysResult', 'macOS');
+	}else if(process.platform=='win32' ){
+		event.reply('getSysResult', 'Windows');
+	}else{
+		event.reply('getSysResult', 'Linux');
+	}
 });
 
 app.on('window-all-closed', () => {

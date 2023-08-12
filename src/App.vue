@@ -1,6 +1,10 @@
 <template>
 	<div id="app">
-		<div class="dragArea"></div>
+		<div class="dragArea">
+			<div class="min"><svg width="13" height="13" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5 24L38.5 24" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+			<div class="max"><svg width="13" height="13" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 42H6V26" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 6H42V22" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+			<div class="close"><svg width="13" height="13" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 8L40 40" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 40L40 8" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+		</div>
 		<mainView v-if="isLogin==true" @logoutApp="logoutApp" ref="mainView"/>
 		<loginView v-else-if="isLogin==false" @getLogin="getLogin" />
 	</div>
@@ -20,6 +24,8 @@ export default {
 		ipcRenderer.removeAllListeners('nextSong');
 		ipcRenderer.removeAllListeners('forwSong');
 		ipcRenderer.removeAllListeners('toggleSong');
+		
+		ipcRenderer.removeAllListeners('getSysResult');
     },
 	components: {
 		mainView: _mainView,
@@ -27,10 +33,18 @@ export default {
 	},
 	data() {
 		return {
+			shownWindowBar: false,
+
 			isLogin: undefined,
 		}
 	},
 	methods: {
+		getSysResult(event, resp){
+			// console.log(resp);
+			if(resp!='macOS'){
+				this.shownWindowBar=false;
+			}
+		},
 		logoutApp(){
 			localStorage.clear();
 			this.isLogin=false;
@@ -64,6 +78,7 @@ export default {
 		ipcRenderer.removeAllListeners('nextSong');
 		ipcRenderer.removeAllListeners('forwSong');
 		ipcRenderer.removeAllListeners('toggleSong');
+		ipcRenderer.removeAllListeners('getSysResult');
 
 		ipcRenderer.on('autoLoginResult', this.autoLoginResult);
 
@@ -79,6 +94,7 @@ export default {
 		ipcRenderer.on('toggleSong', () => {
 			this.$refs.mainView.toggleSong();
 		});
+		ipcRenderer.on('getSysResult', this.getSysResult);
 	},
 	created() {
 		var username=localStorage.getItem("username");
@@ -90,12 +106,34 @@ export default {
         }else{
 			this.isLogin=false;
 		}
+		ipcRenderer.send('getSysRequest');
 	},
 }
 </script>
 
 <style scoped>
+.close:hover{
+	background-color: rgb(215, 0, 0);
+	cursor: pointer;
+}
+.close{
+	background-color: red;
+}
+.min:hover, .max:hover{
+	background-color: rgb(220, 220, 220);
+	cursor: pointer;
+}
+.close, .min, .max{
+	user-select: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 30px;
+	transition: all ease-in-out .2s;
+}
 .dragArea{
+	justify-content: flex-end;
+	display: flex;
 	position: fixed;
 	top: 0;
 	left: 0;
