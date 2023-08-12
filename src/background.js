@@ -10,12 +10,14 @@ protocol.registerSchemesAsPrivileged([
 let win;
 
 async function createWindow() {
+	const path = require('path');
 	win = new BrowserWindow({
 		width: 1100,
 		height: 770,
 		frame: false,
 		titleBarStyle: 'hiddenInset',
 		// resizable: false,
+		icon: path.join(__dirname, 'src/assets/icon.png'),
 		webPreferences: {
 			nodeIntegration: true,
 			contextIsolation: false
