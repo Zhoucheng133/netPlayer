@@ -5,12 +5,17 @@
             <div class="name">netPlayer</div>
             <div class="version">v{{ version }}&nbsp;Dev</div>
             <div class="copyright">Developed by zhouc</div>
+            <div class="showingit">
+                <div class="gitItem" style="margin-right: 10px;" @click="openWeb('github')">See in Github</div>
+                <div class="gitItem" @click="openWeb('gitee')">See in Gitee</div>
+            </div>
             <div class="opensource" @click="showLicenses">About the licenses</div>
         </div>
     </div>
 </template>
 
 <script>
+const {shell} = require('electron')
 export default {
     data() {
         return {
@@ -18,14 +23,22 @@ export default {
         }
     },
     methods: {
+        openWeb(val){
+            if(val=='gitee'){
+                shell.openExternal("https://gitee.com/Ryan-zhou/net-player")
+            }else{
+                shell.openExternal("https://github.com/Zhoucheng133/net-player")
+            }
+        },
         showLicenses(){
             const h = this.$createElement;
             this.$info({
                 title: 'Licenses',
                 centered: true,
                 content: h('div', {}, [
-                    h('div', 'API from © Subsonic AS'),
+                    h('div', 'netPlayer (MIT License)'),
                     h('hr'),
+                    h('div', 'API from © Subsonic AS'),
                     h('div', 'Vue.js (MIT License)'),
                     h('div', 'Electron (MIT License)'),
                     h('div', 'Ant Design Vue (MIT License)'),
@@ -47,11 +60,15 @@ export default {
 </script>
 
 <style scoped>
-.opensource:hover{
+.showingit{
+    margin-bottom: 10px;
+    display: flex;
+}
+.opensource:hover, .gitItem:hover{
     cursor: pointer;
     color: #1890ff;
 }
-.opensource{
+.opensource, .gitItem{
     color: rgb(170, 170, 170);
     transition: all ease-in-out .3s;
 }
