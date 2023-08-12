@@ -15,7 +15,7 @@
                 </div>
                 <div class="formItem">
                     <div class="f_label">密码</div>
-                    <a-input-password placeholder="输入密码" v-model="inputArea.password" />
+                    <a-input-password placeholder="输入密码" v-model="inputArea.password" @keyup.enter="loginController"/>
                 </div>
             </div>
             <div class="loginButton_loading" v-if="loading"><a-icon type="loading" /></div>
