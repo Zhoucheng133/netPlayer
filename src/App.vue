@@ -1,6 +1,7 @@
 <template>
 	<div id="app">
 		<div class="dragArea">
+			<div class="darg"></div>
 			<div class="min" v-if="shownWindowBar" @click="minWin"><svg width="13" height="13" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5 24L38.5 24" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 			<div class="max" v-if="shownWindowBar" @click="maxWin">
 				<svg v-if="isMax==false" width="13" height="13" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 42H6V26" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 6H42V22" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -131,6 +132,10 @@ export default {
 </script>
 
 <style scoped>
+.darg{
+	-webkit-app-region: drag;
+	width: 100%;
+}
 .close:hover{
 	background-color: rgb(215, 0, 0);
 	cursor: pointer;
@@ -149,6 +154,7 @@ export default {
 	align-items: center;
 	width: 30px;
 	transition: all ease-in-out .2s;
+	z-index: 500;
 }
 .dragArea{
 	justify-content: flex-end;
@@ -158,7 +164,7 @@ export default {
 	left: 0;
 	height: 30px;
 	width: 100%;
-	-webkit-app-region: drag;
+	/* -webkit-app-region: drag; */
 }
 </style>
 
