@@ -110,7 +110,7 @@ export default {
             }
         },
         toHelp(){
-            shell.openExternal("https://gitee.com/Ryan-zhou/net-player");
+            shell.openExternal("https://gitee.com/Ryan-zhou/net-player/blob/master/HELP.md");
         },
         startAnimation(){
             const duration = 300;
