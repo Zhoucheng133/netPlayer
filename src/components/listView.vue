@@ -448,6 +448,7 @@ export default {
 .bg{
     user-select: none;
     height: calc(100vh - 30px) !important;
+    width: calc(100vw - 200px) !important;
 }
 .container_artist{
     display: grid;

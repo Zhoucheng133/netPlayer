@@ -150,7 +150,8 @@ export default {
     flex-direction: column;
     align-items: center;
     height: calc(100vh - 160px);
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 .icon{
     margin-right: 8px;
