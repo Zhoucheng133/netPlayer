@@ -409,7 +409,8 @@ export default {
     white-space:nowrap;
 }
 .mainArea{
-    overflow: scroll;
+    overflow-y: overlay;
+    overflow-x: hidden;
     position: fixed;
     margin-top: 50px;
     width: calc(100% - 248px);
