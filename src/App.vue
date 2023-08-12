@@ -1,9 +1,12 @@
 <template>
 	<div id="app">
 		<div class="dragArea">
-			<div class="min"><svg width="13" height="13" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5 24L38.5 24" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-			<div class="max"><svg width="13" height="13" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 42H6V26" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 6H42V22" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-			<div class="close"><svg width="13" height="13" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 8L40 40" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 40L40 8" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+			<div class="min" @click="minWin"><svg width="13" height="13" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5 24L38.5 24" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+			<div class="max" @click="maxWin">
+				<svg v-if="isMax==false" width="13" height="13" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 42H6V26" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 6H42V22" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+				<svg v-else width="13" height="13" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M44 20H28V4" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 28H20V44" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+			</div>
+			<div class="close" @click="closeWin"><svg width="13" height="13" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 8L40 40" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 40L40 8" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 		</div>
 		<mainView v-if="isLogin==true" @logoutApp="logoutApp" ref="mainView"/>
 		<loginView v-else-if="isLogin==false" @getLogin="getLogin" />
@@ -36,9 +39,28 @@ export default {
 			shownWindowBar: false,
 
 			isLogin: undefined,
+
+			isMax: false,
 		}
 	},
 	methods: {
+		closeWin(){
+			ipcRenderer.send('winClose');
+		},
+		maxWin(){
+			if(this.isMax==false){
+				ipcRenderer.send('winMax');
+				this.isMax=true;
+			}else{
+				ipcRenderer.send('winRestore');
+				this.isMax=false;
+			}
+			
+			
+		},
+		minWin(){
+			ipcRenderer.send('winMin');
+		},
 		getSysResult(event, resp){
 			// console.log(resp);
 			if(resp!='macOS'){

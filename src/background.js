@@ -319,6 +319,7 @@ ipcMain.on("loginRequest", async (event, url, username, salt, token) => {
 	});
 });
 
+// 获取系统信息
 ipcMain.on("getSysRequest",async(event)=>{
 	if(process.platform == 'darwin'){
 		event.reply('getSysResult', 'macOS');
@@ -328,6 +329,26 @@ ipcMain.on("getSysRequest",async(event)=>{
 		event.reply('getSysResult', 'Linux');
 	}
 });
+
+// 最小化窗口函数
+ipcMain.on("winMin",async(event)=>{
+	win.minimize();
+}),
+
+// 关闭窗口函数
+ipcMain.on("winClose",async(event)=>{
+	app.quit();
+})
+
+// 最大化窗口
+ipcMain.on("winMax",async(event)=>{
+	win.maximize();
+})
+
+// 还原窗口
+ipcMain.on("winRestore",async(event)=>{
+	win.restore();
+})
 
 app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
