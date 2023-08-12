@@ -12,7 +12,7 @@
         <div class="aboutButton" @click="toPage('about')">关于netPlayer</div>
 
         <div class="menu">
-            <div @click="toPage('albums')" :class="nowPage=='albums'?'itemSelected':'item'" style="margin-top: 30px;">
+            <div @click="toPage('albums')" :class="nowPage=='albums'?'itemSelected':'item'" style="margin-top: 16px;">
                 <svg class="icon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="18" stroke="#333" stroke-width="4"/><path d="M13 24C13 17.9249 17.9249 13 24 13" stroke="#333" stroke-width="4" stroke-linecap="round"/><circle cx="24" cy="24" r="5" fill="none" stroke="#333" stroke-width="4"/></svg>
                 专辑
             </div>
