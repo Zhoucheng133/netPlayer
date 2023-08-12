@@ -65,6 +65,8 @@ export default {
 			// console.log(resp);
 			if(resp!='macOS'){
 				this.shownWindowBar=false;
+			}else{
+				this.shownWindowBar=true;
 			}
 		},
 		logoutApp(){
