@@ -150,7 +150,7 @@ export default {
     flex-direction: column;
     align-items: center;
     height: calc(100vh - 160px);
-    overflow-y: scroll;
+    overflow-y: overlay;;
     overflow-x: hidden;
 }
 .icon{
@@ -243,6 +243,6 @@ export default {
     height: 100vh;
     background-color: rgb(242, 242, 242);
     align-items: center;
-    overflow: scroll;
+    /* overflow: scroll; */
 }
 </style>
