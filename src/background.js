@@ -337,7 +337,7 @@ ipcMain.on("winMin",async(event)=>{
 
 // 关闭窗口函数
 ipcMain.on("winClose",async(event)=>{
-	app.quit();
+	app.exit();
 })
 
 // 最大化窗口
@@ -351,9 +351,7 @@ ipcMain.on("winRestore",async(event)=>{
 })
 
 app.on('window-all-closed', () => {
-	if (process.platform !== 'darwin') {
-		app.quit()
-	}
+	app.quit()
 	globalShortcut.unregisterAll();
 })
 
