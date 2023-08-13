@@ -45,6 +45,7 @@ function createMenu() {
 						win.webContents.send('toAbout');
 					},
 				},
+				{ type: 'separator' },
 				{
 					label:"隐藏 netPlayer",
 					role:"hide",
