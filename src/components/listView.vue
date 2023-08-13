@@ -5,9 +5,10 @@
             :title="shownTitle"
             :sub-title="subTitle" >
             <template slot="extra">
-                <a-button icon="redo" type="primary" shape="round" @click="reloadList">
-                <!-- Operation -->
-                </a-button>
+                <div class="toolBar">
+                    <a-input-search placeholder="输入搜索内容" style="width: 200px;margin-right: 20px;" @search="onSearch" allowClear v-model="inputSearch" @change="onSearch"/>
+                    <a-button icon="redo" type="primary" shape="round" @click="reloadList"></a-button>
+                </div>
             </template>
         </a-page-header>
 
@@ -17,9 +18,7 @@
             :sub-title="subTitle" 
             @back="back" >
             <template slot="extra">
-                <a-button icon="redo" type="primary" shape="round" @click="reloadList">
-                <!-- Operation -->
-                </a-button>
+                <a-button icon="redo" type="primary" shape="round" @click="reloadList"></a-button>
             </template>
         </a-page-header>
 
@@ -31,8 +30,17 @@
                 <div class="item">时长</div>
             </div>
 
-            <div class="mainArea">
+            <div class="mainArea" v-if="!isSearch">
                 <div v-for="(item, index) in shownList" :key="index" @dblclick="playSong(index)" :class="isPlaying(index)?'container_playing':'container'">
+                    <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.title }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.artist }}</div></div>
+                    <div class="item"><div class="itemContent">{{ getSongTime(item.duration) }}</div></div>
+                </div>
+            </div>
+            
+            <div class="mainArea" v-else>
+                <div v-for="(item, index) in searchList" :key="index" @dblclick="playSong(index)" :class="isPlaying(index)?'container_playing':'container'">
                     <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.title }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.artist }}</div></div>
@@ -47,8 +55,16 @@
                 <div class="item">艺人</div>
                 <div class="item">专辑数量</div>
             </div>
-            <div class="mainArea">
+            <div class="mainArea" v-if="!isSearch">
                 <div class="container_artist"  v-for="(item, index) in shownList" :key="index" @dblclick="showArtistContent(item)">
+                    <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.name }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.albumCount }}</div></div>
+                </div>
+            </div>
+
+            <div class="mainArea" v-else>
+                <div class="container_artist"  v-for="(item, index) in searchList" :key="index" @dblclick="showArtistContent(item)">
                     <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.name }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.albumCount }}</div></div>
@@ -62,8 +78,15 @@
                 <div class="item">专辑名称</div>
                 <div class="item">歌曲数</div>
             </div>
-            <div class="mainArea">
+            <div class="mainArea" v-if="!isSearch">
                 <div class="container_artist"  v-for="(item, index) in shownList" :key="index" @dblclick="showAlbumContent(item)">
+                    <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.title }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.songCount }}</div></div>
+                </div>
+            </div>
+            <div class="mainArea" v-else>
+                <div class="container_artist"  v-for="(item, index) in searchList" :key="index" @dblclick="showAlbumContent(item)">
                     <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.title }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.songCount }}</div></div>
@@ -77,8 +100,16 @@
                 <div class="item">专辑名称</div>
                 <div class="item">歌曲数</div>
             </div>
-            <div class="mainArea">
+            <div class="mainArea" v-if="!isSearch">
                 <div class="container_artist"  v-for="(item, index) in shownList" :key="index" @dblclick="showAlbumContent(item)">
+                    <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.title }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.songCount }}</div></div>
+                </div>
+            </div>
+
+            <div class="mainArea" v-else>
+                <div class="container_artist"  v-for="(item, index) in searchList" :key="index" @dblclick="showAlbumContent(item)">
                     <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.title }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.songCount }}</div></div>
@@ -94,8 +125,17 @@
                 <div class="item">时长</div>
             </div>
 
-            <div class="mainArea">
+            <div class="mainArea" v-if="!isSearch">
                 <div v-for="(item, index) in shownList" :key="index" @dblclick="playSong(index)" :class="isPlaying(index)?'container_playing':'container'">
+                    <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.title }}</div></div>
+                    <div class="item"><div class="itemContent">{{ item.artist }}</div></div>
+                    <div class="item"><div class="itemContent">{{ getSongTime(item.duration) }}</div></div>
+                </div>
+            </div>
+
+            <div class="mainArea" v-else>
+                <div v-for="(item, index) in searchList" :key="index" @dblclick="playSong(index)" :class="isPlaying(index)?'container_playing':'container'">
                     <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.title }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.artist }}</div></div>
@@ -147,9 +187,29 @@ export default {
             },
 
             cancelRequest: false,
+
+            isSearch: false,
+            searchList: [],
+
+            inputSearch: "",
         }
     },
     methods: {
+        filterArrayByString(inputArray, searchString) {
+            return inputArray.filter(obj => {
+                return Object.values(obj).some(value => {
+                    return typeof value === 'string' && value.toLowerCase().includes(searchString.toLowerCase());
+                });
+            });
+        },
+        onSearch(){
+            if(this.inputSearch==""){
+                console.log("return!");
+                this.isSearch=false;
+            }
+            this.isSearch=true;
+            this.searchList=this.filterArrayByString(this.shownList,this.inputSearch);
+        },
         reloadList(){
             this.artistContent.enable=false;
             this.albumContent.enable=false;
@@ -220,13 +280,25 @@ export default {
             return false;
         },
         playSong(index){
-            var nowPlay={
-                listName: this.nowPage,
-                index: index,
-                nowPlayList: this.shownList,
-                id: this.listID,
-                isPlay: false,
+            var nowPlay={};
+            if(this.isSearch==false){
+                nowPlay={
+                    listName: this.nowPage,
+                    index: index,
+                    nowPlayList: this.shownList,
+                    id: this.listID,
+                    isPlay: false,
+                }
+            }else{
+                nowPlay={
+                    listName: this.nowPage,
+                    index: this.shownList.indexOf(this.searchList[index]),
+                    nowPlayList: this.shownList,
+                    id: this.listID,
+                    isPlay: false,
+                }
             }
+            console.log(nowPlay);
             this.$emit('playSong',nowPlay)
         },
         getSongTime(duration){
@@ -390,6 +462,8 @@ export default {
         needRequest: function(newVal, oldVal){
             if(newVal==true && oldVal==false){
                 console.log("切换页面");
+                this.inputSearch="";
+                this.isSearch=false;
                 this.pageTurn();
             }
         }
@@ -398,6 +472,9 @@ export default {
 </script>
 
 <style scoped>
+.toolBar{
+    display: flex;
+}
 .ant-page-header{
     width: calc(100vw - 200px);
 }
