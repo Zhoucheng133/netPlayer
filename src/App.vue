@@ -132,6 +132,9 @@ export default {
 </script>
 
 <style scoped>
+#app{
+	overflow: hidden;
+}
 .darg{
 	-webkit-app-region: drag;
 	width: 100%;
