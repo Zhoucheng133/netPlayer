@@ -6,8 +6,8 @@
             <div class="version">v{{ version }}&nbsp;Release</div>
             <div class="copyright">Developed by zhouc</div>
             <div class="showingit">
-                <div class="gitItem" style="margin-right: 10px;" @click="openWeb('github')">See in Github</div>
-                <div class="gitItem" @click="openWeb('gitee')">See in Gitee</div>
+                <div class="gitItem" style="margin-right: 10px;" @click="openWeb('github')">Show in Github</div>
+                <div class="gitItem" @click="openWeb('gitee')">Show in Gitee</div>
             </div>
             <div class="opensource" @click="showLicenses">About the licenses</div>
         </div>
