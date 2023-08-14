@@ -148,7 +148,8 @@
             <searchView class="searchArea"
                 @showAlbumContent="showAlbumContent"
                 @turnToArtist="turnToArtist"
-                @searchPlay="searchPlay"/>
+                @searchPlay="searchPlay" 
+                :nowPlay="nowPlay"/>
         </div>
 
     </div>

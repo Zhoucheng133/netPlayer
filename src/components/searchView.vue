@@ -12,7 +12,7 @@
                         <div class="item">时长</div>
                     </div>
                     <div class="mainArea">
-                        <div v-for="(item, index) in shownList.song" :key="index" class="container" @dblclick="paySong(index)">
+                        <div v-for="(item, index) in shownList.song" :key="index" :class="isPlaying(index)?'container_playing':'container'" @dblclick="paySong(index)">
                             <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
                             <div class="item"><div class="itemContent">{{ item.title }}</div></div>
                             <div class="item"><div class="itemContent">{{ item.artist }}</div></div>
@@ -62,6 +62,9 @@
 <script>
 import { ipcRenderer } from 'electron';
 export default {
+    props: {
+        nowPlay: Object
+    },
     beforeDestroy() {
         ipcRenderer.removeAllListeners('searchResult');
     },
@@ -74,12 +77,18 @@ export default {
         }
     },
     methods: {
+        isPlaying(index){
+            if(index==this.nowPlay.index && this.inputValue==this.nowPlay.id){
+                return true;
+            }
+            return false;
+        },
         paySong(index){
             var nowPlay={
                 listName: "search",
                 index: index,
                 nowPlayList: this.shownList.song,
-                id: "",
+                id: this.inputValue,
                 isPlay: false,
             }
             this.$emit("searchPlay",nowPlay);
@@ -124,6 +133,15 @@ export default {
 </script>
 
 <style scoped>
+.container_playing{
+    display: grid;
+    grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 150px - 70px) 150px 70px 150px 70px;
+    width: 100%;
+    height: 50px;
+    transition: all ease-in-out .2s;
+    background-color: rgb(235, 235, 235);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
+}
 .mainArea > .container_artist:hover{
     background-color: rgb(220, 220, 220);
 }
