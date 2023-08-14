@@ -23,6 +23,20 @@
             </a-tab-pane>
             <a-tab-pane key="artist" tab="艺人">
                 <div v-if="shownList.length==0">对关键字进行搜索</div>
+                <div v-else>
+                    <div class="container_fix_artist">
+                        <div class="item">序号</div>
+                        <div class="item">艺人</div>
+                        <div class="item">专辑数量</div>
+                    </div>
+                    <div class="mainArea">
+                        <div class="container_artist"  v-for="(item, index) in shownList.artist" :key="index">
+                            <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
+                            <div class="item"><div class="itemContent">{{ item.name }}</div></div>
+                            <div class="item"><div class="itemContent">{{ item.albumCount }}</div></div>
+                        </div>
+                    </div>
+                </div>
             </a-tab-pane>
             <a-tab-pane key="album" tab="专辑">
                 <div v-if="shownList.length==0">对关键字进行搜索</div>
@@ -73,6 +87,24 @@ export default {
 </script>
 
 <style scoped>
+.mainArea > .container_artist:hover{
+    background-color: rgb(220, 220, 220);
+}
+.container_artist{
+    display: grid;
+    grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 100px) 100px;
+    width: 100%;
+    height: 50px;
+    transition: all ease-in-out .2s;
+}
+.container_fix_artist{
+    position: fixed;
+    display: grid;
+    grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 100px) 100px;
+    width: 100%;
+    background-color: rgb(242, 242, 242);
+    height: 50px;
+}
 .mainArea > .container:hover{
     background-color: rgb(220, 220, 220);
 }
@@ -101,7 +133,7 @@ export default {
 .container_fix{
     position: fixed;
     display: grid;
-    grid-template-columns: 50px auto 150px 70px;
+    grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 150px - 70px) 150px 70px;
     width: 100%;
     background-color: rgb(242, 242, 242);
     height: 50px;
