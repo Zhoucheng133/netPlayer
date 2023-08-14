@@ -145,7 +145,7 @@
         </div>
         
         <div v-else-if="nowPage=='search'">
-            搜索页面
+            <searchView class="searchArea"/>
         </div>
 
     </div>
@@ -153,7 +153,12 @@
 
 <script>
 import { ipcRenderer } from 'electron';
+
+import searchView from './searchView.vue';
 export default {
+    components:{
+        searchView,
+    },
     beforeDestroy() {
         ipcRenderer.removeAllListeners('listResult');
         ipcRenderer.removeAllListeners('lovedSongsResult');
@@ -553,6 +558,11 @@ export default {
     width: calc(100% - 248px);
     background-color: rgb(242, 242, 242);
     height: 50px;
+}
+.searchArea{
+    margin-left: 24px;
+    margin-right: 24px;
+    /* width: calc(100% - 248px); */
 }
 .container_fix{
     position: fixed;
