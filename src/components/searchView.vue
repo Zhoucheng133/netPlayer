@@ -114,8 +114,8 @@ export default {
     position: fixed;
     margin-top: 50px;
     width: 100%;
-    height: calc(100vh - 30px - 64px - 50px);
-    padding-bottom: 220px;
+    height: calc(100vh - 30px - 64px - 32px - 44px - 50px);
+    padding-bottom: 130px;
 }
 .item{
     display: flex;
