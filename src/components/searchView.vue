@@ -30,7 +30,7 @@
                         <div class="item">专辑数量</div>
                     </div>
                     <div class="mainArea">
-                        <div class="container_artist"  v-for="(item, index) in shownList.artist" :key="index">
+                        <div class="container_artist"  v-for="(item, index) in shownList.artist" :key="index" @dblclick="showArtistContent(item)">
                             <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
                             <div class="item"><div class="itemContent">{{ item.name }}</div></div>
                             <div class="item"><div class="itemContent">{{ item.albumCount }}</div></div>
@@ -74,8 +74,10 @@ export default {
         }
     },
     methods: {
+        showArtistContent(item){
+            this.$emit("turnToArtist",item);
+        },
         showAlbumContent(item){
-            // console.log("12121");
             this.$emit("showAlbumContent", item);
         },
         getSongTime(duration){

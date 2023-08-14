@@ -145,7 +145,9 @@
         </div>
         
         <div v-else-if="nowPage=='search'">
-            <searchView class="searchArea" @showAlbumContent="showAlbumContent"/>
+            <searchView class="searchArea"
+                @showAlbumContent="showAlbumContent"
+                @turnToArtist="turnToArtist"/>
         </div>
 
     </div>
@@ -274,6 +276,10 @@ export default {
             // console.log(resp);
             this.shownList=resp.artist.album;
             this.subTitle="共计"+resp.artist.album.length+"个专辑"
+        },
+        turnToArtist(item){
+            this.$emit("toPage",'artists');
+            this.showArtistContent(item);
         },
         showArtistContent(item){
             this.artistContent.enable=true;
@@ -406,9 +412,6 @@ export default {
             ipcRenderer.send('albumsRequst', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
         },
         albumsResult(event, resp){
-            // if(this.cancelRequest){
-            //     return;
-            // }
             this.shownList=[];
             console.log("请求所有专辑(Rlt)");
             this.subTitle="由新到旧显示的"+resp.albumList.album.length+"个专辑";
@@ -480,9 +483,12 @@ export default {
             this.needRequest=true;
             localStorage.setItem("playList",JSON.stringify(newVal));
         },
-        nowPage: function(newVal){
-            this.needRequest=true;
-            localStorage.setItem("nowPage",newVal);
+        nowPage: function(newVal, oldVal){
+            if(oldVal!="search"){
+                this.needRequest=true;
+                localStorage.setItem("nowPage",newVal);
+            }
+            
         },
         needRequest: function(newVal, oldVal){
             if(newVal==true && oldVal==false){
