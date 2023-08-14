@@ -147,7 +147,8 @@
         <div v-else-if="nowPage=='search'">
             <searchView class="searchArea"
                 @showAlbumContent="showAlbumContent"
-                @turnToArtist="turnToArtist"/>
+                @turnToArtist="turnToArtist"
+                @searchPlay="searchPlay"/>
         </div>
 
     </div>
@@ -295,6 +296,9 @@ export default {
                 return true;
             }
             return false;
+        },
+        searchPlay(item){
+            this.$emit('playSong',item)
         },
         playSong(index){
             var nowPlay={};

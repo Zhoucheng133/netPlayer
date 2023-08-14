@@ -12,7 +12,7 @@
                         <div class="item">时长</div>
                     </div>
                     <div class="mainArea">
-                        <div v-for="(item, index) in shownList.song" :key="index" class="container">
+                        <div v-for="(item, index) in shownList.song" :key="index" class="container" @dblclick="paySong(index)">
                             <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
                             <div class="item"><div class="itemContent">{{ item.title }}</div></div>
                             <div class="item"><div class="itemContent">{{ item.artist }}</div></div>
@@ -74,6 +74,16 @@ export default {
         }
     },
     methods: {
+        paySong(index){
+            var nowPlay={
+                listName: "search",
+                index: index,
+                nowPlayList: this.shownList.song,
+                id: "",
+                isPlay: false,
+            }
+            this.$emit("searchPlay",nowPlay);
+        },
         showArtistContent(item){
             this.$emit("turnToArtist",item);
         },
