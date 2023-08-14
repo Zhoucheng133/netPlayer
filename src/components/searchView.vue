@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a-input-search v-model="inputValue" @search="onSearch" enter-button></a-input-search>
+        <a-input-search v-model="inputValue" @search="onSearch" enter-button placeholder="输入你要搜索的内容"></a-input-search>
         <a-tabs default-active-key="song" @change="callback" :animated="shownAnimation">
             <a-tab-pane key="song" tab="单曲">
                 <div v-if="shownList.length==0">对关键字进行搜索</div>
