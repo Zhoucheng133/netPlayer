@@ -40,6 +40,20 @@
             </a-tab-pane>
             <a-tab-pane key="album" tab="专辑">
                 <div v-if="shownList.length==0">对关键字进行搜索</div>
+                <div v-else>
+                    <div class="container_fix_artist">
+                        <div class="item">序号</div>
+                        <div class="item">专辑名称</div>
+                        <div class="item">歌曲数</div>
+                    </div>
+                    <div class="mainArea" v-if="!isSearch">
+                        <div class="container_artist"  v-for="(item, index) in shownList.album" :key="index" >
+                            <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
+                            <div class="item"><div class="itemContent">{{ item.title }}</div></div>
+                            <div class="item"><div class="itemContent">{{ item.songCount }}</div></div>
+                        </div>
+                    </div>
+                </div>
             </a-tab-pane>
         </a-tabs>
     </div>
