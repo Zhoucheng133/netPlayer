@@ -283,7 +283,9 @@ export default {
             ipcRenderer.send('artistAlbumRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.artistContent.artistID);
         },
         isPlaying(index){
-            if(index==this.nowPlay.index && this.listID==this.nowPlay.id && this.nowPlay.listName==this.nowPage){
+            if(this.isSearch==true){
+                return false;
+            }else if(index==this.nowPlay.index && this.listID==this.nowPlay.id && this.nowPlay.listName==this.nowPage){
                 return true;
             }
             return false;
@@ -466,6 +468,11 @@ export default {
         this.pageTurn();
     },
     watch: {
+        inputSearch: function(newVal){
+            if(newVal==""){
+                this.isSearch=false;
+            }
+        },
         playList: function(newVal){
             this.needRequest=true;
             localStorage.setItem("playList",JSON.stringify(newVal));
