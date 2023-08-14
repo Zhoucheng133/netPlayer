@@ -145,7 +145,7 @@
         </div>
         
         <div v-else-if="nowPage=='search'">
-            <searchView class="searchArea"/>
+            <searchView class="searchArea" @showAlbumContent="showAlbumContent"/>
         </div>
 
     </div>
@@ -253,7 +253,7 @@ export default {
             this.shownList=resp.album.song;
         },
         showAlbumContent(item){
-            if(this.artistContent.enable){
+            if(this.artistContent.enable || this.nowPage=="search"){
                 this.cancelRequest=true;
             }
             this.artistContent.enable=false;
@@ -406,6 +406,9 @@ export default {
             ipcRenderer.send('albumsRequst', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
         },
         albumsResult(event, resp){
+            // if(this.cancelRequest){
+            //     return;
+            // }
             this.shownList=[];
             console.log("请求所有专辑(Rlt)");
             this.subTitle="由新到旧显示的"+resp.albumList.album.length+"个专辑";

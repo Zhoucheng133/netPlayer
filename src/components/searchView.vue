@@ -46,8 +46,8 @@
                         <div class="item">专辑名称</div>
                         <div class="item">歌曲数</div>
                     </div>
-                    <div class="mainArea" v-if="!isSearch">
-                        <div class="container_artist"  v-for="(item, index) in shownList.album" :key="index" >
+                    <div class="mainArea">
+                        <div class="container_artist"  v-for="(item, index) in shownList.album" :key="index"  @dblclick="showAlbumContent(item)">
                             <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
                             <div class="item"><div class="itemContent">{{ item.title }}</div></div>
                             <div class="item"><div class="itemContent">{{ item.songCount }}</div></div>
@@ -74,6 +74,10 @@ export default {
         }
     },
     methods: {
+        showAlbumContent(item){
+            // console.log("12121");
+            this.$emit("showAlbumContent", item);
+        },
         getSongTime(duration){
             var min=parseInt(duration/60);
             var sec=duration%60;
