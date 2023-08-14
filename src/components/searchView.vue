@@ -1,7 +1,7 @@
 <template>
     <div>
         <a-input-search v-model="inputValue" @search="onSearch" enter-button></a-input-search>
-        <a-tabs default-active-key="song" @change="callback">
+        <a-tabs default-active-key="song" @change="callback" :animated="shownAnimation">
             <a-tab-pane key="song" tab="单曲">
                 <div v-if="shownList.length==0">对关键字进行搜索</div>
                 <div v-else>
@@ -39,6 +39,8 @@ export default {
     },
     data() {
         return {
+            shownAnimation: false,
+
             shownList: [],
             inputValue: ""
         }
