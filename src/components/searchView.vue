@@ -97,6 +97,13 @@ export default {
         ipcRenderer.removeAllListeners('searchResult');
         ipcRenderer.on('searchResult', this.searchResult);
     },
+    watch: {
+        inputValue:function(newVal){
+            if(newVal==""){
+                this.onSearch();
+            }
+        }
+    }
 }
 </script>
 
