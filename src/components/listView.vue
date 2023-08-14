@@ -6,8 +6,8 @@
             :sub-title="subTitle" >
             <template slot="extra">
                 <div class="toolBar">
-                    <a-input-search placeholder="输入搜索内容" style="width: 200px;margin-right: 20px;" @search="onSearch" allowClear v-model="inputSearch" @change="onSearch"/>
-                    <a-button icon="redo" type="primary" shape="round" @click="reloadList"></a-button>
+                    <a-input-search v-if="nowPage!='search'" placeholder="输入搜索内容" style="width: 200px;margin-right: 20px;" @search="onSearch" allowClear v-model="inputSearch" @change="onSearch"/>
+                    <a-button v-if="nowPage!='search'" icon="redo" type="primary" shape="round" @click="reloadList"></a-button>
                 </div>
             </template>
         </a-page-header>
@@ -22,7 +22,7 @@
             </template>
         </a-page-header>
 
-        <div v-if="nowPage!='albums' && nowPage!='artists'">
+        <div v-if="nowPage!='albums' && nowPage!='artists' && nowPage!='search'" >
             <div class="container_fix">
                 <div class="item">序号</div>
                 <div class="item">歌曲名</div>
@@ -142,6 +142,10 @@
                     <div class="item"><div class="itemContent">{{ getSongTime(item.duration) }}</div></div>
                 </div>
             </div>
+        </div>
+        
+        <div v-else-if="nowPage=='search'">
+            搜索页面
         </div>
 
     </div>
@@ -327,6 +331,10 @@ export default {
                 case 'playList':
                     this.shownTitle=this.playList.name;
                     break;
+                case 'search':
+                    this.shownTitle="搜索";
+                    this.subTitle="";
+                    break;
             }
         },
         requestLovedSongs(){
@@ -426,6 +434,8 @@ export default {
                 this.requestAllSongs();
             }else if(this.nowPage=='lovedSongs'){
                 this.requestLovedSongs();
+            }else{
+                this.needRequest=false;
             }
         }
     },

@@ -151,6 +151,20 @@ function registerMediaKeyShortcuts() {
 	});
 }
 
+// 搜索请求
+ipcMain.on("searchRequest", async (event, url, username, salt, token, keyword) => {
+	var resp=undefined;
+	await axios.post(url+"/rest/search2?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&query="+keyword)
+	.then((response)=>{
+		resp=response.data['subsonic-response'];
+	})
+	.catch(()=>{
+		resp=null;
+	})
+
+	event.reply('searchResult', resp);
+});
+
 // 获取专辑信息
 ipcMain.on("albumContentRequest", async (event, url, username, salt, token, id) => {
 	var resp=undefined;
