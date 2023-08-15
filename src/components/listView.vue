@@ -60,6 +60,9 @@
                     <div class="item">
                         <div class="itemContent"><svg v-if="isLoved(item)" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#ff0000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
+                    <div class="item">
+                        <div class="itemContent"><svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="3" fill="#000000"/><circle cx="24" cy="24" r="3" fill="#000000"/><circle cx="24" cy="35" r="3" fill="#000000"/></svg></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -602,7 +605,7 @@ export default {
 }
 .container_playing{
     display: grid;
-    grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 150px - 70px - 50px - 50px) 150px 70px 150px 70px 50px 50px;
+    grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 150px - 70px - 50px - 50px) 150px 70px 50px 50px;
     width: 100%;
     height: 50px;
     transition: all ease-in-out .2s;
