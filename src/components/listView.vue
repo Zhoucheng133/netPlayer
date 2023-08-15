@@ -280,6 +280,7 @@ export default {
             this.subTitle="共计"+resp.artist.album.length+"个专辑"
         },
         turnToArtist(item){
+            this.cancelRequest=true;
             this.$emit("toPage",'artists');
             this.showArtistContent(item);
         },
@@ -356,6 +357,11 @@ export default {
             }
         },
         requestLovedSongs(){
+            if(this.cancelRequest){
+                this.cancelRequest=false;
+                console.log("取消请求所有专辑");
+                return;
+            }
             console.log("请求所有喜欢的歌曲(Req)");
             ipcRenderer.send('lovedSongsRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
         },
@@ -372,6 +378,11 @@ export default {
         },
         requestArtists(){
             console.log("请求所有艺人(Req)");
+            if(this.cancelRequest){
+                this.cancelRequest=false;
+                console.log("取消请求所有专辑");
+                return;
+            }
             this.shownList=[];
             ipcRenderer.send('artistsRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
         },
@@ -388,6 +399,11 @@ export default {
         },
         requestAllSongs(){
             console.log("请求所有歌曲(Req)");
+            if(this.cancelRequest){
+                this.cancelRequest=false;
+                console.log("取消请求所有专辑");
+                return;
+            }
             if(this.allSongsList.length==0){
                 ipcRenderer.send('allSongsRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
             }else{
@@ -423,6 +439,11 @@ export default {
             this.shownList=resp.albumList.album;
         },
         requestList(){
+            if(this.cancelRequest){
+                this.cancelRequest=false;
+                console.log("取消请求所有专辑");
+                return;
+            }
             console.log("请求列表(Req)");
             ipcRenderer.send('listRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.playList.id);
         },
@@ -488,10 +509,8 @@ export default {
             this.needRequest=true;
             localStorage.setItem("playList",JSON.stringify(newVal));
         },
-        nowPage: function(newVal, oldVal){
-            if(oldVal!="search"){
-                this.needRequest=true;
-            }
+        nowPage: function(){
+            this.needRequest=true;
         },
         needRequest: function(newVal, oldVal){
             if(newVal==true && oldVal==false){
