@@ -148,7 +148,7 @@ export default {
 <style scoped>
 .container_playing{
     display: grid;
-    grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 150px - 70px) 150px 70px 150px 70px;
+    grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 150px - 70px - 50px) 150px 70px 150px 70px 50px;
     width: 100%;
     height: 50px;
     transition: all ease-in-out .2s;
