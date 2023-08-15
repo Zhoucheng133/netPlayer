@@ -28,6 +28,9 @@
                 <div class="item">歌曲名</div>
                 <div class="item">歌手</div>
                 <div class="item">时长</div>
+                <div class="item">
+                    <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
             </div>
 
             <div class="mainArea" v-if="!isSearch">
@@ -36,6 +39,9 @@
                     <div class="item"><div class="itemContent">{{ item.title }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.artist }}</div></div>
                     <div class="item"><div class="itemContent">{{ getSongTime(item.duration) }}</div></div>
+                    <div class="item">
+                        <div class="itemContent"><svg v-if="isLoved(item)" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#ff0000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    </div>
                 </div>
             </div>
             
@@ -45,6 +51,9 @@
                     <div class="item"><div class="itemContent">{{ item.title }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.artist }}</div></div>
                     <div class="item"><div class="itemContent">{{ getSongTime(item.duration) }}</div></div>
+                    <div class="item">
+                        <div class="itemContent"><svg v-if="isLoved(item)" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#ff0000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -123,6 +132,9 @@
                 <div class="item">歌曲名</div>
                 <div class="item">歌手</div>
                 <div class="item">时长</div>
+                <div class="item">
+                    <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
             </div>
 
             <div class="mainArea" v-if="!isSearch">
@@ -131,6 +143,9 @@
                     <div class="item"><div class="itemContent">{{ item.title }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.artist }}</div></div>
                     <div class="item"><div class="itemContent">{{ getSongTime(item.duration) }}</div></div>
+                    <div class="item">
+                        <div class="itemContent"><svg v-if="isLoved(item)" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#ff0000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    </div>
                 </div>
             </div>
 
@@ -140,6 +155,9 @@
                     <div class="item"><div class="itemContent">{{ item.title }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.artist }}</div></div>
                     <div class="item"><div class="itemContent">{{ getSongTime(item.duration) }}</div></div>
+                    <div class="item">
+                        <div class="itemContent"><svg v-if="isLoved(item)" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#ff0000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -205,9 +223,18 @@ export default {
             searchList: [],
 
             inputSearch: "",
+
+            lovedSongs: [],
         }
     },
     methods: {
+        isLoved(item){
+            if(JSON.stringify(this.lovedSongs).indexOf(JSON.stringify(item))!=-1){
+                return true;
+            }
+            return false;
+            
+        },
         filterArrayByString(inputArray, searchString) {
             return inputArray.filter(obj => {
                 return Object.values(obj).some(value => {
@@ -245,6 +272,9 @@ export default {
             }else if(this.nowPage=='allSongs'){
                 console.log("请求所有歌曲(Req)");
                 ipcRenderer.send('allSongsRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
+            }else if(this.nowPage!='lovedSongs'){
+                this.requestLovedSongs();
+                this.pageTurn();
             }else{
                 this.pageTurn();
             }
@@ -260,6 +290,7 @@ export default {
             if(this.artistContent.enable || this.nowPage=="search"){
                 this.cancelRequest=true;
             }
+            this.isSearch=false;
             this.artistContent.enable=false;
             this.albumContent.enable=true;
             this.albumContent.albumID=item.id;
@@ -285,6 +316,7 @@ export default {
             this.showArtistContent(item);
         },
         showArtistContent(item){
+            this.isSearch=false;
             this.artistContent.enable=true;
             this.artistContent.artistID=item.id;
             this.shownList=[];
@@ -367,8 +399,15 @@ export default {
         },
         lovedSongsResult(event, resp){
             console.log("请求所有喜欢的歌曲(Rlt)");
+            if(this.nowPage!='lovedSongs'){
+                this.lovedSongs=resp.starred.song;
+                console.log("后台更新喜欢的歌曲");
+                console.log(this.lovedSongs);
+                return;
+            }
             this.needRequest=false;
             this.shownList=resp.starred.song;
+            this.lovedSongs=resp.starred.song;
             if(resp.starred.song==undefined){
                 this.subTitle="合计0首歌";
             }else{
@@ -451,6 +490,7 @@ export default {
             console.log("请求列表(Rlt)");
             this.needRequest=false;
             this.shownList=resp.playlist.entry;
+            // console.log(resp.playlist.entry);
             this.listID=resp.playlist.id;
             this.subTitle="合计"+resp.playlist.songCount+"首歌";
         },
@@ -486,6 +526,8 @@ export default {
         ipcRenderer.removeAllListeners('artistAlbumResult');
         ipcRenderer.removeAllListeners('albumsResult');
         ipcRenderer.removeAllListeners('albumContentResult');
+
+
         ipcRenderer.on('listResult', this.listResult);
         ipcRenderer.on('lovedSongsResult', this.lovedSongsResult);
         ipcRenderer.on('allSongsResult', this.allSongsResult);
@@ -518,7 +560,11 @@ export default {
                 this.inputSearch="";
                 this.isSearch=false;
                 this.pageTurn();
+                if(this.nowPage!='lovedSongs'){
+                    this.requestLovedSongs();
+                }
             }
+            
         }
     },
 }
@@ -550,16 +596,25 @@ export default {
 }
 .container_playing{
     display: grid;
-    grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 150px - 70px) 150px 70px 150px 70px;
+    grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 150px - 70px - 50px) 150px 70px 150px 70px 50px;
     width: 100%;
     height: 50px;
     transition: all ease-in-out .2s;
     background-color: rgb(235, 235, 235);
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
 }
+.container_fix{
+    position: fixed;
+    margin-left: 24px;
+    display: grid;
+    grid-template-columns: 50px auto 150px 70px 50px;
+    width: calc(100% - 248px);
+    background-color: rgb(242, 242, 242);
+    height: 50px;
+}
 .container{
     display: grid;
-    grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 150px - 70px) 150px 70px;
+    grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 150px - 70px - 50px) 150px 70px 50px;
     width: 100%;
     height: 50px;
     transition: all ease-in-out .2s;
@@ -601,14 +656,5 @@ export default {
     margin-left: 24px;
     margin-right: 24px;
     /* width: calc(100% - 248px); */
-}
-.container_fix{
-    position: fixed;
-    margin-left: 24px;
-    display: grid;
-    grid-template-columns: 50px auto 150px 70px;
-    width: calc(100% - 248px);
-    background-color: rgb(242, 242, 242);
-    height: 50px;
 }
 </style>
