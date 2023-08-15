@@ -167,6 +167,7 @@
                 @showAlbumContent="showAlbumContent"
                 @turnToArtist="turnToArtist"
                 @searchPlay="searchPlay" 
+                :lovedSongs="lovedSongs"
                 :nowPlay="nowPlay"/>
         </div>
 
@@ -233,7 +234,6 @@ export default {
                 return true;
             }
             return false;
-            
         },
         filterArrayByString(inputArray, searchString) {
             return inputArray.filter(obj => {
