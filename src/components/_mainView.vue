@@ -185,7 +185,10 @@ export default {
                 this.$nextTick(()=>{
                     that.$refs.listPart.pageTurn();
                 })
+                return;
             }
+            localStorage.setItem("nowPage",newVal);
+            
         }
     },
 }

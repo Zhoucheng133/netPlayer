@@ -491,9 +491,7 @@ export default {
         nowPage: function(newVal, oldVal){
             if(oldVal!="search"){
                 this.needRequest=true;
-                localStorage.setItem("nowPage",newVal);
             }
-            
         },
         needRequest: function(newVal, oldVal){
             if(newVal==true && oldVal==false){
