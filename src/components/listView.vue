@@ -329,7 +329,7 @@ export default {
     methods: {
         isLoved(item){
             for (const obj of this.lovedSongs) {
-                if (JSON.stringify(obj.id) === JSON.stringify(item.id)) {
+                if (obj.id == item.id) {
                     return true;
                 }
             }
