@@ -45,8 +45,38 @@
                     <div class="item">
                         <div class="itemContent"><svg v-if="isLoved(item)" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#ff0000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
-                    <div class="item" style="padding-left: 0;" @click.prevent="songOperation(item)">
-                        <div class="songOp itemContent"><svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="3" fill="#000000"/><circle cx="24" cy="24" r="3" fill="#000000"/><circle cx="24" cy="35" r="3" fill="#000000"/></svg></div>
+                    <div class="item" style="padding-left: 0;">
+                        <a-dropdown :trigger="['click']">
+                            <div class="songOp itemContent"><svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="3" fill="#000000"/><circle cx="24" cy="24" r="3" fill="#000000"/><circle cx="24" cy="35" r="3" fill="#000000"/></svg></div>
+                            <a-menu slot="overlay">
+                                <a-menu-item key="1" @click="play_menu(index)">
+                                    <a-icon type="play-circle" />
+                                    播放
+                                </a-menu-item>
+                                <a-menu-divider />
+                                <a-menu-item key="2" @click="addTo_menu(item)">
+                                    <a-icon type="unordered-list" />
+                                    添加到歌单…
+                                </a-menu-item>
+                                <a-menu-item key="3" disabled v-if="nowPage!='playList'">
+                                    <a-icon type="delete"/>
+                                    从歌单中删除
+                                </a-menu-item>
+                                <a-menu-item key="3" v-if="nowPage=='playList'" @click="delFromList_menu(item)">
+                                    <a-icon type="delete" />
+                                    从歌单中删除
+                                </a-menu-item>
+                                <a-menu-divider />
+                                <a-menu-item key="4" v-if="isLoved(item)" @click="deLove_menu(item)">
+                                    <svg width="12" height="12" style="margin-right: 8px;" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C25.1936 41.9295 26.5616 41.3098 28.0099 40.5" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.959 27L41.8375 35.5" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M41.8375 27L34.959 35.5" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    取消喜欢
+                                </a-menu-item>
+                                <a-menu-item key="4" v-else @click="love_menu(item)">
+                                    <svg width="12" height="12" style="margin-right: 8px;" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    喜欢
+                                </a-menu-item>
+                            </a-menu>
+                        </a-dropdown>
                     </div>
                 </div>
             </div>
@@ -60,8 +90,38 @@
                     <div class="item">
                         <div class="itemContent"><svg v-if="isLoved(item)" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#ff0000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
-                    <div class="item">
-                        <div class="itemContent"><svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="3" fill="#000000"/><circle cx="24" cy="24" r="3" fill="#000000"/><circle cx="24" cy="35" r="3" fill="#000000"/></svg></div>
+                    <div class="item" style="padding-left: 0;">
+                        <a-dropdown :trigger="['click']">
+                            <div class="songOp itemContent"><svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="3" fill="#000000"/><circle cx="24" cy="24" r="3" fill="#000000"/><circle cx="24" cy="35" r="3" fill="#000000"/></svg></div>
+                            <a-menu slot="overlay">
+                                <a-menu-item key="1" @click="play_menu(index)">
+                                    <a-icon type="play-circle" />
+                                    播放
+                                </a-menu-item>
+                                <a-menu-divider />
+                                <a-menu-item key="2" @click="addTo_menu(item)">
+                                    <a-icon type="unordered-list" />
+                                    添加到歌单…
+                                </a-menu-item>
+                                <a-menu-item key="3" disabled v-if="nowPage!='playList'">
+                                    <a-icon type="delete"/>
+                                    从歌单中删除
+                                </a-menu-item>
+                                <a-menu-item key="3" v-if="nowPage=='playList'" @click="delFromList_menu(item)">
+                                    <a-icon type="delete" />
+                                    从歌单中删除
+                                </a-menu-item>
+                                <a-menu-divider />
+                                <a-menu-item key="4" v-if="isLoved(item)" @click="deLove_menu(item)">
+                                    <svg width="12" height="12" style="margin-right: 8px;" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C25.1936 41.9295 26.5616 41.3098 28.0099 40.5" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.959 27L41.8375 35.5" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M41.8375 27L34.959 35.5" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    取消喜欢
+                                </a-menu-item>
+                                <a-menu-item key="4" v-else @click="love_menu(item)">
+                                    <svg width="12" height="12" style="margin-right: 8px;" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    喜欢
+                                </a-menu-item>
+                            </a-menu>
+                        </a-dropdown>
                     </div>
                 </div>
             </div>
@@ -144,9 +204,12 @@
                 <div class="item">
                     <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
+                <div class="item">
+                    <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.94971 11.9497H39.9497" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.94971 23.9497H39.9497" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.94971 35.9497H39.9497" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
             </div>
 
-            <div class="mainArea" v-if="!isSearch">
+            <div class="mainArea">
                 <div v-for="(item, index) in shownList" :key="index" @dblclick="playSong(index)" :class="isPlaying(index)?'container_playing':'container'">
                     <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
                     <div class="item"><div class="itemContent">{{ item.title }}</div></div>
@@ -155,17 +218,38 @@
                     <div class="item">
                         <div class="itemContent"><svg v-if="isLoved(item)" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#ff0000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     </div>
-                </div>
-            </div>
-
-            <div class="mainArea" v-else>
-                <div v-for="(item, index) in searchList" :key="index" @dblclick="playSong(index)" :class="isPlaying(index)?'container_playing':'container'">
-                    <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
-                    <div class="item"><div class="itemContent">{{ item.title }}</div></div>
-                    <div class="item"><div class="itemContent">{{ item.artist }}</div></div>
-                    <div class="item"><div class="itemContent">{{ getSongTime(item.duration) }}</div></div>
-                    <div class="item">
-                        <div class="itemContent"><svg v-if="isLoved(item)" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#ff0000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    <div class="item" style="padding-left: 0;">
+                        <a-dropdown :trigger="['click']">
+                            <div class="songOp itemContent"><svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="3" fill="#000000"/><circle cx="24" cy="24" r="3" fill="#000000"/><circle cx="24" cy="35" r="3" fill="#000000"/></svg></div>
+                            <a-menu slot="overlay">
+                                <a-menu-item key="1" @click="play_menu(index)">
+                                    <a-icon type="play-circle" />
+                                    播放
+                                </a-menu-item>
+                                <a-menu-divider />
+                                <a-menu-item key="2" @click="addTo_menu(item)">
+                                    <a-icon type="unordered-list" />
+                                    添加到歌单…
+                                </a-menu-item>
+                                <a-menu-item key="3" disabled v-if="nowPage!='playList'">
+                                    <a-icon type="delete"/>
+                                    从歌单中删除
+                                </a-menu-item>
+                                <a-menu-item key="3" v-if="nowPage=='playList'" @click="delFromList_menu(item)">
+                                    <a-icon type="delete" />
+                                    从歌单中删除
+                                </a-menu-item>
+                                <a-menu-divider />
+                                <a-menu-item key="4" v-if="isLoved(item)" @click="deLove_menu(item)">
+                                    <svg width="12" height="12" style="margin-right: 8px;" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C25.1936 41.9295 26.5616 41.3098 28.0099 40.5" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.959 27L41.8375 35.5" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M41.8375 27L34.959 35.5" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    取消喜欢
+                                </a-menu-item>
+                                <a-menu-item key="4" v-else @click="love_menu(item)">
+                                    <svg width="12" height="12" style="margin-right: 8px;" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    喜欢
+                                </a-menu-item>
+                            </a-menu>
+                        </a-dropdown>
                     </div>
                 </div>
             </div>
@@ -176,6 +260,9 @@
                 @showAlbumContent="showAlbumContent"
                 @turnToArtist="turnToArtist"
                 @searchPlay="searchPlay" 
+                @love_menu="love_menu" 
+                @deLove_menu="deLove_menu" 
+                @addTo_menu="addTo_menu" 
                 :lovedSongs="lovedSongs"
                 :nowPlay="nowPlay"/>
         </div>
@@ -238,8 +325,22 @@ export default {
         }
     },
     methods: {
-        songOperation(item){
-            console.log(item);
+        love_menu(){
+            // From API: star
+            console.log("菜单-喜欢");
+            console.log(this.shownList);
+        },
+        deLove_menu(){
+            console.log("菜单-取消喜欢");
+        },
+        delFromList_menu(){
+            console.log("菜单-从歌单中删除");
+        },
+        addTo_menu(){
+            console.log("菜单-添加到歌单…");
+        },
+        play_menu(index){
+            this.playSong(index);
         },
         isLoved(item){
             if(JSON.stringify(this.lovedSongs).indexOf(JSON.stringify(item))!=-1){

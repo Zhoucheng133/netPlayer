@@ -13,15 +13,43 @@
                         <div class="item">
                             <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         </div>
+                        <div class="item">
+                            <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.94971 11.9497H39.9497" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.94971 23.9497H39.9497" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.94971 35.9497H39.9497" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </div>
                     </div>
                     <div class="mainArea">
-                        <div v-for="(item, index) in shownList.song" :key="index" :class="isPlaying(index)?'container_playing':'container'" @dblclick="paySong(index)">
+                        <div v-for="(item, index) in shownList.song" :key="index" :class="isPlaying(index)?'container_playing':'container'" @dblclick="playSong(index)">
                             <div class="item"><div class="itemContent">{{ index+1 }}</div></div>
                             <div class="item"><div class="itemContent">{{ item.title }}</div></div>
                             <div class="item"><div class="itemContent">{{ item.artist }}</div></div>
                             <div class="item"><div class="itemContent">{{ getSongTime(item.duration) }}</div></div>
                             <div class="item">
                                 <div class="itemContent"><svg v-if="isLoved(item)" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#ff0000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                            </div>
+                            <div class="item" style="padding-left: 0;">
+                                <a-dropdown :trigger="['click']">
+                                    <div class="songOp itemContent"><svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="3" fill="#000000"/><circle cx="24" cy="24" r="3" fill="#000000"/><circle cx="24" cy="35" r="3" fill="#000000"/></svg></div>
+                                    <a-menu slot="overlay" class="forcePosition">
+                                        <a-menu-item key="1" @click="play_menu(index)">
+                                            <a-icon type="play-circle" />
+                                            播放
+                                        </a-menu-item>
+                                        <a-menu-divider />
+                                        <a-menu-item key="2" @click="addTo_menu(item)">
+                                            <a-icon type="unordered-list" />
+                                            添加到歌单…
+                                        </a-menu-item>
+                                        <a-menu-divider />
+                                        <a-menu-item key="4" v-if="isLoved(item)" @click="deLove_menu(item)">
+                                            <svg width="12" height="12" style="margin-right: 8px;" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C25.1936 41.9295 26.5616 41.3098 28.0099 40.5" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.959 27L41.8375 35.5" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M41.8375 27L34.959 35.5" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            取消喜欢
+                                        </a-menu-item>
+                                        <a-menu-item key="4" v-else @click="love_menu(item)">
+                                            <svg width="12" height="12" style="margin-right: 8px;" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            喜欢
+                                        </a-menu-item>
+                                    </a-menu>
+                                </a-dropdown>
                             </div>
                         </div>
                     </div>
@@ -80,10 +108,22 @@ export default {
             shownAnimation: false,
 
             shownList: [],
-            inputValue: ""
+            inputValue: "",
         }
     },
     methods: {
+        love_menu(item){
+            this.$emit("love_menu", item);
+        },
+        deLove_menu(item){
+            this.$emit("deLove_menu", item);
+        },
+        addTo_menu(item){
+            this.$emit("addTo_menu", item);
+        },
+        play_menu(index){
+            this.playSong(index);
+        },
         isLoved(item){
             if(JSON.stringify(this.lovedSongs).indexOf(JSON.stringify(item))!=-1){
                 return true;
@@ -96,7 +136,7 @@ export default {
             }
             return false;
         },
-        paySong(index){
+        playSong(index){
             var nowPlay={
                 listName: "search",
                 index: index,
@@ -146,9 +186,26 @@ export default {
 </script>
 
 <style scoped>
+.forcePosition{
+    transform: translate(-90px);
+}
+.songOp:hover{
+    background-color: white;
+    cursor: pointer;
+}
+.songOp{
+    display: flex;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-right: 10px;
+    transition: all ease-in-out .2s;
+}
 .container_playing{
     display: grid;
-    grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 150px - 70px - 50px) 150px 70px 150px 70px 50px;
+    grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 150px - 70px - 50px - 50px) 150px 70px 50px 50px;
     width: 100%;
     height: 50px;
     transition: all ease-in-out .2s;
@@ -181,7 +238,7 @@ export default {
     overflow-x: hidden;
     position: fixed;
     margin-top: 50px;
-    width: 100%;
+    width: calc(100vw - 200px - 48px);
     height: calc(100vh - 30px - 64px - 32px - 44px - 50px);
     padding-bottom: 130px;
 }
@@ -191,18 +248,26 @@ export default {
     padding-left: 10px;
     font-size: 14px;
 }
+.itemContent{
+    width: 100%;
+    overflow: hidden;
+	text-overflow: ellipsis;
+    text-align: left;
+    white-space:nowrap;
+}
+
 .container{
     display: grid;
-    grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 150px - 70px - 50px) 150px 70px 50px;
-    width: 100%;
+    grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 150px - 70px - 50px - 50px) 150px 70px 50px 50px;
+    /* width: 100%; */
     height: 50px;
     transition: all ease-in-out .2s;
 }
 .container_fix{
     position: fixed;
     display: grid;
-    grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 150px - 70px - 50px) 150px 70px 50px;
-    width: 100%;
+    grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 150px - 70px - 50px - 50px) 150px 70px 50px 50px;
+    /* width: 100%; */
     background-color: rgb(242, 242, 242);
     height: 50px;
 }

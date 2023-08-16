@@ -261,6 +261,34 @@ ipcMain.on("autoLoginRequest", async (event, url, username, salt, token) => {
 	});
 });
 
+// unstar a song
+ipcMain.on("unstarRequest", async (event, url, username, salt, token, id) => {
+	var resp=undefined;
+	await axios.post(url+"/rest/unstar?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&id="+id)
+	.then((response)=>{
+		resp=response.data['subsonic-response'];
+	})
+	.catch(()=>{
+		resp=null;
+	})
+
+	event.reply('unstarResult', resp);
+});
+
+// 标记为喜欢的歌曲
+ipcMain.on("starRequest", async (event, url, username, salt, token, id) => {
+	var resp=undefined;
+	await axios.post(url+"/rest/star?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&id="+id)
+	.then((response)=>{
+		resp=response.data['subsonic-response'];
+	})
+	.catch(()=>{
+		resp=null;
+	})
+
+	event.reply('starResult', resp);
+});
+
 // 加载我喜爱的歌曲
 ipcMain.on("lovedSongsRequest", async (event, url, username, salt, token) => {
 	var resp=undefined;
