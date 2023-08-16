@@ -286,6 +286,8 @@ export default {
         ipcRenderer.removeAllListeners('artistAlbumResult');
         ipcRenderer.removeAllListeners('albumsResult');
         ipcRenderer.removeAllListeners('albumContentResult');
+        ipcRenderer.removeAllListeners('starResult');
+        ipcRenderer.removeAllListeners('unstarResult');
     },
     props:{
         nowPage: String,
@@ -325,13 +327,19 @@ export default {
         }
     },
     methods: {
-        love_menu(){
-            // From API: star
-            console.log("菜单-喜欢");
-            console.log(this.shownList);
+        isLoved(item){
+            for (const obj of this.lovedSongs) {
+                if (JSON.stringify(obj.id) === JSON.stringify(item.id)) {
+                    return true;
+                }
+            }
+            return false;
         },
-        deLove_menu(){
-            console.log("菜单-取消喜欢");
+        love_menu(item){
+            ipcRenderer.send('starRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), item.id);
+        },
+        deLove_menu(item){
+            ipcRenderer.send('unstarRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), item.id);
         },
         delFromList_menu(){
             console.log("菜单-从歌单中删除");
@@ -341,12 +349,6 @@ export default {
         },
         play_menu(index){
             this.playSong(index);
-        },
-        isLoved(item){
-            if(JSON.stringify(this.lovedSongs).indexOf(JSON.stringify(item))!=-1){
-                return true;
-            }
-            return false;
         },
         filterArrayByString(inputArray, searchString) {
             return inputArray.filter(obj => {
@@ -514,8 +516,10 @@ export default {
             console.log("请求所有喜欢的歌曲(Rlt)");
             if(this.nowPage!='lovedSongs'){
                 this.lovedSongs=resp.starred.song;
-                console.log("后台更新喜欢的歌曲");
                 console.log(this.lovedSongs);
+                console.log(this.shownList);
+                this.$forceUpdate();
+                console.log("后台更新喜欢的歌曲");
                 return;
             }
             this.needRequest=false;
@@ -629,7 +633,23 @@ export default {
             }else{
                 this.needRequest=false;
             }
-        }
+        },
+        starResult(event, resp){
+            if(resp.status=="ok"){
+                this.$message.success("操作成功");
+            }else{
+                this.$message.error("操作失败");
+            }
+            this.requestLovedSongs();
+        },
+        unstarResult(event, resp){
+            if(resp.status=="ok"){
+                this.$message.success("操作成功");
+            }else{
+                this.$message.error("操作失败");
+            }
+            this.requestLovedSongs();
+        },
     },
     mounted() {
         ipcRenderer.removeAllListeners('listResult');
@@ -639,6 +659,8 @@ export default {
         ipcRenderer.removeAllListeners('artistAlbumResult');
         ipcRenderer.removeAllListeners('albumsResult');
         ipcRenderer.removeAllListeners('albumContentResult');
+        ipcRenderer.removeAllListeners('starResult');
+        ipcRenderer.removeAllListeners('unstarResult');
 
 
         ipcRenderer.on('listResult', this.listResult);
@@ -648,6 +670,8 @@ export default {
         ipcRenderer.on('artistAlbumResult', this.artistAlbumResult);
         ipcRenderer.on('albumsResult', this.albumsResult);
         ipcRenderer.on('albumContentResult', this.albumContentResult);
+        ipcRenderer.on('starResult', this.starResult);
+        ipcRenderer.on('unstarResult', this.unstarResult);
     },
     created() {
         this.titleController();
