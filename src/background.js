@@ -261,7 +261,7 @@ ipcMain.on("autoLoginRequest", async (event, url, username, salt, token) => {
 	});
 });
 
-// unstar a song
+// 从喜欢的歌曲中删除
 ipcMain.on("unstarRequest", async (event, url, username, salt, token, id) => {
 	var resp=undefined;
 	await axios.post(url+"/rest/unstar?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&id="+id)
