@@ -125,8 +125,10 @@ export default {
             this.playSong(index);
         },
         isLoved(item){
-            if(JSON.stringify(this.lovedSongs).indexOf(JSON.stringify(item))!=-1){
-                return true;
+            for (const obj of this.lovedSongs) {
+                if (obj.id == item.id) {
+                    return true;
+                }
             }
             return false;
         },
