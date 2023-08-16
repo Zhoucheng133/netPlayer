@@ -359,7 +359,7 @@ export default {
         },
         onSearch(){
             if(this.inputSearch==""){
-                console.log("return!");
+                // console.log("return!");
                 this.isSearch=false;
             }
             this.isSearch=true;
@@ -410,7 +410,7 @@ export default {
             this.albumContent.enable=true;
             this.albumContent.albumID=item.id;
             this.$emit("toPage",'albums');
-            console.log(this.albumContent);
+            // console.log(this.albumContent);
             this.shownTitle="专辑/"+item.name;
             console.log("请求专辑内容(Req)");
             ipcRenderer.send('albumContentRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.albumContent.albumID);
@@ -468,7 +468,7 @@ export default {
                     isPlay: false,
                 }
             }
-            console.log(nowPlay);
+            // console.log(nowPlay);
             this.$emit('playSong',nowPlay)
         },
         getSongTime(duration){
@@ -516,8 +516,8 @@ export default {
             console.log("请求所有喜欢的歌曲(Rlt)");
             if(this.nowPage!='lovedSongs'){
                 this.lovedSongs=resp.starred.song;
-                console.log(this.lovedSongs);
-                console.log(this.shownList);
+                // console.log(this.lovedSongs);
+                // console.log(this.shownList);
                 this.$forceUpdate();
                 console.log("后台更新喜欢的歌曲");
                 return;
