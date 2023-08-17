@@ -47,7 +47,9 @@
                     </div>
                     <div class="item" style="padding-left: 0;">
                         <a-dropdown :trigger="['click']">
-                            <div class="songOp itemContent"><svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="3" fill="#000000"/><circle cx="24" cy="24" r="3" fill="#000000"/><circle cx="24" cy="35" r="3" fill="#000000"/></svg></div>
+                            <div class="songOp itemContent">
+                                <a-icon type="more"/>
+                            </div>
                             <a-menu slot="overlay">
                                 <a-menu-item key="1" @click="play_menu(index)">
                                     <a-icon type="play-circle" />
@@ -92,7 +94,9 @@
                     </div>
                     <div class="item" style="padding-left: 0;">
                         <a-dropdown :trigger="['click']">
-                            <div class="songOp itemContent"><svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="3" fill="#000000"/><circle cx="24" cy="24" r="3" fill="#000000"/><circle cx="24" cy="35" r="3" fill="#000000"/></svg></div>
+                            <div class="songOp itemContent">
+                                <a-icon type="more"/>
+                            </div>
                             <a-menu slot="overlay">
                                 <a-menu-item key="1" @click="play_menu(index)">
                                     <a-icon type="play-circle" />
@@ -220,7 +224,9 @@
                     </div>
                     <div class="item" style="padding-left: 0;">
                         <a-dropdown :trigger="['click']">
-                            <div class="songOp itemContent"><svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="12" r="3" fill="#000000"/><circle cx="24" cy="24" r="3" fill="#000000"/><circle cx="24" cy="35" r="3" fill="#000000"/></svg></div>
+                            <div class="songOp itemContent">
+                                <a-icon type="more"/>
+                            </div>
                             <a-menu slot="overlay">
                                 <a-menu-item key="1" @click="play_menu(index)">
                                     <a-icon type="play-circle" />
@@ -709,7 +715,8 @@ export default {
 
 <style scoped>
 .songOp:hover{
-    background-color: white;
+    color: white;
+    background-color: rgb(140, 140, 140);
     cursor: pointer;
 }
 .songOp{
