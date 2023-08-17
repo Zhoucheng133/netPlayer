@@ -195,7 +195,10 @@ export default {
                 })
                 return;
             }
-            localStorage.setItem("nowPage",newVal);
+            if(newVal!='about'){
+                localStorage.setItem("nowPage",newVal);
+            }
+            
             
         }
     },
