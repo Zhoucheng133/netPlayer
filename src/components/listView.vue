@@ -273,6 +273,23 @@
                 :nowPlay="nowPlay"/>
         </div>
 
+        <a-modal v-model="addDialog" title="添加到歌单…" on-ok="handleOk" centered class="dialog">
+          <template slot="footer">
+                <a-button key="back" @click="handleCancel">
+                    取消
+                </a-button>
+                <a-button key="submit" type="primary" @click="handleOk" :disabled="addListID==''">
+                    添加
+                </a-button>
+            </template>
+            <div>
+                <a-radio-group v-model="addListID">
+                    <a-radio v-for="(item, index) in songList" :key="index" :value="item.id" :style="radioStyle">
+                        {{ item.name }}
+                    </a-radio>
+                </a-radio-group>
+            </div>
+    </a-modal>
     </div>
 </template>
 
@@ -294,11 +311,13 @@ export default {
         ipcRenderer.removeAllListeners('albumContentResult');
         ipcRenderer.removeAllListeners('starResult');
         ipcRenderer.removeAllListeners('unstarResult');
+        ipcRenderer.removeAllListeners('addToListResult');
     },
     props:{
         nowPage: String,
         playList: Object,
         nowPlay: Object,
+        songList: Array,
     },
     data() {
         return {
@@ -330,9 +349,26 @@ export default {
             inputSearch: "",
 
             lovedSongs: [],
+
+            addDialog: false,
+
+            opSong: {},
+            addListID: "",
+            radioStyle: {
+                display: 'block',
+                height: '30px',
+                lineHeight: '30px',
+            },
         }
     },
     methods: {
+        handleOk(){
+            this.addToSongList();
+        },
+        handleCancel(){
+            this.addDialog=false;
+            this.addListID="";
+        },
         isLoved(item){
             for (const obj of this.lovedSongs) {
                 if (obj.id == item.id) {
@@ -350,8 +386,23 @@ export default {
         delFromList_menu(){
             console.log("菜单-从歌单中删除");
         },
-        addTo_menu(){
-            console.log("菜单-添加到歌单…");
+        addTo_menu(item){
+            this.opSong=item;
+            this.addDialog=true;
+        },
+        addToListResult(event, resp){
+            // console.log(resp);
+            if(resp.status=='ok'){
+                this.addDialog=false;
+                this.addListID="";
+                this.opSong={};
+                this.$message.success("添加成功!");
+            }else{
+                this.$message.success("添加失败!");
+            }
+        },
+        addToSongList(){
+            ipcRenderer.send('addToListRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.addListID, this.opSong.id);
         },
         play_menu(index){
             this.playSong(index);
@@ -667,6 +718,7 @@ export default {
         ipcRenderer.removeAllListeners('albumContentResult');
         ipcRenderer.removeAllListeners('starResult');
         ipcRenderer.removeAllListeners('unstarResult');
+        ipcRenderer.removeAllListeners('addToListResult');
 
 
         ipcRenderer.on('listResult', this.listResult);
@@ -678,6 +730,7 @@ export default {
         ipcRenderer.on('albumContentResult', this.albumContentResult);
         ipcRenderer.on('starResult', this.starResult);
         ipcRenderer.on('unstarResult', this.unstarResult);
+        ipcRenderer.on('addToListResult', this.addToListResult);
     },
     created() {
         this.titleController();
@@ -714,6 +767,9 @@ export default {
 </script>
 
 <style scoped>
+.dialog{
+    user-select: none;
+}
 .songOp:hover{
     color: white;
     background-color: rgb(140, 140, 140);

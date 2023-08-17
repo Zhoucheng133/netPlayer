@@ -90,6 +90,7 @@ export default {
                 return;
             }
             this.playlist=response.playlists.playlist;
+            this.$emit('getSongList',this.playlist);
         },
         requestList(){
             ipcRenderer.send('playlistRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));

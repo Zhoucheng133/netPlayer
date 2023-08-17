@@ -4,10 +4,12 @@
             class="sideBar_style"
             @logoutMain="logoutMain" 
             @toPage="toPage" 
-            @toPlayList="toPlayList"
+            @toPlayList="toPlayList" 
+            @getSongList="getSongList"
             :nowPage="nowPage" 
             :playList="playList"
-            :nowPlay="nowPlay" />
+            :nowPlay="nowPlay"
+            />
         
         <playBar class="playbar" 
             ref="player"
@@ -27,6 +29,7 @@
                 @toPage="toPage" 
                 @playSong="playSong"
                 @stopAudio="stopAudio"
+                :songList="songList"
                 :nowPage="nowPage" 
                 :nowPlay="nowPlay"
                 :playList="playList" 
@@ -64,9 +67,14 @@ export default {
                 id: "",
                 isPlay: false,
             },
+
+            songList:[],
         }
     },
     methods: {
+        getSongList(val){
+            this.songList=val;
+        },
         stopAudio(){
             this.$refs.player.stopAudio();
             this.nowPlay={

@@ -151,6 +151,20 @@ function registerMediaKeyShortcuts() {
 	});
 }
 
+// 添加到歌单
+ipcMain.on("addToListRequest", async (event, url, username, salt, token, listID, songID) => {
+	var resp=undefined;
+	await axios.post(url+"/rest/updatePlaylist?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&playlistId="+listID+"&songIdToAdd="+songID)
+	.then((response)=>{
+		resp=response.data['subsonic-response'];
+	})
+	.catch(()=>{
+		resp=null;
+	})
+
+	event.reply('addToListResult', resp);
+});
+
 // 搜索请求
 ipcMain.on("searchRequest", async (event, url, username, salt, token, keyword) => {
 	var resp=undefined;
