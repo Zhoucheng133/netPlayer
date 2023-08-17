@@ -194,7 +194,8 @@ export default {
     transform: translate(-90px);
 }
 .songOp:hover{
-    background-color: white;
+    color: white;
+    background-color: rgb(140, 140, 140);
     cursor: pointer;
 }
 .songOp{
