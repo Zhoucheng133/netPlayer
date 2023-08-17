@@ -151,6 +151,20 @@ function registerMediaKeyShortcuts() {
 	});
 }
 
+// 从歌单中删除
+ipcMain.on("delSongFromListRequest", async (event, url, username, salt, token, listID, songID) => {
+	var resp=undefined;
+	await axios.post(url+"/rest/updatePlaylist?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&playlistId="+listID+"&songIndexToRemove="+songID)
+	.then((response)=>{
+		resp=response.data['subsonic-response'];
+	})
+	.catch(()=>{
+		resp=null;
+	})
+
+	event.reply('delSongFromListResult', resp);
+});
+
 // 添加到歌单
 ipcMain.on("addToListRequest", async (event, url, username, salt, token, listID, songID) => {
 	var resp=undefined;

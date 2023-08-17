@@ -64,7 +64,7 @@
                                     <a-icon type="delete"/>
                                     从歌单中删除
                                 </a-menu-item>
-                                <a-menu-item key="3" v-if="nowPage=='playList'" @click="delFromList_menu(item)">
+                                <a-menu-item key="3" v-if="nowPage=='playList'" @click="delFromList_menu(index)">
                                     <a-icon type="delete" />
                                     从歌单中删除
                                 </a-menu-item>
@@ -111,7 +111,7 @@
                                     <a-icon type="delete"/>
                                     从歌单中删除
                                 </a-menu-item>
-                                <a-menu-item key="3" v-if="nowPage=='playList'" @click="delFromList_menu(item)">
+                                <a-menu-item key="3" v-if="nowPage=='playList'" @click="delFromList_menu(index)">
                                     <a-icon type="delete" />
                                     从歌单中删除
                                 </a-menu-item>
@@ -241,7 +241,7 @@
                                     <a-icon type="delete"/>
                                     从歌单中删除
                                 </a-menu-item>
-                                <a-menu-item key="3" v-if="nowPage=='playList'" @click="delFromList_menu(item)">
+                                <a-menu-item key="3" v-if="nowPage=='playList'" @click="delFromList_menu(index)">
                                     <a-icon type="delete" />
                                     从歌单中删除
                                 </a-menu-item>
@@ -312,6 +312,7 @@ export default {
         ipcRenderer.removeAllListeners('starResult');
         ipcRenderer.removeAllListeners('unstarResult');
         ipcRenderer.removeAllListeners('addToListResult');
+        ipcRenderer.removeAllListeners('delSongFromListResult');
     },
     props:{
         nowPage: String,
@@ -383,8 +384,33 @@ export default {
         deLove_menu(item){
             ipcRenderer.send('unstarRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), item.id);
         },
-        delFromList_menu(){
-            console.log("菜单-从歌单中删除");
+        delSongFromListResult(event, resp){
+            // console.log(resp);
+            if(resp.status=='ok'){
+                this.addDialog=false;
+                this.addListID="";
+                this.opSong={};
+                this.$message.success("删除成功!");
+                this.pageTurn();
+            }else{
+                this.$message.success("删除失败!");
+            }
+        },
+        delFromList_menu(index){
+            console.log(index);
+            var that=this;
+            this.$confirm({
+                title: '你确定要从这个歌单中删除吗?',
+                centered: true,
+                cancelText: '取消',
+                okText: '确定',
+                onOk() {
+                    // console.log('OK');
+                    ipcRenderer.send('delSongFromListRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), that.playList.id, index);
+                },
+                onCancel() {
+                },
+            });
         },
         addTo_menu(item){
             this.opSong=item;
@@ -397,6 +423,7 @@ export default {
                 this.addListID="";
                 this.opSong={};
                 this.$message.success("添加成功!");
+                this.pageTurn();
             }else{
                 this.$message.success("添加失败!");
             }
@@ -719,6 +746,7 @@ export default {
         ipcRenderer.removeAllListeners('starResult');
         ipcRenderer.removeAllListeners('unstarResult');
         ipcRenderer.removeAllListeners('addToListResult');
+        ipcRenderer.removeAllListeners('delSongFromListResult');
 
 
         ipcRenderer.on('listResult', this.listResult);
@@ -731,6 +759,7 @@ export default {
         ipcRenderer.on('starResult', this.starResult);
         ipcRenderer.on('unstarResult', this.unstarResult);
         ipcRenderer.on('addToListResult', this.addToListResult);
+        ipcRenderer.on('delSongFromListResult', this.delSongFromListResult);
     },
     created() {
         this.titleController();
