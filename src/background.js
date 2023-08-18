@@ -151,6 +151,20 @@ function registerMediaKeyShortcuts() {
 	});
 }
 
+// 新建歌单
+ipcMain.on("newListRequest", async (event, url, username, salt, token, listName) => {
+	var resp=undefined;
+	await axios.post(url+"/rest/createPlaylist?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&name="+listName)
+	.then((response)=>{
+		resp=response.data['subsonic-response'];
+	})
+	.catch(()=>{
+		resp=null;
+	})
+
+	event.reply('newListResult', resp);
+});
+
 // 重命名歌单
 ipcMain.on("renameListRequest", async (event, url, username, salt, token, listID, listName) => {
 	var resp=undefined;

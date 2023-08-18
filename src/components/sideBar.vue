@@ -33,6 +33,14 @@
                 搜索
             </div>
             <div class="divLine"></div>
+            <div @click="addList" class='item'>
+                <svg width="16" class="icon" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 28H24" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 37H24" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 19H40" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 10H40" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 33H40" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M35 28L35 38" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                新建歌单
+            </div>
+            <a-modal v-model="createListPanel" title="新建歌单" centered cancelText='取消' okText='确定' @ok="createNewList">
+                <a-input v-model="newListName" placeholder="输入新建歌单的名称" />
+            </a-modal>
+            <div class="divLine"></div>
             <div class="listText">创建的歌单</div>
             <div v-for="(item,index) in playlist" :key="index" @click="toPage('playList', item)" >
                 <a-dropdown :trigger="['contextmenu']">
@@ -67,6 +75,7 @@ export default {
         ipcRenderer.removeAllListeners('playlistResult');
         ipcRenderer.removeAllListeners('renameListResult');
         ipcRenderer.removeAllListeners('delListResult');
+        ipcRenderer.removeAllListeners('newListResult');
     },
     data() {
         return {
@@ -78,6 +87,8 @@ export default {
             newListName: "",
 
             selectedList: "",
+
+            createListPanel: false,
         }
     },
     props:{
@@ -85,6 +96,12 @@ export default {
         playList: Object,
     },
     methods: {
+        createNewList(){
+            ipcRenderer.send('newListRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.newListName);
+        },
+        addList(){
+            this.createListPanel=true;
+        },
         changeListName(){
             ipcRenderer.send('renameListRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.selectedList, this.newListName);
         },
@@ -152,6 +169,7 @@ export default {
             this.$message.success('重命名成功!');
             this.renamePanel=false;
             this.selectedList="";
+            this.newListName="";
             this.requestList();
         },
         delListResult(event, resp){
@@ -163,15 +181,28 @@ export default {
             this.toPage("allSongs");
             this.requestList();
         },
+        newListResult(event, resp){
+            if(resp.status!='ok'){
+                this.$message.error('创建失败!');
+                return;
+            }
+            this.$message.success("创建成功!");
+            this.requestList();
+            this.createListPanel=false;
+            this.selectedList="";
+            this.newListName="";
+        },
     },
     mounted() {
         ipcRenderer.removeAllListeners('playlistResult');
         ipcRenderer.removeAllListeners('renameListResult');
         ipcRenderer.removeAllListeners('delListResult');
+        ipcRenderer.removeAllListeners('newListResult');
 
         ipcRenderer.on('playlistResult', this.playlistResult);
         ipcRenderer.on('renameListResult', this.renameListResult);
         ipcRenderer.on('delListResult', this.delListResult);
+        ipcRenderer.on('newListResult', this.newListResult);
     },
     created() {
         this.username=localStorage.getItem("username");
