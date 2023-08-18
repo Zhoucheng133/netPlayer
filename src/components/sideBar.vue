@@ -34,11 +34,27 @@
             </div>
             <div class="divLine"></div>
             <div class="listText">创建的歌单</div>
-            <div class="item" v-for="(item,index) in playlist" :key="index" @click="toPage('playList', item)" :class="nowPage=='playList' && playList.id==item.id ? 'itemSelected':'item'">
-                <svg class="icon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="4" width="32" height="40" rx="2" fill="none" stroke="#333" stroke-width="4" stroke-linejoin="round"/><path d="M21 14H33" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 24H33" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 34H33" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15 16C16.1046 16 17 15.1046 17 14C17 12.8954 16.1046 12 15 12C13.8954 12 13 12.8954 13 14C13 15.1046 13.8954 16 15 16Z" fill="#333"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15 26C16.1046 26 17 25.1046 17 24C17 22.8954 16.1046 22 15 22C13.8954 22 13 22.8954 13 24C13 25.1046 13.8954 26 15 26Z" fill="#333"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15 36C16.1046 36 17 35.1046 17 34C17 32.8954 16.1046 32 15 32C13.8954 32 13 32.8954 13 34C13 35.1046 13.8954 36 15 36Z" fill="#333"/></svg>
-                <div class="itemContainer">
-                    {{ item.name }}
-                </div>
+            <div v-for="(item,index) in playlist" :key="index" @click="toPage('playList', item)" >
+                <a-dropdown :trigger="['contextmenu']">
+                    <div :class="nowPage=='playList' && playList.id==item.id ? 'itemSelected':'item'">
+                        <svg class="icon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="4" width="32" height="40" rx="2" fill="none" stroke="#333" stroke-width="4" stroke-linejoin="round"/><path d="M21 14H33" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 24H33" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 34H33" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15 16C16.1046 16 17 15.1046 17 14C17 12.8954 16.1046 12 15 12C13.8954 12 13 12.8954 13 14C13 15.1046 13.8954 16 15 16Z" fill="#333"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15 26C16.1046 26 17 25.1046 17 24C17 22.8954 16.1046 22 15 22C13.8954 22 13 22.8954 13 24C13 25.1046 13.8954 26 15 26Z" fill="#333"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15 36C16.1046 36 17 35.1046 17 34C17 32.8954 16.1046 32 15 32C13.8954 32 13 32.8954 13 34C13 35.1046 13.8954 36 15 36Z" fill="#333"/></svg>
+                        <div class="itemContainer">
+                            {{ item.name }}
+                        </div>
+                    </div>
+                    <a-menu slot="overlay">
+                        <a-menu-item key="1" @click="renameList">
+                            <a-icon type="edit" />重命名歌单
+                        </a-menu-item>
+                        <a-modal v-model="renamePanel" title="重命名歌单" centered cancelText='取消' okText='确定'>
+                            <a-input placeholder="输入新的歌单名称" />
+                        </a-modal>
+                        <a-menu-divider />
+                        <a-menu-item key="2" @click="delList">
+                            <a-icon type="delete"  />删除歌单
+                        </a-menu-item>
+                    </a-menu>
+                </a-dropdown>
             </div>
         </div>
     </div>
@@ -54,6 +70,8 @@ export default {
         return {
             username: "",
             playlist: [],
+
+            renamePanel:false,
         }
     },
     props:{
@@ -61,6 +79,24 @@ export default {
         playList: Object,
     },
     methods: {
+        delList(){
+            console.log("=111");
+            this.$confirm({
+                centered: true,
+                title: '你确定要删除这个歌单吗?',
+                cancelText: '取消',
+                okText: '确定',
+                onOk() {
+                    // console.log('OK');
+                },
+                onCancel() {
+                },
+                class: 'test',
+            });
+        },
+        renameList(){
+            this.renamePanel=true;
+        },
         toPage(pageName, item){
             if(pageName!='playList'){
                 this.$emit("toPage",pageName);
