@@ -151,6 +151,34 @@ function registerMediaKeyShortcuts() {
 	});
 }
 
+// 重命名歌单
+ipcMain.on("renameListRequest", async (event, url, username, salt, token, listID, listName) => {
+	var resp=undefined;
+	await axios.post(url+"/rest/deletePlaylist?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&playlistId="+listID+"&name="+listName)
+	.then((response)=>{
+		resp=response.data['subsonic-response'];
+	})
+	.catch(()=>{
+		resp=null;
+	})
+
+	event.reply('renameListResult', resp);
+});
+
+// 删除歌单
+ipcMain.on("delListRequest", async (event, url, username, salt, token, listID) => {
+	var resp=undefined;
+	await axios.post(url+"/rest/deletePlaylist?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&id="+listID)
+	.then((response)=>{
+		resp=response.data['subsonic-response'];
+	})
+	.catch(()=>{
+		resp=null;
+	})
+
+	event.reply('delListResult', resp);
+});
+
 // 从歌单中删除
 ipcMain.on("delSongFromListRequest", async (event, url, username, salt, token, listID, songID) => {
 	var resp=undefined;
