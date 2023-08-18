@@ -154,7 +154,7 @@ function registerMediaKeyShortcuts() {
 // 重命名歌单
 ipcMain.on("renameListRequest", async (event, url, username, salt, token, listID, listName) => {
 	var resp=undefined;
-	await axios.post(url+"/rest/deletePlaylist?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&playlistId="+listID+"&name="+listName)
+	await axios.post(url+"/rest/updatePlaylist?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token+"&playlistId="+listID+"&name="+listName)
 	.then((response)=>{
 		resp=response.data['subsonic-response'];
 	})

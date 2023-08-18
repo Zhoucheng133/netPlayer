@@ -43,14 +43,14 @@
                         </div>
                     </div>
                     <a-menu slot="overlay">
-                        <a-menu-item key="1" @click="renameList">
+                        <a-menu-item key="1" @click="renameList(item)">
                             <a-icon type="edit" />重命名歌单
                         </a-menu-item>
                         <a-modal v-model="renamePanel" title="重命名歌单" centered cancelText='取消' okText='确定' @ok="changeListName">
                             <a-input v-model="newListName" placeholder="输入新的歌单名称" />
                         </a-modal>
                         <a-menu-divider />
-                        <a-menu-item key="2" @click="delList">
+                        <a-menu-item key="2" @click="delList(item)">
                             <a-icon type="delete"  />删除歌单
                         </a-menu-item>
                     </a-menu>
@@ -65,6 +65,8 @@ const {ipcRenderer, shell} = require('electron')
 export default {
     beforeDestroy() {
         ipcRenderer.removeAllListeners('playlistResult');
+        ipcRenderer.removeAllListeners('renameListResult');
+        ipcRenderer.removeAllListeners('delListResult');
     },
     data() {
         return {
@@ -74,6 +76,8 @@ export default {
             renamePanel: false,
 
             newListName: "",
+
+            selectedList: "",
         }
     },
     props:{
@@ -82,9 +86,9 @@ export default {
     },
     methods: {
         changeListName(){
-            
+            ipcRenderer.send('renameListRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.selectedList, this.newListName);
         },
-        delList(){
+        delList(item){
             console.log("=111");
             this.$confirm({
                 centered: true,
@@ -92,15 +96,16 @@ export default {
                 cancelText: '取消',
                 okText: '确定',
                 onOk() {
-                    // console.log('OK');
+                    ipcRenderer.send('delListRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), item.id);
                 },
                 onCancel() {
                 },
                 class: 'test',
             });
         },
-        renameList(){
+        renameList(item){
             this.renamePanel=true;
+            this.selectedList=item.id;
         },
         toPage(pageName, item){
             if(pageName!='playList'){
@@ -138,11 +143,35 @@ export default {
         },
         openBrower(){
             shell.openExternal(localStorage.getItem("url"));
-        }
+        },
+        renameListResult(event, resp){
+            if(resp.status!='ok'){
+                this.$message.error('重命名失败!');
+                return;
+            }
+            this.$message.success('重命名成功!');
+            this.renamePanel=false;
+            this.selectedList="";
+            this.requestList();
+        },
+        delListResult(event, resp){
+            if(resp.status!='ok'){
+                this.$message.error('删除失败!');
+                return;
+            }
+            this.$message.success("删除成功!");
+            this.toPage("allSongs");
+            this.requestList();
+        },
     },
     mounted() {
         ipcRenderer.removeAllListeners('playlistResult');
+        ipcRenderer.removeAllListeners('renameListResult');
+        ipcRenderer.removeAllListeners('delListResult');
+
         ipcRenderer.on('playlistResult', this.playlistResult);
+        ipcRenderer.on('renameListResult', this.renameListResult);
+        ipcRenderer.on('delListResult', this.delListResult);
     },
     created() {
         this.username=localStorage.getItem("username");
