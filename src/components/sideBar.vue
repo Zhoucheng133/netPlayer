@@ -46,8 +46,8 @@
                         <a-menu-item key="1" @click="renameList">
                             <a-icon type="edit" />重命名歌单
                         </a-menu-item>
-                        <a-modal v-model="renamePanel" title="重命名歌单" centered cancelText='取消' okText='确定'>
-                            <a-input placeholder="输入新的歌单名称" />
+                        <a-modal v-model="renamePanel" title="重命名歌单" centered cancelText='取消' okText='确定' @ok="changeListName">
+                            <a-input v-model="newListName" placeholder="输入新的歌单名称" />
                         </a-modal>
                         <a-menu-divider />
                         <a-menu-item key="2" @click="delList">
@@ -71,7 +71,9 @@ export default {
             username: "",
             playlist: [],
 
-            renamePanel:false,
+            renamePanel: false,
+
+            newListName: "",
         }
     },
     props:{
@@ -79,6 +81,9 @@ export default {
         playList: Object,
     },
     methods: {
+        changeListName(){
+            
+        },
         delList(){
             console.log("=111");
             this.$confirm({
