@@ -14,6 +14,8 @@
 
 **基于Subsonic API的桌面端播放器**
 
+关于移动版的netPlayer，你可以在这里查看：[Gitee](https://gitee.com/Ryan-zhou/net-player_-lite) / [Github](https://github.com/Zhoucheng133/neyPlayer_Lite)
+
 ## 截图
 <img src="https://s2.loli.net/2023/08/25/oJ4N5cgVrDmKRAl.png" height="400px"/>
 
