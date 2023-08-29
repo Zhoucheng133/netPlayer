@@ -4,7 +4,8 @@
 	"private": true,
 	"productName": "netPlayer",
 	"author": {
-		"name": "zhouc"
+		"name": "zhouc",
+		"email": "zhoucheng133@outlook.com"
 	},
 	"scripts": {
 		"serve": "vue-cli-service serve",
