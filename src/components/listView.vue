@@ -599,7 +599,9 @@ export default {
         lovedSongsResult(event, resp){
             console.log("请求所有喜欢的歌曲(Rlt)");
             if(this.nowPage!='lovedSongs'){
-                this.lovedSongs=resp.starred.song;
+                if(resp.starred.song!=undefined){
+                    this.lovedSongs=resp.starred.song;
+                }
                 // console.log(this.lovedSongs);
                 // console.log(this.shownList);
                 this.$forceUpdate();
@@ -607,11 +609,13 @@ export default {
                 return;
             }
             this.needRequest=false;
-            this.shownList=resp.starred.song;
-            this.lovedSongs=resp.starred.song;
             if(resp.starred.song==undefined){
+                this.shownList=[];
+                this.lovedSongs=[];
                 this.subTitle="合计0首歌";
             }else{
+                this.shownList=resp.starred.song;
+                this.lovedSongs=resp.starred.song;
                 this.subTitle="合计"+resp.starred.song.length+"首歌";
             }
             this.listID='';
