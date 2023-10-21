@@ -157,7 +157,46 @@ export default {
 				this.getSongStream();
 				this.$refs.audioPlayer.src = this.songStream;
 			})
-		}
+		},
+		setMedia(){
+			var username = localStorage.getItem("username");
+			var salt = localStorage.getItem("salt");
+			var token = localStorage.getItem("token");
+			var url = localStorage.getItem("url");
+
+			var that=this;
+			
+      console.log("==update==");
+
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: that.nowPlay.nowPlayList[that.nowPlay.index].title,
+        artist: that.nowPlay.nowPlayList[that.nowPlay.index].artist,
+        album: '',
+        artwork: [
+            {
+              src: url+"/rest/getCoverArt?v=1.12.0&c=netPlayer&f=json&u="+username+"&t="+token+"&s="+salt+"&id="+that.nowPlay.nowPlayList[that.nowPlay.index].id+"&size=512",
+              sizes: "512x512",
+              type: "image/png",
+            },
+          ],
+      });
+    
+      navigator.mediaSession.setActionHandler('play', function() {
+        that.toggleSong();
+      });
+
+      navigator.mediaSession.setActionHandler('pause', function() {
+        that.toggleSong();
+      });
+
+      navigator.mediaSession.setActionHandler('previoustrack', function() {
+        that.backSong();
+      });
+
+      navigator.mediaSession.setActionHandler('nexttrack', function() {
+        that.nextSong();
+      });
+    }
 	},
 	mounted() {
 		this.audioPlayer = this.$refs.audioPlayer;
@@ -174,7 +213,7 @@ export default {
 		this.shownCoverLink = url + "/rest/getCoverArt?v=1.13.0&c=netPlayer&f=json&u=" + username + "&s=" + salt + "&t=" + token;
 	},
 	watch: {
-
+		
 	},
 }
 </script>

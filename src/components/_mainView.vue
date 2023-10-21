@@ -88,24 +88,40 @@ export default {
 				this.$refs.player.pauseSongController();
 			}
 			this.nowPlay.isPlay = !this.nowPlay.isPlay;
+			var that=this;
+			this.$nextTick(()=>{
+				that.$refs.player.setMedia();
+			});
 		},
 		backSong() {
 			this.nowPlay.index = (this.nowPlay.index - 1 + this.nowPlay.nowPlayList.length) % this.nowPlay.nowPlayList.length;
 			this.$refs.player.playSong();
 			this.nowPlay.isPlay = true;
 			this.saveNowPlay();
+			var that=this;
+			this.$nextTick(()=>{
+				that.$refs.player.setMedia();
+			});
 		},
 		nextSong() {
 			this.nowPlay.index = (this.nowPlay.index + 1 + this.nowPlay.nowPlayList.length) % this.nowPlay.nowPlayList.length;
 			this.$refs.player.playSong();
 			this.nowPlay.isPlay = true;
 			this.saveNowPlay();
+			var that=this;
+			this.$nextTick(()=>{
+				that.$refs.player.setMedia();
+			});
 		},
 		playSong(nowPlay) {
 			this.nowPlay = nowPlay;
 			this.$refs.player.playSong();
-			// console.log(this.nowPlay);
+			console.log(this.nowPlay);
 			this.saveNowPlay();
+			var that=this;
+			this.$nextTick(()=>{
+				that.$refs.player.setMedia();
+			});
 		},
 		toPlayList(item) {
 			this.nowPage = 'playList';
