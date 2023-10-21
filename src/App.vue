@@ -2,15 +2,31 @@
 	<div id="app">
 		<div class="dragArea">
 			<div class="darg"></div>
-			<div class="min" v-if="shownWindowBar" @click="minWin"><svg width="13" height="13" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5 24L38.5 24" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+			<div class="min" v-if="shownWindowBar" @click="minWin"><svg width="13" height="13" viewBox="0 0 48 48" fill="none"
+					xmlns="http://www.w3.org/2000/svg">
+					<path d="M10.5 24L38.5 24" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+				</svg></div>
 			<div class="max" v-if="shownWindowBar" @click="maxWin">
-				<svg v-if="isMax==false" width="13" height="13" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 42H6V26" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 6H42V22" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-				<svg v-else width="13" height="13" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M44 20H28V4" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 28H20V44" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+				<svg v-if="isMax == false" width="13" height="13" viewBox="0 0 48 48" fill="none"
+					xmlns="http://www.w3.org/2000/svg">
+					<path d="M22 42H6V26" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+					<path d="M26 6H42V22" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+				</svg>
+				<svg v-else width="13" height="13" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M44 20H28V4" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+					<path d="M4 28H20V44" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+				</svg>
 			</div>
-			<div class="close" v-if="shownWindowBar" @click="closeWin"><svg width="13" height="13" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 8L40 40" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 40L40 8" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+			<div class="close" v-if="shownWindowBar" @click="closeWin">
+				<svg width="13" height="13" viewBox="0 0 48 48"
+					fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M8 8L40 40" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+					<path d="M8 40L40 8" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+				</svg>
+			</div>
 		</div>
-		<mainView v-if="isLogin==true" @logoutApp="logoutApp" ref="mainView"/>
-		<loginView v-else-if="isLogin==false" @getLogin="getLogin" />
+		<mainView v-if="isLogin == true" @logoutApp="logoutApp" ref="mainView" />
+		<loginView v-else-if="isLogin == false" @getLogin="getLogin" />
 	</div>
 </template>
 
@@ -18,19 +34,19 @@
 import _mainView from '@/components/_mainView.vue';
 import loginView from '@/components/loginView.vue';
 
-const {ipcRenderer} = require('electron')
+const { ipcRenderer } = require('electron')
 
 export default {
 	beforeDestroy() {
-        ipcRenderer.removeAllListeners('autoLoginResult');
+		ipcRenderer.removeAllListeners('autoLoginResult');
 		ipcRenderer.removeAllListeners('toAbout');
 
 		ipcRenderer.removeAllListeners('nextSong');
 		ipcRenderer.removeAllListeners('forwSong');
 		ipcRenderer.removeAllListeners('toggleSong');
-		
+
 		ipcRenderer.removeAllListeners('getSysResult');
-    },
+	},
 	components: {
 		mainView: _mainView,
 		loginView,
@@ -45,53 +61,53 @@ export default {
 		}
 	},
 	methods: {
-		closeWin(){
+		closeWin() {
 			ipcRenderer.send('winClose');
 		},
-		maxWin(){
-			if(this.isMax==false){
+		maxWin() {
+			if (this.isMax == false) {
 				ipcRenderer.send('winMax');
-				this.isMax=true;
-			}else{
+				this.isMax = true;
+			} else {
 				ipcRenderer.send('winRestore');
-				this.isMax=false;
+				this.isMax = false;
 			}
 		},
-		minWin(){
+		minWin() {
 			ipcRenderer.send('winMin');
 		},
-		getSysResult(event, resp){
-			if(resp!='macOS'){
-				this.shownWindowBar=true;
+		getSysResult(event, resp) {
+			if (resp != 'macOS') {
+				this.shownWindowBar = true;
 			}
 		},
-		logoutApp(){
+		logoutApp() {
 			localStorage.clear();
-			this.isLogin=false;
+			this.isLogin = false;
 		},
-		getLogin(val){
-			this.isLogin=val;
+		getLogin(val) {
+			this.isLogin = val;
 		},
-		autoLoginResult(event, response){
-            if(response==null){
-                this.$message.error('请求失败，请检查服务器状态');
+		autoLoginResult(event, response) {
+			if (response == null) {
+				this.$message.error('请求失败，请检查服务器状态');
 				localStorage.clear();
-				this.isLogin=false;
-                return;
-            }
-            var status=response['subsonic-response'].status;
-            if(status=='ok'){
-                this.isLogin=true
-            }else{
-                this.$message.error('用户名或者密码错误, 需要重新登录!');
+				this.isLogin = false;
+				return;
+			}
+			var status = response['subsonic-response'].status;
+			if (status == 'ok') {
+				this.isLogin = true
+			} else {
+				this.$message.error('用户名或者密码错误, 需要重新登录!');
 				localStorage.clear();
-				this.isLogin=false;
-                return;
-            }
-        },
+				this.isLogin = false;
+				return;
+			}
+		},
 	},
 	mounted() {
-		
+
 
 		ipcRenderer.removeAllListeners('autoLoginResult');
 		ipcRenderer.removeAllListeners('toAbout');
@@ -117,14 +133,14 @@ export default {
 		ipcRenderer.on('getSysResult', this.getSysResult);
 	},
 	created() {
-		var username=localStorage.getItem("username");
-        var salt=localStorage.getItem("salt");
-        var token=localStorage.getItem("token");
-        var url=localStorage.getItem("url");
-        if(token!=null && username!=null && salt!=null && url!=null){
-            ipcRenderer.send('autoLoginRequest', url, username, salt, token);
-        }else{
-			this.isLogin=false;
+		var username = localStorage.getItem("username");
+		var salt = localStorage.getItem("salt");
+		var token = localStorage.getItem("token");
+		var url = localStorage.getItem("url");
+		if (token != null && username != null && salt != null && url != null) {
+			ipcRenderer.send('autoLoginRequest', url, username, salt, token);
+		} else {
+			this.isLogin = false;
 		}
 		ipcRenderer.send('getSysRequest');
 	},
@@ -132,25 +148,33 @@ export default {
 </script>
 
 <style scoped>
-#app{
+#app {
 	overflow: hidden;
 }
-.darg{
+
+.darg {
 	-webkit-app-region: drag;
 	width: 100%;
 }
-.close:hover{
+
+.close:hover {
 	background-color: rgb(215, 0, 0);
 	cursor: pointer;
 }
-.close{
+
+.close {
 	background-color: red;
 }
-.min:hover, .max:hover{
+
+.min:hover,
+.max:hover {
 	background-color: rgb(220, 220, 220);
 	cursor: pointer;
 }
-.close, .min, .max{
+
+.close,
+.min,
+.max {
 	user-select: none;
 	display: flex;
 	justify-content: center;
@@ -159,7 +183,8 @@ export default {
 	transition: all ease-in-out .2s;
 	z-index: 500;
 }
-.dragArea{
+
+.dragArea {
 	justify-content: flex-end;
 	display: flex;
 	position: fixed;
@@ -168,11 +193,9 @@ export default {
 	height: 30px;
 	width: 100%;
 	/* -webkit-app-region: drag; */
-}
-</style>
+}</style>
 
-<style>
-#app {
+<style>#app {
 	font-family: Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -184,7 +207,6 @@ export default {
 	background-color: white;
 }
 
-body{
+body {
 	margin: 0;
-}
-</style>
+}</style>
