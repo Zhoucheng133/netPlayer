@@ -3,8 +3,17 @@
 		<sideBar class="sideBar_style" @logoutMain="logoutMain" @toPage="toPage" @toPlayList="toPlayList"
 			@getSongList="getSongList" :nowPage="nowPage" :playList="playList" :nowPlay="nowPlay" />
 
-		<playBar class="playbar" ref="player" :nowPlay="nowPlay" @nextSong="nextSong" @backSong="backSong"
-			@toggleSong="toggleSong" @isPlaying="isPlaying" @handlePause="handlePause" />
+		<playBar 
+			class="playbar" 
+			ref="player" 
+			:nowPlay="nowPlay" 
+			:random="random"
+			@nextSong="nextSong" 
+			@backSong="backSong"
+			@toggleSong="toggleSong" 
+			@isPlaying="isPlaying" 
+			@changePlayMode="changePlayMode"
+			@handlePause="handlePause" />
 
 		<!-- 主要内容在下面 -->
 		<div class="mainSide">
@@ -45,10 +54,15 @@ export default {
 				isPlay: false,
 			},
 
+			random: false,
+
 			songList: [],
 		}
 	},
 	methods: {
+		changePlayMode(){
+			this.random=!this.random;
+		},
 		getSongList(val) {
 			this.songList = val;
 		},
@@ -104,7 +118,11 @@ export default {
 			});
 		},
 		nextSong() {
-			this.nowPlay.index = (this.nowPlay.index + 1 + this.nowPlay.nowPlayList.length) % this.nowPlay.nowPlayList.length;
+			if(!this.random){
+				this.nowPlay.index = (this.nowPlay.index + 1 + this.nowPlay.nowPlayList.length) % this.nowPlay.nowPlayList.length;
+			}else{
+				this.nowPlay.index = Math.floor(Math.random() * this.nowPlay.nowPlayList.length);
+			}
 			this.$refs.player.playSong();
 			this.nowPlay.isPlay = true;
 			this.saveNowPlay();

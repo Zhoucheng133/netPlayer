@@ -19,6 +19,10 @@
 			@timeupdate="handleTimeUpdate" @play="handlePlay" @pause="handlePause"></audio>
 
 		<div class="tools">
+			<div class="playMode" @click="changePlayMode">
+				<i class="bi bi-shuffle" v-if="random"></i>
+				<i class="bi bi-repeat" v-else></i>
+			</div>
 			<div class="songBack" @click="backSong"><a-icon type="step-backward" /></div>
 			<div class="songToggle" @click="toggleSong">
 				<a-icon type="pause" v-if="nowPlay.isPlay" />
@@ -41,6 +45,7 @@ export default {
 	},
 	props: {
 		nowPlay: Object,
+		random: Boolean,
 	},
 	data() {
 		return {
@@ -53,6 +58,9 @@ export default {
 		}
 	},
 	methods: {
+		changePlayMode(){
+			this.$emit("changePlayMode");
+		},
 		jumpStream(event) {
 			if (this.nowPlay.nowPlayList.length == 0) {
 				return;
@@ -219,6 +227,13 @@ export default {
 </script>
 
 <style scoped>
+.playMode:hover{
+	cursor: pointer;
+}
+.playMode{
+	margin-right: 20px;
+	font-size: 16px;
+}
 .textArea {
 	text-align: left;
 	padding-left: 20px;
@@ -249,12 +264,6 @@ export default {
 	bottom: 0px;
 }
 
-/* .progressBar:hover{
-    height: 10px;
-    cursor: pointer;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-} */
 .progressBar {
 	height: 3px;
 	background-color: #1890ff;
