@@ -9,6 +9,7 @@
 ![Antd](https://img.shields.io/badge/Antd-1.7.8-blue)
 ![axios](https://img.shields.io/badge/axios-1.4-orange)
 ![crypto-js](https://img.shields.io/badge/crypto_js-4.1.1-yellow)
+![bootstrap-icons](https://img.shields.io/badge/bootstrap_icons-1.11.1-purple)
 
 ![License](https://img.shields.io/badge/License-MIT-dark_green)
 
@@ -52,6 +53,11 @@
 ## 更新日志
 
 **⚠️注意，版本v1.2.1之前的版本在你标记喜欢的歌曲(Star)数量为0的时候会出现白屏的情况，在v1.2.1版本修复**
+
+### 1.2.2 (2023/10/22)
+- 按照添加顺序显示所有歌曲
+- 添加系统控制中心控制音乐播放和显示歌曲信息
+- 可以自定义随机播放还是顺序播放
 
 ### 1.2.1 (2023/8/30)
 - 修复当喜欢的音乐为0无法显示的情况
