@@ -793,10 +793,14 @@ export default {
 		allSongsResult(event, resp) {
 			console.log("请求所有歌曲(Rlt)");
 			this.needRequest = false;
-			this.allSongsList = resp.randomSongs.song;
-			this.shownList = resp.randomSongs.song;
+			var tmp = resp.randomSongs.song;
+			tmp.sort(function(a,b){
+				return a.created>b.created ? -1 : 1;
+			});
+			this.allSongsList = tmp;
+			this.shownList = this.allSongsList;
 			this.listID = "";
-			this.subTitle = "随机的" + resp.randomSongs.song.length + "首歌";
+			this.subTitle = "合计" + resp.randomSongs.song.length + "首歌";
 		},
 		requetAlbums() {
 			console.log("请求所有专辑(Req)");
