@@ -791,7 +791,7 @@ export default {
 				this.needRequest = false;
 				this.shownList = this.allSongsList;
 				this.listID = "";
-				this.subTitle = "随机的" + this.allSongsList.length + "首歌";
+				this.subTitle = "合计" + this.allSongsList.length + "首歌";
 			}
 
 		},
@@ -820,7 +820,7 @@ export default {
 		albumsResult(event, resp) {
 			this.shownList = [];
 			console.log("请求所有专辑(Rlt)");
-			this.subTitle = "由新到旧显示的" + resp.albumList.album.length + "个专辑";
+			this.subTitle = "合计" + resp.albumList.album.length + "个专辑";
 			this.shownList = resp.albumList.album;
 		},
 		requestList() {
