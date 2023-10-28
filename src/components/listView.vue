@@ -286,7 +286,9 @@
 			<div class="mainArea" v-else>
 				<div class="container_artist" v-for="(item, index) in searchList" :key="index" @dblclick="showAlbumContent(item)">
 					<div class="item">
-						<div class="itemContent">{{ index + 1 }}</div>
+						<div class="itemContent">
+							{{ index + 1 }}
+						</div>
 					</div>
 					<div class="item">
 						<div class="itemContent">{{ item.title }}</div>
@@ -940,8 +942,8 @@ export default {
 }
 
 .songOp:hover {
-	color: white;
-	background-color: rgb(140, 140, 140);
+	/* color: white; */
+	/* background-color: rgb(140, 140, 140); */
 	cursor: pointer;
 }
 
@@ -984,13 +986,10 @@ export default {
 }
 
 .container_playing {
-	display: grid;
-	grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 150px - 70px - 50px - 50px) 150px 70px 50px 50px;
-	width: 100%;
-	height: 50px;
-	transition: all ease-in-out .2s;
-	background-color: rgb(235, 235, 235);
-	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
+	/* background-color: rgb(235, 235, 235); */
+	/* box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3); */
+	color: rgb(24, 144, 255);
+	font-weight: bolder;
 }
 
 .container_fix {
@@ -1003,7 +1002,7 @@ export default {
 	height: 50px;
 }
 
-.container {
+.container, .container_playing {
 	display: grid;
 	grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 150px - 70px - 50px - 50px) 150px 70px 50px 50px;
 	width: 100%;
@@ -1012,11 +1011,11 @@ export default {
 }
 
 .mainArea>.container:hover {
-	background-color: rgb(220, 220, 220);
+	background-color: rgb(240, 240, 240);
 }
 
 .mainArea>.container_artist:hover {
-	background-color: rgb(220, 220, 220);
+	background-color: rgb(240, 240, 240);
 }
 
 .item {
