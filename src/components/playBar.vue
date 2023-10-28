@@ -235,6 +235,8 @@ export default {
 .playMode{
 	margin-right: 20px;
 	font-size: 16px;
+	display: flex;
+	align-items: center;
 }
 .textArea {
 	text-align: left;
