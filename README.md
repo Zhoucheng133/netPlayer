@@ -9,7 +9,6 @@
 ![Antd](https://img.shields.io/badge/Antd-1.7.8-blue)
 ![axios](https://img.shields.io/badge/axios-1.4-orange)
 ![crypto-js](https://img.shields.io/badge/crypto_js-4.1.1-yellow)
-![bootstrap-icons](https://img.shields.io/badge/bootstrap_icons-1.11.1-purple)
 
 ![License](https://img.shields.io/badge/License-MIT-dark_green)
 
@@ -56,6 +55,8 @@
 
 ### 1.2.3 (2023/10/28)
 - 修复一个布局问题
+- 支持歌曲右键显示菜单
+- 更改显示播放方式
 
 ### 1.2.2 (2023/10/22)
 - 按照添加顺序显示所有歌曲
