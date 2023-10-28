@@ -46,7 +46,8 @@
 				<div v-for="(item, index) in shownList" :key="index" @dblclick="playSong(index)"
 					:class="isPlaying(index) ? 'container_playing' : 'container'">
 					<div class="item">
-						<div class="itemContent">{{ index + 1 }}</div>
+						<div class="itemContent" v-if="!isPlaying(index)">{{ index + 1 }}</div>
+						<div class="itemContent" v-else><a-icon type="caret-right" /></div>
 					</div>
 					<div class="item">
 						<div class="itemContent">{{ item.title }}</div>
@@ -121,7 +122,8 @@
 				<div v-for="(item, index) in searchList" :key="index" @dblclick="playSong(index)"
 					:class="isPlaying(index) ? 'container_playing' : 'container'">
 					<div class="item">
-						<div class="itemContent">{{ index + 1 }}</div>
+						<div class="itemContent" v-if="!isPlaying(index)">{{ index + 1 }}</div>
+						<div class="itemContent" v-else><a-icon type="caret-right" /></div>
 					</div>
 					<div class="item">
 						<div class="itemContent">{{ item.title }}</div>
@@ -286,9 +288,7 @@
 			<div class="mainArea" v-else>
 				<div class="container_artist" v-for="(item, index) in searchList" :key="index" @dblclick="showAlbumContent(item)">
 					<div class="item">
-						<div class="itemContent">
-							{{ index + 1 }}
-						</div>
+						<div class="itemContent">{{ index + 1 }}</div>
 					</div>
 					<div class="item">
 						<div class="itemContent">{{ item.title }}</div>
@@ -329,7 +329,10 @@
 				<div v-for="(item, index) in shownList" :key="index" @dblclick="playSong(index)"
 					:class="isPlaying(index) ? 'container_playing' : 'container'">
 					<div class="item">
-						<div class="itemContent">{{ index + 1 }}</div>
+						<div class="itemContent">
+							<div class="itemContent" v-if="!isPlaying(index)">{{ index + 1 }}</div>
+							<div class="itemContent" v-else><a-icon type="caret-right" /></div>
+						</div>
 					</div>
 					<div class="item">
 						<div class="itemContent">{{ item.title }}</div>
