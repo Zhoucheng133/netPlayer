@@ -29,12 +29,12 @@
 </template>
 
 <script>
-const { ipcRenderer, shell } = require('electron')
+const { shell } = require('electron')
 const CryptoJS = require('crypto-js');
+
+var axios=require("axios");
+
 export default {
-	beforeDestroy() {
-		ipcRenderer.removeAllListeners('loginResult');
-	},
 	data() {
 		return {
 			inputArea: {
@@ -83,31 +83,37 @@ export default {
 			const salt = this.generateRandomString(6);
 			const token = CryptoJS.MD5(this.inputArea.password + salt).toString();
 
-			ipcRenderer.send('loginRequest', this.inputArea.url, this.inputArea.username, salt, token);
-		},
-		loginResult(event, response, salt, token) {
-			this.loading = false;
-			if (response == null || response['subsonic-response'] == undefined) {
+			// ipcRenderer.send('loginRequest', this.inputArea.url, this.inputArea.username, salt, token);
+			axios.post(this.inputArea.url+"/rest/ping.view?v=1.13.0&c=netPlayer&f=json&u="+this.inputArea.username+"&s="+salt+"&t="+token)
+			.then((response)=>{
+				this.loading = false;
+				response=response.data;
+				if (response == null || response['subsonic-response'] == undefined) {
+					this.$message.error('请求失败，请检查URL地址是否正确');
+					return;
+				}
+				var status = response['subsonic-response'].status;
+				if (status == 'ok') {
+					this.$message.success("登录成功!")
+					this.bgOpacity = 0;
+
+					setTimeout(() => {
+						this.$emit("getLogin", true);
+					}, 300);
+
+					localStorage.setItem("username", this.inputArea.username);
+					localStorage.setItem("salt", salt);
+					localStorage.setItem("token", token);
+					localStorage.setItem("url", this.inputArea.url)
+				} else {
+					this.$message.error('用户名或者密码错误!');
+					return;
+				}
+			})
+			.catch(()=>{
+				this.loading = false;
 				this.$message.error('请求失败，请检查URL地址是否正确');
-				return;
-			}
-			var status = response['subsonic-response'].status;
-			if (status == 'ok') {
-				this.$message.success("登录成功!")
-				this.bgOpacity = 0;
-
-				setTimeout(() => {
-					this.$emit("getLogin", true);
-				}, 300);
-
-				localStorage.setItem("username", this.inputArea.username);
-				localStorage.setItem("salt", salt);
-				localStorage.setItem("token", token);
-				localStorage.setItem("url", this.inputArea.url)
-			} else {
-				this.$message.error('用户名或者密码错误!');
-				return;
-			}
+			})
 		},
 		toHelp() {
 			shell.openExternal("https://gitee.com/Ryan-zhou/net-player/blob/master/HELP.md");
@@ -130,8 +136,6 @@ export default {
 	},
 	mounted() {
 		this.startAnimation();
-		ipcRenderer.removeAllListeners('loginResult');
-		ipcRenderer.on('loginResult', this.loginResult);
 	},
 	created() {
 
