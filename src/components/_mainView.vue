@@ -24,11 +24,16 @@
 		<!-- 主要内容在下面 -->
 		<div class="mainSide">
 			<aboutView v-show="nowPage == 'about'" />
-			<!-- <listView ref="listPart" @toPage="toPage" @playSong="playSong" @stopAudio="stopAudio" :songList="songList"
-				:nowPage="nowPage" :nowPlay="nowPlay" :playList="playList" /> -->
+			
 			<albumView v-show="nowPage == 'albums'"/>
 			<artistView v-show="nowPage == 'artists'"/>
-			<allSongsView v-show="nowPage == 'allSongs'"/>
+			<allSongsView v-show="nowPage == 'allSongs'"
+				@playSong="playSong"
+				:songList="songList"
+				:nowPage="nowPage" 
+				:nowPlay="nowPlay"
+				:lovedSongs="lovedSongs"
+				:userInfo="userInfo"/>
 			<lovedSongsView v-show="nowPage == 'lovedSongs'"/>
 			<searchView v-show="nowPage == 'search'"/>
 			<playListView 
@@ -50,6 +55,8 @@ import allSongsView from './views/allSongsView.vue';
 import lovedSongsView from './views/lovedSongsView.vue';
 import searchView from './views/searchView.vue';
 import playListView from './views/playListView.vue'
+
+var axios=require("axios");
 
 export default {
 	beforeDestroy() {
@@ -85,6 +92,9 @@ export default {
 			random: false,
 
 			songList: [],
+
+			userInfo: {},
+			lovedSongs: [],
 		}
 	},
 	methods: {
@@ -223,7 +233,20 @@ export default {
 		}
 	},
 	created() {
-
+		this.userInfo={
+			url: localStorage.getItem("url"),
+			username: localStorage.getItem("username"),
+			salt: localStorage.getItem("salt"),
+			token: localStorage.getItem("token"),
+		};
+		axios.post(this.userInfo.url+"/rest/getStarred?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token)
+		.then((response)=>{
+			// console.log(response.data['subsonic-response']);
+			this.lovedSongs=response.data['subsonic-response']['starred']['song'];
+		})
+		.catch(()=>{
+			// 错误
+		})
 	},
 	watch: {
 		nowPage: function (newVal, oldVal) {
