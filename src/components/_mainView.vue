@@ -18,8 +18,14 @@
 		<!-- 主要内容在下面 -->
 		<div class="mainSide">
 			<aboutView v-show="nowPage == 'about'" />
-			<listView ref="listPart" @toPage="toPage" @playSong="playSong" @stopAudio="stopAudio" :songList="songList"
-				:nowPage="nowPage" :nowPlay="nowPlay" :playList="playList" />
+			<!-- <listView ref="listPart" @toPage="toPage" @playSong="playSong" @stopAudio="stopAudio" :songList="songList"
+				:nowPage="nowPage" :nowPlay="nowPlay" :playList="playList" /> -->
+			<albumView v-show="nowPage == 'albums'"/>
+			<artistView v-show="nowPage == 'artists'"/>
+			<allSongsView v-show="nowPage == 'allSongs'"/>
+			<lovedSongsView v-show="nowPage == 'lovedSongs'"/>
+			<searchView v-show="nowPage == 'search'"/>
+			<playListView v-show="nowPage == 'playList'"/>
 		</div>
 	</div>
 </template>
@@ -27,8 +33,16 @@
 <script>
 import sideBar from './sideBar.vue';
 import aboutView from './aboutView.vue';
-import listView from './listView.vue';
+// import listView from './listView.vue';
 import playBar from './playBar.vue';
+
+import albumView from './views/albumView.vue';
+import artistView from './views/artistView.vue';
+import allSongsView from './views/allSongsView.vue';
+import lovedSongsView from './views/lovedSongsView.vue';
+import searchView from './views/searchView.vue';
+import playListView from './views/playListView.vue'
+
 export default {
 	beforeDestroy() {
 		window.removeEventListener('keydown', this.handleKeyDown);
@@ -36,8 +50,14 @@ export default {
 	components: {
 		sideBar,
 		aboutView,
-		listView,
+		// listView,
 		playBar,
+		albumView,
+		artistView,
+		allSongsView,
+		lovedSongsView,
+		searchView,
+		playListView
 	},
 	data() {
 		return {
@@ -196,22 +216,6 @@ export default {
 	},
 	created() {
 
-	},
-	watch: {
-		nowPage: function (newVal, oldVal) {
-			if (oldVal == 'about') {
-				var that = this;
-				this.$nextTick(() => {
-					that.$refs.listPart.pageTurn();
-				})
-				return;
-			}
-			if (newVal != 'about') {
-				localStorage.setItem("nowPage", newVal);
-			}
-
-
-		}
 	},
 }
 </script>
