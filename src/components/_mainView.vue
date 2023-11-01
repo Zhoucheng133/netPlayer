@@ -1,7 +1,13 @@
 <template>
 	<div class="bg" :style="{ 'opacity': bgOpacity }">
-		<sideBar class="sideBar_style" @logoutMain="logoutMain" @toPage="toPage" @toPlayList="toPlayList"
-			@getSongList="getSongList" :nowPage="nowPage" :playList="playList" :nowPlay="nowPlay" />
+		<sideBar class="sideBar_style" 
+			@logoutMain="logoutMain" 
+			@toPage="toPage" 
+			@toPlayList="toPlayList"
+			@getSongList="getSongList" 
+			:nowPage="nowPage" 
+			:playList="playList" 
+			:nowPlay="nowPlay" />
 
 		<playBar 
 			class="playbar" 
@@ -25,7 +31,9 @@
 			<allSongsView v-show="nowPage == 'allSongs'"/>
 			<lovedSongsView v-show="nowPage == 'lovedSongs'"/>
 			<searchView v-show="nowPage == 'search'"/>
-			<playListView v-show="nowPage == 'playList'"/>
+			<playListView 
+				v-show="nowPage == 'playList'"
+				:playList="playList"/>
 		</div>
 	</div>
 </template>
@@ -216,6 +224,20 @@ export default {
 	},
 	created() {
 
+	},
+	watch: {
+		nowPage: function (newVal, oldVal) {
+			if (oldVal == 'about') {
+				var that = this;
+				this.$nextTick(() => {
+					that.$refs.listPart.pageTurn();
+				})
+				return;
+			}
+			if (newVal != 'about') {
+				localStorage.setItem("nowPage", newVal);
+			}
+		}
 	},
 }
 </script>
