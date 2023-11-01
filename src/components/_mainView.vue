@@ -28,7 +28,11 @@
 			<albumView v-show="nowPage == 'albums'"/>
 			<artistView v-show="nowPage == 'artists'"/>
 			<allSongsView v-show="nowPage == 'allSongs'"
+				ref="allSongsRef"
 				@playSong="playSong"
+				@loveSong="loveSong"
+				@deloveSong="deloveSong"
+				@addToSongList="addToSongList"
 				:songList="songList"
 				:nowPage="nowPage" 
 				:nowPlay="nowPlay"
@@ -98,6 +102,19 @@ export default {
 		}
 	},
 	methods: {
+		loveSong(item){
+			console.log("喜欢歌曲"+item);
+			// TODO 喜欢歌曲
+		},
+		deloveSong(item){
+			console.log("不喜欢歌曲"+item);
+			// TODO 取消喜欢歌曲
+		},
+		addToSongList(songId, listId){
+			console.log(songId+" "+listId);
+			// TODO 添加到歌单
+			this.$refs.allSongsRef.handleClose();
+		},
 		changePlayMode(){
 			this.random=!this.random;
 		},

@@ -161,18 +161,16 @@ export default {
   },
   methods: {
     love_menu(item) {
-      console.log(item);
-      // TODO 喜欢歌曲
+      this.$emit("loveSong", item);
 		},
 		deLove_menu(item) {
-      console.log(item);
-      // TODO 取消喜欢歌曲
+      this.$emit("deloveSong", item);
 		},
     handleOk() {
 			this.addToSongList();
 		},
     addToSongList() {
-      // TODO 将歌曲添加到歌单
+      this.$emit("addToSongList", this.opSong.id, this.addListID)
 		},
     addTo_menu(item) {
 			this.opSong = item;
@@ -248,6 +246,10 @@ export default {
 			this.addDialog = false;
 			this.addListID = "";
 		},
+    handleClose(){
+      this.addDialog = false;
+			this.addListID = "";
+    }
   },
   created() {
     this.requestAllSongs();
