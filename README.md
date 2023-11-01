@@ -1,5 +1,7 @@
 # netPlayer
 
+## 正在大力修改中，如需找到可以运行的版本，可以查看标记Tag的最新版本
+
 ## 简介
 
 <img src="build/icon.png" width="100px">
@@ -11,6 +13,8 @@
 ![crypto-js](https://img.shields.io/badge/crypto_js-4.1.1-yellow)
 
 ![License](https://img.shields.io/badge/License-MIT-dark_green)
+
+
 
 **基于Subsonic API的桌面端播放器**
 
