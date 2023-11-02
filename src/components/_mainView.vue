@@ -45,6 +45,7 @@
 				ref="lovedSongsRef"
 				@addToSongList="addToSongList" 
 				@playSong="playSong" 
+				@reloadLoved="reloadLoved" 
 				:lovedSongs="lovedSongs"
 				:songList="songList"
 				:nowPlay="nowPlay"/>
@@ -115,14 +116,40 @@ export default {
 			this.nowPlay=item;
 		},
 		reloadLoved(){
-			// console.log("重新加载喜欢的歌曲");
-			axios.post(this.userInfo.url+"/rest/getStarred?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token)
-			.then((response)=>{
-				this.lovedSongs=response.data['subsonic-response']['starred']['song'];
-			})
-			.catch(()=>{
-				this.$message.error("刷新喜欢的歌曲失败!");
-			})
+			if(this.nowPlay.listName!="lovedSongs"){
+				axios.post(this.userInfo.url+"/rest/getStarred?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token)
+				.then((response)=>{
+					this.lovedSongs=response.data['subsonic-response']['starred']['song'];
+				})
+				.catch(()=>{
+					this.$message.error("刷新喜欢的歌曲失败!");
+				})
+			}else{
+				var tmp=[];
+				axios.post(this.userInfo.url+"/rest/getStarred?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token)
+				.then((response)=>{
+					tmp=response.data['subsonic-response']['starred']['song'];
+					var tmpId=this.nowPlay.nowPlayList[this.nowPlay.index].id;
+				var index=tmp.findIndex(obj => obj.id==tmpId);
+				if(index==-1){
+					this.$emit("stopAudio");
+					this.$message.success("已刷新");
+					return;
+				}
+				var tmpNowPlay={
+					listName: "lovedSongs",
+					index: index,
+					nowPlayList: tmp,
+					id: "",
+					isPlay: this.nowPlay.isPlay,
+				}
+				this.lovedSongs=tmp;
+				this.updateNowPlay(tmpNowPlay);
+				})
+				.catch(()=>{
+					this.$message.error("刷新喜欢的歌曲失败!");
+				})
+			}
 		},
 		loveSong(item){
 			// console.log("喜欢歌曲"+item);

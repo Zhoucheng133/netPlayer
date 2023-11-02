@@ -221,7 +221,7 @@ export default {
 			this.searchList = this.filterArrayByString(this.lovedSongs, this.inputSearch);
 		},
     reloadList(){
-
+      this.$emit("reloadLoved");
     }
   },
 }
