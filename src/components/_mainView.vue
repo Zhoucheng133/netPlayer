@@ -34,6 +34,7 @@
 				@deloveSong="deloveSong"
 				@addToSongList="addToSongList" 
 				@updateNowPlay="updateNowPlay"
+				@reloadLoved="reloadLoved" 
 				:songList="songList"
 				:nowPage="nowPage" 
 				:nowPlay="nowPlay"

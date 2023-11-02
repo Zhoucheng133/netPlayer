@@ -260,6 +260,7 @@ export default {
           this.shownList=tmp;
           this.$emit("updateNowPlay", tmpNowPlay)
         }
+        this.$emit("reloadLoved");
         this.$message.success("已刷新");
       })
       .catch(()=>{
