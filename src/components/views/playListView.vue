@@ -253,7 +253,7 @@ export default {
             listName: this.nowPage,
             index: index,
             nowPlayList: tmp,
-            id: "",
+            id: this.playList.id,
             isPlay: this.nowPlay.isPlay,
           }
           this.$emit("updateNowPlay", tmpNowPlay)
