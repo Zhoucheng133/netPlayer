@@ -212,11 +212,11 @@ export default {
 		},
 		showArtistContent(item) {
       console.log(item);
-      // TODO 显示艺人搜索结果
+      // TODO 艺人信息
 		},
 		showAlbumContent(item) {
       console.log(item);
-      // TODO 显示专辑搜索结果
+      // TODO 专辑信息
 		},
 		getSongTime(duration) {
 			var min = parseInt(duration / 60);
