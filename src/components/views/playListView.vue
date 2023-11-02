@@ -15,20 +15,45 @@
 </template>
 
 <script>
+const axios=require("axios");
 export default {
   props: {
-    playList: Object
+    playList: Object,
+    userInfo: Object,
   },
   data() {
     return {
       inputSearch: "",
-      subTitle: ""
+      subTitle: "",
+
+      isSearch: false,
+      shownList: [],
+      listID: "",
     }
   },
   methods: {
-    change(){},
-    onSearch(){},
-    reloadList(){},
+    onSearch(){
+      // 搜索列表
+    },
+    reloadList(){
+      // TODO 重新加载列表
+    },
+    getList(){
+      const that=this;
+      this.$nextTick(()=>{
+        console.log(that.playList);
+        if(that.playList!=null && that.playList.id!=null && that.playList.id!=undefined){
+          axios.post(that.userInfo.url+"/rest/getPlaylist?v=1.13.0&c=netPlayer&f=json&u="+that.userInfo.username+"&s="+that.userInfo.salt+"&t="+that.userInfo.token+"&id="+that.playList.id)
+          .then((response)=>{
+            response=response.data['subsonic-response'];
+            console.log(response);
+          })
+          .catch(()=>{
+            that.$message.error("加载歌单内容出错")
+          })
+        }
+      });
+    }
   },
 }
 </script>

@@ -57,7 +57,9 @@
 				:lovedSongs="lovedSongs"
 				:userInfo="userInfo"/>
 			<playListView 
+				ref="playListRef"
 				v-show="nowPage == 'playList'"
+				:userInfo="userInfo" 
 				:playList="playList"/>
 		</div>
 	</div>
@@ -357,6 +359,7 @@ export default {
 	watch: {
 		playList: function(newVal){
 			localStorage.setItem("playList", JSON.stringify(newVal));
+			this.$refs.playListRef.getList();
 		},
 		nowPage: function (newVal, oldVal) {
 			if (oldVal == 'about') {
