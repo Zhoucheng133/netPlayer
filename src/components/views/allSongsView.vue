@@ -240,14 +240,15 @@ export default {
 			this.searchList = this.filterArrayByString(this.shownList, this.inputSearch);
 		},
     reloadList(){
+      // console.log(this.userInfo.url+"/rest/getRandomSongs?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token+"&size=500");
       axios.get(this.userInfo.url+"/rest/getRandomSongs?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token+"&size=500")
       .then((response)=>{
-        var tmpId=this.nowPlay.nowPlayList[this.nowPlay.index].id;
         var tmp=response.data["subsonic-response"].randomSongs.song;
         tmp.sort(function(a,b){
           return a.created>b.created ? -1 : 1;
         });
         if(this.nowPlay.listName=="allSongs"){
+          var tmpId=this.nowPlay.nowPlayList[this.nowPlay.index].id;
           var index=tmp.findIndex(obj => obj.id==tmpId);
           var tmpNowPlay={
             listName: "allSongs",
@@ -259,6 +260,7 @@ export default {
           this.shownList=tmp;
           this.$emit("updateNowPlay", tmpNowPlay)
         }
+        this.$message.success("已刷新");
       })
       .catch(()=>{
         this.$message.error("重新加载出错!");
