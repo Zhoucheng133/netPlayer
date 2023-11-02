@@ -107,8 +107,14 @@ export default {
 			this.nowPlay=item;
 		},
 		reloadLoved(){
-			// TODO 刷新喜欢的歌曲
-			console.log("重新加载喜欢的歌曲");
+			// console.log("重新加载喜欢的歌曲");
+			axios.post(this.userInfo.url+"/rest/getStarred?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token)
+			.then((response)=>{
+				this.lovedSongs=response.data['subsonic-response']['starred']['song'];
+			})
+			.catch(()=>{
+				this.$message.error("刷新喜欢的歌曲失败!");
+			})
 		},
 		loveSong(item){
 			// console.log("喜欢歌曲"+item);
@@ -126,7 +132,7 @@ export default {
 			})
 		},
 		deloveSong(item){
-			console.log("不喜欢歌曲"+item);
+			// console.log("不喜欢歌曲"+item);
 			const id=item.id;
 			axios.get(this.userInfo.url+"/rest/unstar?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token+"&id="+id).then((response)=>{
 				const resp=response.data['subsonic-response'];
