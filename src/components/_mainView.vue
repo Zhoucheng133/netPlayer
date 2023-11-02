@@ -32,7 +32,8 @@
 				@playSong="playSong"
 				@loveSong="loveSong"
 				@deloveSong="deloveSong"
-				@addToSongList="addToSongList"
+				@addToSongList="addToSongList" 
+				@updateNowPlay="updateNowPlay"
 				:songList="songList"
 				:nowPage="nowPage" 
 				:nowPlay="nowPlay"
@@ -102,6 +103,9 @@ export default {
 		}
 	},
 	methods: {
+		updateNowPlay(item){
+			this.nowPlay=item;
+		},
 		loveSong(item){
 			console.log("喜欢歌曲"+item);
 			// TODO 喜欢歌曲

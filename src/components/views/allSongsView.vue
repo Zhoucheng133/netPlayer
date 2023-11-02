@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="all">
     <a-page-header 
       title="所有歌曲"
 			:sub-title="subTitle">
@@ -222,7 +222,7 @@ export default {
         // console.log(this.shownList);
       })
       .catch(()=>{
-        // 请求错误
+        this.$message.error("加载所有歌曲出错!");
       })
 		},
     filterArrayByString(inputArray, searchString) {
@@ -240,7 +240,29 @@ export default {
 			this.searchList = this.filterArrayByString(this.shownList, this.inputSearch);
 		},
     reloadList(){
-      // TODO 重载歌曲
+      axios.get(this.userInfo.url+"/rest/getRandomSongs?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token+"&size=500")
+      .then((response)=>{
+        var tmpId=this.nowPlay.nowPlayList[this.nowPlay.index].id;
+        var tmp=response.data["subsonic-response"].randomSongs.song;
+        tmp.sort(function(a,b){
+          return a.created>b.created ? -1 : 1;
+        });
+        if(this.nowPlay.listName=="allSongs"){
+          var index=tmp.findIndex(obj => obj.id==tmpId);
+          var tmpNowPlay={
+            listName: "allSongs",
+            index: index,
+            nowPlayList: tmp,
+            id: "",
+            isPlay: this.nowPlay.isPlay,
+          }
+          this.shownList=tmp;
+          this.$emit("updateNowPlay", tmpNowPlay)
+        }
+      })
+      .catch(()=>{
+        this.$message.error("重新加载出错!");
+      })
     },
     handleCancel() {
 			this.addDialog = false;
@@ -319,7 +341,9 @@ export default {
 	/* background-color: rgb(140, 140, 140); */
 	cursor: pointer;
 }
-
+.all{
+  user-select: none;
+}
 .songOp {
 	display: flex;
 	border-radius: 10px;
