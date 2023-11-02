@@ -235,6 +235,7 @@ export default {
     onSearch() {
 			if (this.inputSearch == "") {
 				this.isSearch = false;
+        return;
 			}
 			this.isSearch = true;
 			this.searchList = this.filterArrayByString(this.shownList, this.inputSearch);
