@@ -236,14 +236,42 @@ export default {
 			this.addListID = "";
     },
     reloadList(){
-      // TODO 重新加载列表
+      axios.get(this.userInfo.url+"/rest/getPlaylist?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token+"&id="+this.playList.id)
+      .then((response)=>{
+        var tmp=response.data['subsonic-response'].playlist.entry;
+        if(this.nowPlay.listName == this.nowPage && this.nowPlay.id == this.playList.id){
+          var tmpId=this.nowPlay.nowPlayList[this.nowPlay.index].id;
+          var index=tmp.findIndex(obj => obj.id==tmpId);
+          if(index==-1){
+            this.shownList=tmp;
+            this.$emit("stopAudio");
+            this.$emit("reloadLoved");
+            this.$message.success("已刷新");
+            return;
+          }
+          var tmpNowPlay={
+            listName: this.nowPage,
+            index: index,
+            nowPlayList: tmp,
+            id: "",
+            isPlay: this.nowPlay.isPlay,
+          }
+          this.$emit("updateNowPlay", tmpNowPlay)
+        }
+        this.shownList=tmp;
+        this.$emit("reloadLoved");
+        this.$message.success("已刷新");
+      })
+      .catch(()=>{
+        this.$message.error("重新加载出错!");
+      })
     },
     getList(){
       const that=this;
       this.$nextTick(()=>{
         // console.log(that.playList);
         if(that.playList!=null && that.playList.id!=null && that.playList.id!=undefined){
-          axios.post(that.userInfo.url+"/rest/getPlaylist?v=1.13.0&c=netPlayer&f=json&u="+that.userInfo.username+"&s="+that.userInfo.salt+"&t="+that.userInfo.token+"&id="+that.playList.id)
+          axios.get(that.userInfo.url+"/rest/getPlaylist?v=1.13.0&c=netPlayer&f=json&u="+that.userInfo.username+"&s="+that.userInfo.salt+"&t="+that.userInfo.token+"&id="+that.playList.id)
           .then((response)=>{
             response=response.data['subsonic-response'];
             // console.log(response);

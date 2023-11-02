@@ -152,21 +152,22 @@ export default {
 				.then((response)=>{
 					tmp=response.data['subsonic-response']['starred']['song'];
 					var tmpId=this.nowPlay.nowPlayList[this.nowPlay.index].id;
-				var index=tmp.findIndex(obj => obj.id==tmpId);
-				if(index==-1){
-					this.$emit("stopAudio");
-					this.$message.success("已刷新");
-					return;
-				}
-				var tmpNowPlay={
-					listName: "lovedSongs",
-					index: index,
-					nowPlayList: tmp,
-					id: "",
-					isPlay: this.nowPlay.isPlay,
-				}
-				this.lovedSongs=tmp;
-				this.updateNowPlay(tmpNowPlay);
+					var index=tmp.findIndex(obj => obj.id==tmpId);
+					if(index==-1){
+						this.lovedSongs=tmp;
+						this.$emit("stopAudio");
+						this.$message.success("已刷新");
+						return;
+					}
+					var tmpNowPlay={
+						listName: "lovedSongs",
+						index: index,
+						nowPlayList: tmp,
+						id: "",
+						isPlay: this.nowPlay.isPlay,
+					}
+					this.lovedSongs=tmp;
+					this.updateNowPlay(tmpNowPlay);
 				})
 				.catch(()=>{
 					this.$message.error("刷新喜欢的歌曲失败!");

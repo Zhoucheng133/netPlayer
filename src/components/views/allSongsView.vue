@@ -252,6 +252,7 @@ export default {
           var tmpId=this.nowPlay.nowPlayList[this.nowPlay.index].id;
           var index=tmp.findIndex(obj => obj.id==tmpId);
           if(index==-1){
+            this.shownList=tmp;
             this.$emit("stopAudio");
             this.$message.success("已刷新");
             return;
@@ -263,9 +264,9 @@ export default {
             id: "",
             isPlay: this.nowPlay.isPlay,
           }
-          this.shownList=tmp;
           this.$emit("updateNowPlay", tmpNowPlay)
         }
+        this.shownList=tmp;
         this.$emit("reloadLoved");
         this.$message.success("已刷新");
       })
