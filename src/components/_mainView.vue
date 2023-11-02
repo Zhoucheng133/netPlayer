@@ -148,8 +148,17 @@ export default {
 			})
 		},
 		addToSongList(songId, listId){
-			console.log(songId+" "+listId);
-			// TODO 添加到歌单
+			axios.post(this.userInfo.url+"/rest/updatePlaylist?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token+"&playlistId="+listId+"&songIdToAdd="+songId)
+			.then((response)=>{
+				if(response.data['subsonic-response'].status=="ok"){
+					this.$message.success("操作成功!");
+				}else{
+					this.$message.error("操作失败");
+				}
+			})
+			.catch(()=>{
+				this.$message.error("操作失败");
+			})
 			this.$refs.allSongsRef.handleClose();
 		},
 		changePlayMode(){
