@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="all">
     <a-page-header 
       :title=playList.name
 			:sub-title="subTitle">
