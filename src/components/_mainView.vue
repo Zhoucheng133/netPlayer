@@ -50,7 +50,9 @@
 				:songList="songList"
 				:nowPlay="nowPlay"/>
 			<searchView v-show="nowPage == 'search'"
-				@playSong="playSong"
+				@playSong="playSong" 
+				@deloveSong="deloveSong" 
+				@loveSong="loveSong"
 				:nowPlay="nowPlay" 
 				:lovedSongs="lovedSongs"
 				:userInfo="userInfo"/>

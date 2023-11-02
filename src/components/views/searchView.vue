@@ -172,12 +172,10 @@ export default {
 	},
 	methods: {
 		love_menu(item) {
-      console.log(item);
-      // TODO 添加到喜欢
+      this.$emit("loveSong", item);
 		},
 		deLove_menu(item) {
-      console.log(item);
-      // TODO 从喜欢中移除
+      this.$emit("deloveSong", item);
 		},
 		addTo_menu(item) {
       console.log(item);
