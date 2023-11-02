@@ -37,7 +37,8 @@
               <div v-for="(item, index) in shownList.song" :key="index"
                 :class="isPlaying(index) ? 'container_playing' : 'container'" @dblclick="playSong(index)">
                 <div class="item">
-                  <div class="itemContent">{{ index + 1 }}</div>
+                  <div class="itemContent" v-if="!isPlaying(index)">{{ index + 1 }}</div>
+                  <div class="itemContent" v-else><a-icon type="caret-right" /></div>
                 </div>
                 <div class="item">
                   <div class="itemContent">{{ item.title }}</div>
