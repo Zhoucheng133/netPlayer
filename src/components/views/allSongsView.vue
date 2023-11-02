@@ -253,6 +253,7 @@ export default {
           var index=tmp.findIndex(obj => obj.id==tmpId);
           if(index==-1){
             this.$emit("stopAudio");
+            this.$message.success("已刷新");
             return;
           }
           var tmpNowPlay={
