@@ -106,13 +106,39 @@ export default {
 		updateNowPlay(item){
 			this.nowPlay=item;
 		},
+		reloadLoved(){
+			// TODO 刷新喜欢的歌曲
+			console.log("重新加载喜欢的歌曲");
+		},
 		loveSong(item){
-			console.log("喜欢歌曲"+item);
-			// TODO 喜欢歌曲
+			// console.log("喜欢歌曲"+item);
+			const id=item.id;
+			axios.get(this.userInfo.url+"/rest/star?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token+"&id="+id).then((response)=>{
+				const resp=response.data['subsonic-response'];
+				if (resp.status == "ok") {
+					this.$message.success("操作成功");
+					this.reloadLoved();
+				} else {
+					this.$message.error("操作失败");
+				}
+			}).catch(()=>{
+				this.$message.error("操作失败");
+			})
 		},
 		deloveSong(item){
 			console.log("不喜欢歌曲"+item);
-			// TODO 取消喜欢歌曲
+			const id=item.id;
+			axios.get(this.userInfo.url+"/rest/unstar?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token+"&id="+id).then((response)=>{
+				const resp=response.data['subsonic-response'];
+				if (resp.status == "ok") {
+					this.$message.success("操作成功");
+					this.reloadLoved();
+				} else {
+					this.$message.error("操作失败");
+				}
+			}).catch(()=>{
+				this.$message.error("操作失败");
+			})
 		},
 		addToSongList(songId, listId){
 			console.log(songId+" "+listId);
@@ -262,11 +288,10 @@ export default {
 		};
 		axios.post(this.userInfo.url+"/rest/getStarred?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token)
 		.then((response)=>{
-			// console.log(response.data['subsonic-response']);
 			this.lovedSongs=response.data['subsonic-response']['starred']['song'];
 		})
 		.catch(()=>{
-			// 错误
+			this.$message.error("获取喜欢的歌曲失败!");
 		})
 	},
 	watch: {
