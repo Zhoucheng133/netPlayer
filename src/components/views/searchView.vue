@@ -253,8 +253,7 @@ export default {
 }
 
 .songOp:hover {
-	color: white;
-	background-color: rgb(140, 140, 140);
+	/* color: white; */
 	cursor: pointer;
 }
 
@@ -280,7 +279,7 @@ export default {
 }
 
 .mainArea>.container_artist:hover {
-	background-color: rgb(220, 220, 220);
+	background-color: rgb(240, 240, 240);
 }
 
 .container_artist {
@@ -301,7 +300,7 @@ export default {
 }
 
 .mainArea>.container:hover {
-	background-color: rgb(220, 220, 220);
+	background-color: rgb(240, 240, 240);
 }
 
 .mainArea {
