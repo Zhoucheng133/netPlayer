@@ -36,9 +36,10 @@ import loginView from '@/components/loginView.vue';
 
 const { ipcRenderer } = require('electron')
 
+const axios=require("axios");
+
 export default {
 	beforeDestroy() {
-		ipcRenderer.removeAllListeners('autoLoginResult');
 		ipcRenderer.removeAllListeners('toAbout');
 
 		ipcRenderer.removeAllListeners('nextSong');
@@ -88,7 +89,32 @@ export default {
 		getLogin(val) {
 			this.isLogin = val;
 		},
-		autoLoginResult(event, response) {
+		async autoLogin(url, username, salt, token) {
+			var resp=undefined;
+			const request=new Promise((resolve)=>{
+				axios.post(url+"/rest/ping.view?v=1.13.0&c=netPlayer&f=json&u="+username+"&s="+salt+"&t="+token)
+				.then((response)=>{
+					resp=response.data;
+					resolve(resp);
+				})
+				.catch(()=>{
+					resp=null;
+					resolve(resp);
+				})
+			})
+			const timeout=new Promise((resolve)=>{
+				setTimeout(() => {
+					resp=null;
+					resolve(resp);
+				}, 2000);
+			})
+
+			var response=null;
+
+			await Promise.race([request, timeout]).then((value) => {
+				response=value;
+			});
+
 			if (response == null) {
 				this.$message.error('请求失败，请检查服务器状态');
 				localStorage.clear();
@@ -107,16 +133,11 @@ export default {
 		},
 	},
 	mounted() {
-
-
-		ipcRenderer.removeAllListeners('autoLoginResult');
 		ipcRenderer.removeAllListeners('toAbout');
 		ipcRenderer.removeAllListeners('nextSong');
 		ipcRenderer.removeAllListeners('forwSong');
 		ipcRenderer.removeAllListeners('toggleSong');
 		ipcRenderer.removeAllListeners('getSysResult');
-
-		ipcRenderer.on('autoLoginResult', this.autoLoginResult);
 
 		ipcRenderer.on('toAbout', () => {
 			this.$refs.mainView.toPage('about');
@@ -138,7 +159,8 @@ export default {
 		var token = localStorage.getItem("token");
 		var url = localStorage.getItem("url");
 		if (token != null && username != null && salt != null && url != null) {
-			ipcRenderer.send('autoLoginRequest', url, username, salt, token);
+			// 自动登录
+			this.autoLogin(url, username, salt, token);
 		} else {
 			this.isLogin = false;
 		}
