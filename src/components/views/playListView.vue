@@ -75,7 +75,7 @@
                 <a-icon type="unordered-list" />
                 添加到歌单…
               </a-menu-item>
-              <a-menu-item key="3" disabled>
+              <a-menu-item key="3" @click="delFromList(item)">
                 <a-icon type="delete" />
                 从歌单中删除
               </a-menu-item>
@@ -161,6 +161,10 @@ export default {
     }
   },
   methods: {
+    delFromList(item){
+      console.log(item);
+      // TODO 从列表中删除
+    },
     love_menu(item) {
       this.$emit("loveSong", item);
 		},
