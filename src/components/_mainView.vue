@@ -99,6 +99,8 @@ export default {
 			bgOpacity: 0,
 
 			nowPage: '',
+
+			// 当前选择的歌单信息
 			playList: {},
 
 			nowPlay: {
@@ -111,6 +113,7 @@ export default {
 
 			random: false,
 
+			// 所有歌单
 			songList: [],
 
 			userInfo: {},
@@ -352,6 +355,9 @@ export default {
 		})
 	},
 	watch: {
+		playList: function(newVal){
+			localStorage.setItem("playList", JSON.stringify(newVal));
+		},
 		nowPage: function (newVal, oldVal) {
 			if (oldVal == 'about') {
 				var that = this;
