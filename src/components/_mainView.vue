@@ -40,7 +40,13 @@
 				:nowPlay="nowPlay"
 				:lovedSongs="lovedSongs"
 				:userInfo="userInfo"/>
-			<lovedSongsView v-show="nowPage == 'lovedSongs'"/>
+			<lovedSongsView v-show="nowPage == 'lovedSongs'"
+				ref="lovedSongsRef"
+				@addToSongList="addToSongList" 
+				@playSong="playSong" 
+				:lovedSongs="lovedSongs"
+				:songList="songList"
+				:nowPlay="nowPlay"/>
 			<searchView v-show="nowPage == 'search'"/>
 			<playListView 
 				v-show="nowPage == 'playList'"
@@ -160,6 +166,7 @@ export default {
 				this.$message.error("操作失败");
 			})
 			this.$refs.allSongsRef.handleClose();
+			this.$refs.lovedSongsRef.handleClose();
 		},
 		changePlayMode(){
 			this.random=!this.random;
@@ -235,7 +242,7 @@ export default {
 		playSong(nowPlay) {
 			this.nowPlay = nowPlay;
 			this.$refs.player.playSong();
-			console.log(this.nowPlay);
+			// console.log(this.nowPlay);
 			this.saveNowPlay();
 			var that=this;
 			this.$nextTick(()=>{
