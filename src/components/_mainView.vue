@@ -58,7 +58,18 @@
 				:userInfo="userInfo"/>
 			<playListView 
 				ref="playListRef"
-				v-show="nowPage == 'playList'"
+				v-show="nowPage == 'playList'" 
+				@playSong="playSong"
+				@loveSong="loveSong"
+				@deloveSong="deloveSong"
+				@addToSongList="addToSongList" 
+				@updateNowPlay="updateNowPlay"
+				@reloadLoved="reloadLoved" 
+				@stopAudio="stopAudio"
+				:songList="songList"
+				:nowPage="nowPage" 
+				:lovedSongs="lovedSongs"
+				:nowPlay="nowPlay"
 				:userInfo="userInfo" 
 				:playList="playList"/>
 		</div>
