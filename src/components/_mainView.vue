@@ -153,9 +153,10 @@ export default {
 					tmp=response.data['subsonic-response']['starred']['song'];
 					var tmpId=this.nowPlay.nowPlayList[this.nowPlay.index].id;
 					var index=tmp.findIndex(obj => obj.id==tmpId);
+					console.log(index);
 					if(index==-1){
 						this.lovedSongs=tmp;
-						this.$emit("stopAudio");
+						this.stopAudio();
 						this.$message.success("已刷新");
 						return;
 					}
