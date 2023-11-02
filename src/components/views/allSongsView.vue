@@ -251,6 +251,10 @@ export default {
         if(this.nowPlay.listName=="allSongs"){
           var tmpId=this.nowPlay.nowPlayList[this.nowPlay.index].id;
           var index=tmp.findIndex(obj => obj.id==tmpId);
+          if(index==-1){
+            this.$emit("stopAudio");
+            return;
+          }
           var tmpNowPlay={
             listName: "allSongs",
             index: index,
