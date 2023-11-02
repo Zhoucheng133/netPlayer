@@ -35,6 +35,7 @@
 				@addToSongList="addToSongList" 
 				@updateNowPlay="updateNowPlay"
 				@reloadLoved="reloadLoved" 
+				@stopAudio="stopAudio"
 				:songList="songList"
 				:nowPage="nowPage" 
 				:nowPlay="nowPlay"
