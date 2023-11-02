@@ -206,7 +206,7 @@ export default {
 				id: this.inputValue,
 				isPlay: false,
 			}
-			this.$emit("searchPlay", nowPlay);
+			this.$emit("playSong", nowPlay);
 		},
 		showArtistContent(item) {
       console.log(item);
@@ -274,8 +274,10 @@ export default {
 	width: 100%;
 	height: 50px;
 	transition: all ease-in-out .2s;
-	background-color: rgb(235, 235, 235);
-	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
+	/* background-color: rgb(235, 235, 235);
+	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3); */
+  color: rgb(24, 144, 255);
+	font-weight: bolder;
 }
 
 .mainArea>.container_artist:hover {
@@ -285,7 +287,7 @@ export default {
 .container_artist {
 	display: grid;
 	grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 100px) 100px;
-	width: 100%;
+	/* width: 100%; */
 	height: 50px;
 	transition: all ease-in-out .2s;
 }
@@ -294,7 +296,7 @@ export default {
 	position: fixed;
 	display: grid;
 	grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 100px) 100px;
-	width: 100%;
+	/* width: 100%; */
 	background-color: rgb(242, 242, 242);
 	height: 50px;
 }
@@ -348,5 +350,6 @@ export default {
 	margin-left: 24px;
 	margin-right: 24px;
 	/* width: calc(100% - 248px); */
+  user-select: none;
 }
 </style>
