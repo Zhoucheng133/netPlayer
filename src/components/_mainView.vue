@@ -45,6 +45,7 @@
 				ref="lovedSongsRef"
 				@addToSongList="addToSongList" 
 				@playSong="playSong" 
+				@deloveSong="deloveSong" 
 				@reloadLoved="reloadLoved" 
 				:lovedSongs="lovedSongs"
 				:songList="songList"
@@ -137,7 +138,7 @@ export default {
 		updateNowPlay(item){
 			this.nowPlay=item;
 		},
-		reloadLoved(){
+		reloadLoved(enableMsg){
 			if(this.nowPlay.listName!="lovedSongs"){
 				axios.post(this.userInfo.url+"/rest/getStarred?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token)
 				.then((response)=>{
@@ -157,9 +158,12 @@ export default {
 					if(index==-1){
 						this.lovedSongs=tmp;
 						this.stopAudio();
-						this.$message.success("已刷新");
 						return;
 					}
+					if(enableMsg){
+						this.$message.success("已刷新");
+					}
+					
 					var tmpNowPlay={
 						listName: "lovedSongs",
 						index: index,
