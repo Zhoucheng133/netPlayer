@@ -155,10 +155,12 @@
 </template>
 
 <script>
+const axios=require("axios");
 export default {
 	props: {
 		nowPlay: Object,
-		lovedSongs: Array
+		lovedSongs: Array,
+    userInfo: Object
 	},
 	data() {
 		return {
@@ -225,15 +227,17 @@ export default {
 			if (this.inputValue == '') {
 				this.shownList = [];
 			} else {
-				// TODO 搜索操作
+				axios.get(this.userInfo.url+"/rest/search2?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token+"&query="+this.inputValue)
+        .then((response)=>{
+          this.shownList = response.data["subsonic-response"]["searchResult2"];
+          console.log(this.shownList.song);
+        })
+        .catch(()=>{
+          this.$message.error("搜索出错")
+        })
 			}
 		},
-		callback() {
-
-		},
-		searchResult(event, resp) {
-			this.shownList = resp.searchResult2
-		}
+    callback(){},
 	},
 	watch: {
 		inputValue: function (newVal) {

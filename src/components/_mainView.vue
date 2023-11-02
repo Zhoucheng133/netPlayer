@@ -49,7 +49,11 @@
 				:lovedSongs="lovedSongs"
 				:songList="songList"
 				:nowPlay="nowPlay"/>
-			<searchView v-show="nowPage == 'search'"/>
+			<searchView v-show="nowPage == 'search'"
+				@playSong="playSong"
+				:nowPlay="nowPlay" 
+				:lovedSongs="lovedSongs"
+				:userInfo="userInfo"/>
 			<playListView 
 				v-show="nowPage == 'playList'"
 				:playList="playList"/>
