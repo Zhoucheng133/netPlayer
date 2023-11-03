@@ -26,10 +26,18 @@
 			<aboutView v-show="nowPage == 'about'" />
 
 			<albumContentView v-show="nowPage == 'albums' && selectedAlbumId!=''"
-				ref="albumContent"
+				ref="albumContentRef"
+				@addToSongList="addToSongList"
+				@playSong="playSong"
+				@closeAlbumContent="closeAlbumContent"
+				@loveSong="loveSong" 
+				@deloveSong="deloveSong"
 				:userInfo="userInfo"
-				:selectedAlbumId="selectedAlbumId"
-				@closeAlbumContent="closeAlbumContent"/>
+				:songList="songList"
+				:nowPage="nowPage"
+				:lovedSongs="lovedSongs"
+				:nowPlay="nowPlay"
+				:selectedAlbumId="selectedAlbumId"/>
 			<albumView v-show="nowPage == 'albums' && selectedAlbumId==''"
 				@showAlbumContent="showAlbumContent"
 				:userInfo="userInfo"/>
@@ -154,7 +162,7 @@ export default {
 		},
 		showAlbumContent(id){
 			this.selectedAlbumId=id;
-			this.$refs.albumContent.requestAlbumContent(id);
+			this.$refs.albumContentRef.requestAlbumContent(id);
 		},
 		updateNowPlay(item){
 			this.nowPlay=item;
@@ -248,6 +256,7 @@ export default {
 			this.$refs.allSongsRef.handleClose();
 			this.$refs.lovedSongsRef.handleClose();
 			this.$refs.searchRef.handleClose();
+			this.$refs.albumContentRef.handleClose();
 		},
 		changePlayMode(){
 			this.random=!this.random;
