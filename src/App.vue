@@ -106,7 +106,7 @@ export default {
 				setTimeout(() => {
 					resp=null;
 					resolve(resp);
-				}, 2000);
+				}, 5000);
 			})
 
 			var response=null;
