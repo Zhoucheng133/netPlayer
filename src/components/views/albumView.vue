@@ -48,7 +48,9 @@ export default {
     }
   },
   methods: {
-    showAlbumContent(){},
+    showAlbumContent(item){
+      this.$emit("showAlbumContent", item.id);
+    },
     filterArrayByString(inputArray, searchString) {
 			return inputArray.filter(obj => {
 				return Object.values(obj).some(value => {
