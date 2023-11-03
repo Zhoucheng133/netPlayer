@@ -152,6 +152,23 @@
         </a-tab-pane>
       </a-tabs>
     </div>
+    <a-modal v-model="addDialog" title="添加到歌单…" on-ok="handleOk" centered class="dialog">
+			<template slot="footer">
+				<a-button key="back" @click="handleCancel">
+					取消
+				</a-button>
+				<a-button key="submit" type="primary" @click="handleOk" :disabled="addListID == ''">
+					添加
+				</a-button>
+			</template>
+			<div>
+				<a-radio-group v-model="addListID">
+					<a-radio v-for="(item, index) in songList" :key="index" :value="item.id" :style="radioStyle">
+						{{ item.name }}
+					</a-radio>
+				</a-radio-group>
+			</div>
+		</a-modal>
   </div>
 </template>
 
@@ -161,7 +178,8 @@ export default {
 	props: {
 		nowPlay: Object,
 		lovedSongs: Array,
-    userInfo: Object
+    userInfo: Object,
+    songList: Array
 	},
 	data() {
 		return {
@@ -169,18 +187,42 @@ export default {
 
 			shownList: [],
 			inputValue: "",
+
+      opSong: {},
+      addDialog: false,
+      addListID: "",
+
+      radioStyle: {
+				display: 'block',
+				height: '30px',
+				lineHeight: '30px',
+			},
 		}
 	},
 	methods: {
+    handleCancel() {
+			this.addDialog = false;
+			this.addListID = "";
+		},
+    handleClose(){
+      this.addDialog = false;
+			this.addListID = "";
+    },
+    handleOk() {
+			this.addToSongList();
+		},
 		love_menu(item) {
       this.$emit("loveSong", item);
 		},
 		deLove_menu(item) {
       this.$emit("deloveSong", item);
 		},
+    addToSongList() {
+      this.$emit("addToSongList", this.opSong.id, this.addListID)
+		},
 		addTo_menu(item) {
-      console.log(item);
-      // TODO 添加到某个歌单
+			this.opSong = item;
+			this.addDialog = true;
 		},
 		play_menu(index) {
 			this.playSong(index);

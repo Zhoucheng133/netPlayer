@@ -51,9 +51,12 @@
 				:songList="songList"
 				:nowPlay="nowPlay"/>
 			<searchView v-show="nowPage == 'search'"
+				ref="searchRef" 
 				@playSong="playSong" 
 				@deloveSong="deloveSong" 
 				@loveSong="loveSong"
+				@addToSongList="addToSongList"
+				:songList="songList"
 				:nowPlay="nowPlay" 
 				:lovedSongs="lovedSongs"
 				:userInfo="userInfo"/>
@@ -106,7 +109,7 @@ export default {
 		allSongsView,
 		lovedSongsView,
 		searchView,
-		playListView
+		playListView,
 	},
 	data() {
 		return {
@@ -223,6 +226,7 @@ export default {
 			})
 			this.$refs.allSongsRef.handleClose();
 			this.$refs.lovedSongsRef.handleClose();
+			this.$refs.searchRef.handleClose();
 		},
 		changePlayMode(){
 			this.random=!this.random;
