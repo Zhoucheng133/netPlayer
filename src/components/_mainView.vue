@@ -25,7 +25,8 @@
 		<div class="mainSide">
 			<aboutView v-show="nowPage == 'about'" />
 			
-			<albumView v-show="nowPage == 'albums'"/>
+			<albumView v-show="nowPage == 'albums'"
+				:userInfo="userInfo"/>
 			<artistView v-show="nowPage == 'artists'"/>
 			<allSongsView v-show="nowPage == 'allSongs'"
 				ref="allSongsRef"
