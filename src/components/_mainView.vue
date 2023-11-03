@@ -85,6 +85,7 @@
 				@updateNowPlay="updateNowPlay"
 				@reloadLoved="reloadLoved" 
 				@stopAudio="stopAudio"
+				@delFromList="delFromList"
 				:songList="songList"
 				:nowPage="nowPage" 
 				:lovedSongs="lovedSongs"
@@ -157,6 +158,21 @@ export default {
 		}
 	},
 	methods: {
+		delFromList(songId, listId){
+			axios.post(this.userInfo.url+"/rest/updatePlaylist?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token+"&playlistId="+listId+"&songIndexToRemove="+songId)
+			.then((response)=>{
+				const resp=response.data['subsonic-response'];
+				if (resp.status == "ok") {
+					this.$message.success("操作成功");
+					this.$refs.playListRef.reloadList(false)
+				} else {
+					this.$message.error("操作失败");
+				}
+			})
+			.catch(()=>{
+				this.$message.error("操作失败");
+			})
+		},
 		closeAlbumContent(){
 			this.selectedAlbumId="";
 		},

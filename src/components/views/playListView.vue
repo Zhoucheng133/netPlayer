@@ -75,7 +75,7 @@
                 <a-icon type="unordered-list" />
                 添加到歌单…
               </a-menu-item>
-              <a-menu-item key="3" @click="delFromList(item)">
+              <a-menu-item key="3" @click="delFromList(index)">
                 <a-icon type="delete" />
                 从歌单中删除
               </a-menu-item>
@@ -161,9 +161,9 @@ export default {
     }
   },
   methods: {
-    delFromList(item){
-      console.log(item);
+    delFromList(index){
       // TODO 从列表中删除
+      this.$emit("delFromList", index, this.playList.id);
     },
     love_menu(item) {
       this.$emit("loveSong", item);
@@ -239,7 +239,7 @@ export default {
       this.addDialog = false;
 			this.addListID = "";
     },
-    reloadList(){
+    reloadList(showMsg){
       axios.get(this.userInfo.url+"/rest/getPlaylist?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token+"&id="+this.playList.id)
       .then((response)=>{
         var tmp=response.data['subsonic-response'].playlist.entry;
@@ -251,7 +251,9 @@ export default {
             this.subTitle="合计"+this.shownList.length+"首歌"
             this.$emit("stopAudio");
             this.$emit("reloadLoved");
-            this.$message.success("已刷新");
+            if(showMsg!=false){
+              this.$message.success("已刷新");
+            }
             return;
           }
           var tmpNowPlay={
@@ -265,7 +267,9 @@ export default {
         }
         this.shownList=tmp;
         this.$emit("reloadLoved");
-        this.$message.success("已刷新");
+        if(showMsg!=false){
+          this.$message.success("已刷新");
+        }
         this.subTitle="合计"+this.shownList.length+"首歌"
       })
       .catch(()=>{
