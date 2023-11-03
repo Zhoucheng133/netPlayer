@@ -24,8 +24,14 @@
 		<!-- 主要内容在下面 -->
 		<div class="mainSide">
 			<aboutView v-show="nowPage == 'about'" />
-			
-			<albumView v-show="nowPage == 'albums'"
+
+			<albumContentView v-show="nowPage == 'albums' && selectedAlbumId!=''"
+				ref="albumContent"
+				:userInfo="userInfo"
+				:selectedAlbumId="selectedAlbumId"
+				@closeAlbumContent="closeAlbumContent"/>
+			<albumView v-show="nowPage == 'albums' && selectedAlbumId==''"
+				@showAlbumContent="showAlbumContent"
 				:userInfo="userInfo"/>
 			<artistView v-show="nowPage == 'artists'"/>
 			<allSongsView v-show="nowPage == 'allSongs'"
@@ -93,6 +99,7 @@ import allSongsView from './views/allSongsView.vue';
 import lovedSongsView from './views/lovedSongsView.vue';
 import searchView from './views/searchView.vue';
 import playListView from './views/playListView.vue'
+import albumContentView from './views/albumContentView.vue';
 
 var axios=require("axios");
 
@@ -111,6 +118,7 @@ export default {
 		lovedSongsView,
 		searchView,
 		playListView,
+		albumContentView
 	},
 	data() {
 		return {
@@ -120,6 +128,8 @@ export default {
 
 			// 当前选择的歌单信息
 			playList: {},
+
+			selectedAlbumId: "",
 
 			nowPlay: {
 				listName: "",
@@ -139,6 +149,13 @@ export default {
 		}
 	},
 	methods: {
+		closeAlbumContent(){
+			this.selectedAlbumId="";
+		},
+		showAlbumContent(id){
+			this.selectedAlbumId=id;
+			this.$refs.albumContent.requestAlbumContent(id);
+		},
 		updateNowPlay(item){
 			this.nowPlay=item;
 		},
