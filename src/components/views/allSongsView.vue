@@ -219,6 +219,7 @@ export default {
           return a.created>b.created ? -1 : 1;
         });
         this.shownList=tmp;
+        this.subTitle="合计"+this.shownList.length+"首歌";
         // console.log(this.shownList);
       })
       .catch(()=>{
@@ -253,6 +254,7 @@ export default {
           var index=tmp.findIndex(obj => obj.id==tmpId);
           if(index==-1){
             this.shownList=tmp;
+            this.subTitle="合计"+this.shownList.length+"首歌"
             this.$emit("stopAudio");
             this.$message.success("已刷新");
             return;
@@ -269,6 +271,7 @@ export default {
         this.shownList=tmp;
         this.$emit("reloadLoved");
         this.$message.success("已刷新");
+        this.subTitle="合计"+this.shownList.length+"首歌";
       })
       .catch(()=>{
         this.$message.error("重新加载出错!");

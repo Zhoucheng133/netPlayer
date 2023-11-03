@@ -248,6 +248,7 @@ export default {
           var index=tmp.findIndex(obj => obj.id==tmpId);
           if(index==-1){
             this.shownList=tmp;
+            this.subTitle="合计"+this.shownList.length+"首歌"
             this.$emit("stopAudio");
             this.$emit("reloadLoved");
             this.$message.success("已刷新");
@@ -265,6 +266,7 @@ export default {
         this.shownList=tmp;
         this.$emit("reloadLoved");
         this.$message.success("已刷新");
+        this.subTitle="合计"+this.shownList.length+"首歌"
       })
       .catch(()=>{
         this.$message.error("重新加载出错!");
@@ -280,6 +282,7 @@ export default {
             response=response.data['subsonic-response'];
             // console.log(response);
             this.shownList=response.playlist.entry;
+            this.subTitle="合计"+this.shownList.length+"首歌"
           })
           .catch(()=>{
             that.$message.error("加载歌单内容出错")

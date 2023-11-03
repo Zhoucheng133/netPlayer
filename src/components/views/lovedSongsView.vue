@@ -2,7 +2,7 @@
   <div class="all">
     <a-page-header 
       title="喜欢的歌曲"
-			:sub-title="subTitle">
+			:sub-title='"合计"+this.lovedSongs.length+"首歌"'>
 			<template slot="extra">
 				<div class="toolBar">
 					<a-input-search placeholder="输入搜索内容" style="width: 200px;margin-right: 20px;"
