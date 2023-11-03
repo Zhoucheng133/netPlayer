@@ -146,6 +146,9 @@ export default {
 				axios.post(this.userInfo.url+"/rest/getStarred?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token)
 				.then((response)=>{
 					this.lovedSongs=response.data['subsonic-response']['starred']['song'];
+					if(enableMsg){
+						this.$message.success("已刷新");
+					}
 				})
 				.catch(()=>{
 					this.$message.error("刷新喜欢的歌曲失败!");
