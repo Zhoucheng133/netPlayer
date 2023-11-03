@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="all">
     <a-page-header 
       title="专辑"
 			:sub-title="subTitle">
@@ -16,7 +16,7 @@
       <div class="item">专辑名称</div>
       <div class="item">歌曲数</div>
     </div>
-    <div class="mainArea" v-if="!isSearch">
+    <div class="mainArea">
       <div class="container_artist" v-for="(item, index) in isSearch ? searchList : shownList" :key="index" @dblclick="showAlbumContent(item)">
         <div class="item">
           <div class="itemContent">{{ index + 1 }}</div>
@@ -48,7 +48,22 @@ export default {
     }
   },
   methods: {
-    onSearch(){},
+    showAlbumContent(){},
+    filterArrayByString(inputArray, searchString) {
+			return inputArray.filter(obj => {
+				return Object.values(obj).some(value => {
+					return typeof value === 'string' && value.toLowerCase().includes(searchString.toLowerCase());
+				});
+			});
+		},
+    onSearch() {
+			if (this.inputSearch == "") {
+				this.isSearch = false;
+        return;
+			}
+			this.isSearch = true;
+			this.searchList = this.filterArrayByString(this.shownList, this.inputSearch);
+		},
     reloadList(){
       axios.get(this.userInfo.url+"/rest/getAlbumList?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token+"&type=newest&size=500")
       .then((response)=>{
@@ -125,5 +140,7 @@ export default {
 	background-color: rgb(242, 242, 242);
 	height: 50px;
 }
-
+.all{
+  user-select: none;
+}
 </style>
