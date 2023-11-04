@@ -257,7 +257,7 @@ export default {
 		},
 		showAlbumContent(item) {
       console.log(item);
-      // TODO 专辑信息
+      this.$emit("toAlbum", item.id);
 		},
 		getSongTime(duration) {
 			var min = parseInt(duration / 60);

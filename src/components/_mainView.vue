@@ -71,6 +71,7 @@
 				@deloveSong="deloveSong" 
 				@loveSong="loveSong"
 				@addToSongList="addToSongList"
+				@toAlbum="toAlbum"
 				:songList="songList"
 				:nowPlay="nowPlay" 
 				:lovedSongs="lovedSongs"
@@ -158,6 +159,11 @@ export default {
 		}
 	},
 	methods: {
+		toAlbum(id){
+			this.nowPage="albums";
+			this.selectedAlbumId=id;
+			this.$refs.albumContentRef.requestAlbumContent(id);
+		},
 		delFromList(songId, listId){
 			axios.post(this.userInfo.url+"/rest/updatePlaylist?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token+"&playlistId="+listId+"&songIndexToRemove="+songId)
 			.then((response)=>{
