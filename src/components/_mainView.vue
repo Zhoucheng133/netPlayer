@@ -41,7 +41,8 @@
 			<albumView v-show="nowPage == 'albums' && selectedAlbumId==''"
 				@showAlbumContent="showAlbumContent"
 				:userInfo="userInfo"/>
-			<artistView v-show="nowPage == 'artists'"/>
+			<artistView v-show="nowPage == 'artists'"
+				:userInfo="userInfo"/>
 			<allSongsView v-show="nowPage == 'allSongs'"
 				ref="allSongsRef"
 				@playSong="playSong"
