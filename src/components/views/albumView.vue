@@ -82,6 +82,7 @@ export default {
       .then((response)=>{
         // console.log(response.data['subsonic-response']);
         this.shownList=response.data['subsonic-response'].albumList.album;
+        this.subTitle="合计"+this.shownList.length+"个专辑"
       })
       .catch(()=>{
         this.$message.error("请求所有专辑出错")
