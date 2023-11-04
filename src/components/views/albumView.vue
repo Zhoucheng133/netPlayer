@@ -109,9 +109,6 @@ export default {
 	padding-left: 10px;
 	font-size: 14px;
 }
-.toolBar {
-	display: flex;
-}
 .mainArea {
 	overflow-y: overlay;
 	overflow-x: hidden;
