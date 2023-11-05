@@ -55,24 +55,37 @@ export default {
       // TODO 搜索
     },
     reloadList(){
-      // TODO 刷新列表
-    },
-    loadList(){
       axios.get(this.userInfo.url+"/rest/getIndexes?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token)
       .then((response)=>{
-        // console.log(response.data['subsonic-response']);
         var tmp=response.data['subsonic-response'].indexes.index.map(item => item.artist);
 
         for(var item1 in tmp){
           for(var item2 in tmp[item1]){
-            this.shownList.push(tmp[item1][item2])
+            this.shownList.push(tmp[item1][item2]);
+          }
+        }
+        this.subTitle="合计"+this.shownList.length+"位艺人";
+        this.$message.success("已刷新");
+      })
+      .catch(()=>{
+        this.$message.error("请求所有艺人出错");
+      })
+    },
+    loadList(){
+      axios.get(this.userInfo.url+"/rest/getIndexes?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token)
+      .then((response)=>{
+        var tmp=response.data['subsonic-response'].indexes.index.map(item => item.artist);
+
+        for(var item1 in tmp){
+          for(var item2 in tmp[item1]){
+            this.shownList.push(tmp[item1][item2]);
           }
         }
         // console.log(this.shownList);
-        this.subTitle="合计"+this.shownList.length+"位艺人"
+        this.subTitle="合计"+this.shownList.length+"位艺人";
       })
       .catch(()=>{
-        this.$message.error("请求所有艺人出错")
+        this.$message.error("请求所有艺人出错");
       })
     }
   },
