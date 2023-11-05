@@ -17,8 +17,8 @@
       <div class="item">艺人</div>
       <div class="item">专辑数量</div>
     </div>
-    <div class="mainArea" v-if="!isSearch">
-      <div class="container_artist" v-for="(item, index) in shownList" :key="index" @dblclick="showArtistContent(item)">
+    <div class="mainArea">
+      <div class="container_artist" v-for="(item, index) in isSearch ? searchList : shownList" :key="index" @dblclick="showArtistContent(item)">
         <div class="item">
           <div class="itemContent">{{ index + 1 }}</div>
         </div>
@@ -45,15 +45,28 @@ export default {
       subTitle: "",
       shownList: [],
       isSearch: false,
+      searchList: [],
     }
   },
   methods: {
     showArtistContent(){
       // TODO 艺人信息
     },
-    onSearch(){
-      // TODO 搜索
-    },
+    filterArrayByString(inputArray, searchString) {
+			return inputArray.filter(obj => {
+				return Object.values(obj).some(value => {
+					return typeof value === 'string' && value.toLowerCase().includes(searchString.toLowerCase());
+				});
+			});
+		},
+    onSearch() {
+			if (this.inputSearch == "") {
+				this.isSearch = false;
+        return;
+			}
+			this.isSearch = true;
+			this.searchList = this.filterArrayByString(this.shownList, this.inputSearch);
+		},
     reloadList(){
       axios.get(this.userInfo.url+"/rest/getIndexes?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token)
       .then((response)=>{
