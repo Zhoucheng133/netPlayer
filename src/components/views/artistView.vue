@@ -49,8 +49,8 @@ export default {
     }
   },
   methods: {
-    showArtistContent(){
-      // TODO 艺人信息
+    showArtistContent(item){
+      this.$emit("showArtistContent", item.id);
     },
     filterArrayByString(inputArray, searchString) {
 			return inputArray.filter(obj => {

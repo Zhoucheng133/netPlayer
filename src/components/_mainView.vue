@@ -41,7 +41,13 @@
 			<albumView v-show="nowPage == 'albums' && selectedAlbumId==''"
 				@showAlbumContent="showAlbumContent"
 				:userInfo="userInfo"/>
-			<artistView v-show="nowPage == 'artists'"
+			<artistView v-show="nowPage == 'artists'&& selectedArtistId==''"
+				@showArtistContent="showArtistContent"
+				:userInfo="userInfo"/>
+			<artistContentView v-show="nowPage == 'artists'&& selectedArtistId!=''"
+				ref="artistContentRef" 
+				@closeArtistContent="closeArtistContent"
+				:selectedArtistId="selectedArtistId" 
 				:userInfo="userInfo"/>
 			<allSongsView v-show="nowPage == 'allSongs'"
 				ref="allSongsRef"
@@ -111,6 +117,7 @@ import lovedSongsView from './views/lovedSongsView.vue';
 import searchView from './views/searchView.vue';
 import playListView from './views/playListView.vue'
 import albumContentView from './views/albumContentView.vue';
+import artistContentView from './views/artistContentView.vue';
 
 var axios=require("axios");
 
@@ -129,7 +136,8 @@ export default {
 		lovedSongsView,
 		searchView,
 		playListView,
-		albumContentView
+		albumContentView,
+		artistContentView
 	},
 	data() {
 		return {
@@ -141,6 +149,7 @@ export default {
 			playList: {},
 
 			selectedAlbumId: "",
+			selectedArtistId: "",
 
 			nowPlay: {
 				listName: "",
@@ -160,6 +169,13 @@ export default {
 		}
 	},
 	methods: {
+		closeArtistContent(){
+			this.selectedArtistId="";
+		},
+		showArtistContent(id){
+			this.selectedArtistId=id;
+			this.$refs.artistContentRef.requestArtistContent(id);
+		},
 		toAlbum(id){
 			this.nowPage="albums";
 			this.selectedAlbumId=id;
