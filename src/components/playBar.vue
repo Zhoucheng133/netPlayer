@@ -5,14 +5,17 @@
 		</div>
 
 		<div class="textArea">
-			<div class="name">
-				<div class="title">{{ nowPlay.nowPlayList.length == 0 ? "" : nowPlay.nowPlayList[nowPlay.index].title }}</div>
-				<div class="artist">-</div>
-				<div class="artist">{{ nowPlay.nowPlayList.length == 0 ? "" : nowPlay.nowPlayList[nowPlay.index].artist }}</div>
+			<div class="infoArea">
+				<div class="name">
+					<div class="title">{{ nowPlay.nowPlayList.length == 0 ? " " : nowPlay.nowPlayList[nowPlay.index].title }}</div>
+					<div class="artist">-</div>
+					<div class="artist">{{ nowPlay.nowPlayList.length == 0 ? " " : nowPlay.nowPlayList[nowPlay.index].artist }}</div>
+				</div>
+				<div class="time">
+					{{ showTime() }}
+				</div>
 			</div>
-			<div class="time">
-				{{ showTime() }}
-			</div>
+			<a-slider class="slider" :tip-formatter="null" :disabled="disableSlider" :value="timeValue" :max="nowSongTime" @change="jumpStream"></a-slider>
 		</div>
 
 		<audio controls :src="songStream" ref="audioPlayer" @ended="nextSong" style="display: none;"
@@ -32,9 +35,9 @@
 			</div>
 			<div class="songForward" @click="nextSong"><a-icon type="step-forward" /></div>
 		</div>
-		<div class="progressBarContainer" @click="jumpStream">
+		<!-- <div class="progressBarContainer" @click="jumpStream">
 			<div class="progressBar" :style="{ width: (curTime / nowSongTime * 100) + '%' }"></div>
-		</div>
+		</div> -->
 
 	</div>
 </template>
@@ -55,25 +58,36 @@ export default {
 			songStream: "",
 			audioPlayer: "",
 
+			disableSlider: true,
+
 			curTime: 0,
 			nowSongTime: 0,
+			timeValue: 0,
+			sliderStep: 0.3,
+
+			sliderTimeout: null,
 		}
 	},
 	methods: {
 		changePlayMode(){
 			this.$emit("changePlayMode");
 		},
-		jumpStream(event) {
+		jumpStream(value) {
 			if (this.nowPlay.nowPlayList.length == 0) {
 				return;
 			}
-			const element = event.currentTarget;
-			const clickX = event.clientX - element.getBoundingClientRect().left;
-			const elementWidth = element.offsetWidth;
-			const clickPercentage = clickX / elementWidth;
 
-			var jumpTime = parseInt(this.nowSongTime * clickPercentage);
-			this.$refs.audioPlayer.currentTime = jumpTime;
+			this.pauseSongController();
+			this.$refs.audioPlayer.currentTime = value;
+			
+			if(this.sliderTimeout){
+				clearTimeout(this.sliderTimeout);
+			}
+			
+			this.sliderTimeout=setTimeout(() => {
+				// console.log("执行跳转");
+				this.playSongController();
+			}, 200);
 		},
 		handlePause() {
 			this.$emit("handlePause");
@@ -92,6 +106,10 @@ export default {
 		handleTimeUpdate() {
 			this.curTime = this.audioPlayer.currentTime;
 			this.nowSongTime = this.audioPlayer.duration;
+			if(this.nowSongTime!=0){
+				this.disableSlider=false;
+			}
+			this.timeValue=parseInt(this.curTime);
 		},
 		pauseSongController() {
 			this.$nextTick(() => {
@@ -229,6 +247,13 @@ export default {
 </script>
 
 <style scoped>
+.ant-slider-handle:focus{
+	box-shadow: none;
+}
+.infoArea{
+	/* background-color: red; */
+	height: 46px;
+}
 .playMode:hover{
 	cursor: pointer;
 }
@@ -238,9 +263,17 @@ export default {
 	display: flex;
 	align-items: center;
 }
+.slider{
+	margin-top: 3px;
+	margin-bottom: 5px;
+}
 .textArea {
+	/* padding-top: 5px; */
 	text-align: left;
-	padding-left: 20px;
+	margin-left: 20px;
+	margin-right: 10px;
+	/* background-color: red; */
+	width: 100%;
 }
 
 .time {
@@ -248,6 +281,7 @@ export default {
 	margin-right: 10px;
 	color: grey;
 	font-size: 13px;
+	margin-top: 2px;
 }
 
 .progressBarContainer:hover {
