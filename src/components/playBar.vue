@@ -246,10 +246,17 @@ export default {
 }
 </script>
 
-<style scoped>
-.ant-slider-handle:focus{
-	box-shadow: none;
+<style>
+.ant-slider-handle{
+	border: solid 2px #91d5ff !important;
 }
+.ant-slider-handle:focus, .ant-slider-handle:active{
+	box-shadow: none !important;
+	border: solid 2px #91d5ff !important;
+}
+</style>
+
+<style scoped>
 .infoArea{
 	/* background-color: red; */
 	height: 46px;
