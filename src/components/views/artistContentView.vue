@@ -54,13 +54,26 @@ export default {
       var reqeustUrl=this.userInfo.url+"/rest/getArtist?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token+"&id="+id;
       aixos.get(reqeustUrl)
       .then((response)=>{
-        console.log(response.data["subsonic-response"]);
+        // console.log(response.data["subsonic-response"]);
         this.shownList=response.data["subsonic-response"].artist.album;
         this.artistName=response.data["subsonic-response"].artist.name;
       })
+      .catch(()=>{
+        this.$message.success("请求艺人专辑出错");
+      })
     },
     reloadList(){
-
+      var reqeustUrl=this.userInfo.url+"/rest/getArtist?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token+"&id="+this.selectedArtistId;
+      aixos.get(reqeustUrl)
+      .then((response)=>{
+        // console.log(response.data["subsonic-response"]);
+        this.shownList=response.data["subsonic-response"].artist.album;
+        this.artistName=response.data["subsonic-response"].artist.name;
+        this.$message.success("已刷新");
+      })
+      .catch(()=>{
+        this.$message.error("请求艺人专辑出错");
+      })
     }
   },
   created() {
