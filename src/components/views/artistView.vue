@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="all">
     <a-page-header 
       title="艺人"
 			:sub-title="subTitle">
@@ -153,5 +153,8 @@ export default {
 	width: calc(100% - 248px);
 	background-color: rgb(242, 242, 242);
 	height: 50px;
+}
+.all{
+  user-select: none;
 }
 </style>
