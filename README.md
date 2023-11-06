@@ -1,7 +1,5 @@
 # netPlayer
 
-## 正在大力修改中，如需找到可以运行的版本，可以查看标记Tag的最新版本
-
 ## 简介
 
 <img src="build/icon.png" width="100px">
