@@ -48,6 +48,7 @@ export default {
       this.$emit("toAlbum", item.id);
     },
     back(){
+      this.artistName="";
       this.$emit("closeArtistContent");
     },
     requestArtistContent(id){
