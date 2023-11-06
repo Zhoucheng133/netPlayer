@@ -44,8 +44,8 @@ export default {
     }
   },
   methods: {
-    showAlbumContent(){
-
+    showAlbumContent(item){
+      this.$emit("toAlbum", item.id);
     },
     back(){
       this.$emit("closeArtistContent");

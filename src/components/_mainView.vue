@@ -46,7 +46,8 @@
 				:userInfo="userInfo"/>
 			<artistContentView v-show="nowPage == 'artists'&& selectedArtistId!=''"
 				ref="artistContentRef" 
-				@closeArtistContent="closeArtistContent"
+				@closeArtistContent="closeArtistContent" 
+				@toAlbum="toAlbum" 
 				:selectedArtistId="selectedArtistId" 
 				:userInfo="userInfo"/>
 			<allSongsView v-show="nowPage == 'allSongs'"
