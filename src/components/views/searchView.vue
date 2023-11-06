@@ -252,8 +252,7 @@ export default {
 			this.$emit("playSong", nowPlay);
 		},
 		showArtistContent(item) {
-      console.log(item);
-      // TODO 艺人信息
+      this.$emit("toArtist", item.id);
 		},
 		showAlbumContent(item) {
       console.log(item);

@@ -79,7 +79,8 @@
 				@deloveSong="deloveSong" 
 				@loveSong="loveSong"
 				@addToSongList="addToSongList"
-				@toAlbum="toAlbum"
+				@toAlbum="toAlbum" 
+				@toArtist="toArtist" 
 				:songList="songList"
 				:nowPlay="nowPlay" 
 				:lovedSongs="lovedSongs"
@@ -170,6 +171,11 @@ export default {
 		}
 	},
 	methods: {
+		toArtist(id){
+			this.nowPage="artists";
+			this.selectedArtistId=id;
+			this.$refs.artistContentRef.requestArtistContent(id);
+		},
 		closeArtistContent(){
 			this.selectedArtistId="";
 		},
