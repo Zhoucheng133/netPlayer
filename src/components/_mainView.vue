@@ -217,7 +217,11 @@ export default {
 			if(this.nowPlay.listName!="lovedSongs"){
 				axios.post(this.userInfo.url+"/rest/getStarred?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token)
 				.then((response)=>{
-					this.lovedSongs=response.data['subsonic-response']['starred']['song'];
+					if(response.data['subsonic-response']['starred']['song']!=undefined){
+						this.lovedSongs=response.data['subsonic-response']['starred']['song'];
+					}else{
+						this.lovedSongs=[];
+					}
 					if(enableMsg){
 						this.$message.success("已刷新");
 					}
@@ -445,9 +449,13 @@ export default {
 			salt: localStorage.getItem("salt"),
 			token: localStorage.getItem("token"),
 		};
-		axios.post(this.userInfo.url+"/rest/getStarred?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token)
+		axios.get(this.userInfo.url+"/rest/getStarred?v=1.13.0&c=netPlayer&f=json&u="+this.userInfo.username+"&s="+this.userInfo.salt+"&t="+this.userInfo.token)
 		.then((response)=>{
-			this.lovedSongs=response.data['subsonic-response']['starred']['song'];
+			if(response.data['subsonic-response']['starred']['song']!=undefined){
+				this.lovedSongs=response.data['subsonic-response']['starred']['song'];
+			}else{
+				this.lovedSongs=[];
+			}
 		})
 		.catch(()=>{
 			this.$message.error("获取喜欢的歌曲失败!");
