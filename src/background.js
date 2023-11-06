@@ -23,6 +23,8 @@ async function createWindow() {
 		}
 	})
 
+	win.setMinimumSize(1100, 770);
+
 	registerMediaKeyShortcuts();
 
 	if (process.env.WEBPACK_DEV_SERVER_URL) {
