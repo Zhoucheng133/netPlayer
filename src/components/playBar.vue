@@ -280,7 +280,8 @@ export default {
 	margin-left: 20px;
 	margin-right: 10px;
 	/* background-color: red; */
-	width: 100%;
+	/* width: calc(100vw - 240px - 40px - 10px - 80px - ); */
+	/* width: 100%; */
 }
 
 .time {
@@ -392,10 +393,12 @@ export default {
 
 .bar {
 	position: absolute;
-	display: flex;
+	/* display: flex; */
+	display: grid;
+	grid-template-columns: 80px auto 206px;
 	align-items: center;
 	padding-left: 10px;
-	padding-bottom: 5px;
+	/* padding-bottom: 5px; */
 	height: 100px;
 	background-color: rgba(255, 255, 255, 0.3);
 	backdrop-filter: blur(15px);
