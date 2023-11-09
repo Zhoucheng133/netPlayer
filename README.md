@@ -1,5 +1,3 @@
-<mark>**本项目迁移到Github，[点击这里查看](https://github.com/Zhoucheng133/net-player)**</mark>
-
 # netPlayer
 
 ## 简介
