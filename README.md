@@ -20,9 +20,9 @@
 
 **注意，鉴于Subsonic没有提供“获取所有歌曲”的API，因此“所有歌曲”是通过获取随机歌曲排序后得到的，只能获取500首歌曲**
 
-关于移动Lite的netPlayer，你可以在这里查看：[Gitee](https://gitee.com/Ryan-zhou/net-player_-lite) / [Github](https://github.com/Zhoucheng133/neyPlayer_Lite)  
-关于移动版的netPlayer，你可以在这里查看：[Gitee](https://gitee.com/Ryan-zhou/net-player-mobile) / [Github](https://github.com/Zhoucheng133/netPlayer-Mobile)  
-关于PWA版本的netPlayer，你可以在这里查看：[Gitee](https://gitee.com/Ryan-zhou/net-player-pwa) / [Github](https://github.com/Zhoucheng133/netPlayer-PWA)
+关于移动Lite的netPlayer，你可以在这里查看：[Github](https://github.com/Zhoucheng133/neyPlayer_Lite)  
+关于移动版的netPlayer，你可以在这里查看：[Github](https://github.com/Zhoucheng133/netPlayer-Mobile)  
+关于PWA版本的netPlayer，你可以在这里查看：[Github](https://github.com/Zhoucheng133/netPlayer-PWA)
 
 
 |                          | netPlayer                       | netPlayer Mobile                                             | netPlayer Lite                                               | netPlayer PWA         |
