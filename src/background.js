@@ -242,10 +242,10 @@ ipcMain.on("winMin", async (event) => {
   win.minimize();
 }),
 
-  // 关闭窗口函数
-  ipcMain.on("winClose", async (event) => {
-    app.exit();
-  })
+// 关闭窗口函数
+ipcMain.on("winClose", async (event) => {
+  app.exit();
+})
 
 // 最大化窗口
 ipcMain.on("winMax", async (event) => {
