@@ -366,6 +366,7 @@ export default {
 			});
 		},
 		nextSong() {
+			// TODO 添加完全随机播放
 			if(!this.random){
 				this.nowPlay.index = (this.nowPlay.index + 1 + this.nowPlay.nowPlayList.length) % this.nowPlay.nowPlayList.length;
 			}else{
