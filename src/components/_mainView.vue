@@ -274,6 +274,7 @@ export default {
       }
     },
     isPlaying() {
+      localStorage.setItem("playInfo", JSON.stringify(this.nowPlay))
       this.nowPlay.isPlay = true;
     },
     toggleSong() {
@@ -383,6 +384,10 @@ export default {
       salt: localStorage.getItem("salt"),
       token: localStorage.getItem("token"),
     };
+    var playInfo=localStorage.getItem("playInfo");
+    if(playInfo!=null){
+      this.nowPlay=JSON.parse(playInfo);
+    }
     axios.get(this.userInfo.url + "/rest/getStarred?v=1.13.0&c=netPlayer&f=json&u=" + this.userInfo.username + "&s=" + this.userInfo.salt + "&t=" + this.userInfo.token)
       .then((response) => {
         if (response.data['subsonic-response']['starred']['song'] != undefined) {
