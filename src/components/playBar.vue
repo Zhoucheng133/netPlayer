@@ -61,6 +61,7 @@ export default {
   props: {
     nowPlay: Object,
     random: Boolean,
+    fRandom: Boolean
   },
   data() {
     return {
@@ -80,6 +81,9 @@ export default {
   },
   methods: {
     changePlayMode() {
+      if(this.fRandom){
+        return;
+      }
       this.$emit("changePlayMode");
     },
     jumpStream(value) {

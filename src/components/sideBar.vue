@@ -66,6 +66,11 @@
         搜索
       </div>
       <div class="divLine"></div>
+      <div @click="fullRandomPlay" class="item" :style="{'color': fRandom ? 'rgb(24, 144, 255)' : 'black', 'transition': 'none'}">
+        <svg class="icon" v-if="!fRandom" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30 42H42V30" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 18V6H30" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 6L6 42" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M31.5 31.5L34 34L39 39L41.5 41.5L42 42M24 24L6 6L24 24Z" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="icon" v-else width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30 42H42V30" stroke="#1890ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 18V6H30" stroke="#1890ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 6L6 42" stroke="#1890ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M31.5 31.5L34 34L39 39L41.5 41.5L42 42M24 24L6 6L24 24Z" stroke="#1890ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        随机播放
+      </div>
       <div @click="addList" class='item'>
         <svg width="16" class="icon" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M8 28H24" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
@@ -149,8 +154,12 @@ export default {
   props: {
     nowPage: String,
     playList: Object,
+    fRandom: Boolean
   },
   methods: {
+    fullRandomPlay(){
+      this.$emit("fullRandomPlay");
+    },
     createNewList() {
       ipcRenderer.send('newListRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"), this.newListName);
     },

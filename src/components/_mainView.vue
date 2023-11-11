@@ -1,40 +1,116 @@
 <template>
   <div class="bg" :style="{ 'opacity': bgOpacity }">
-    <sideBar class="sideBar_style" @logoutMain="logoutMain" @toPage="toPage" @toPlayList="toPlayList"
-      @getSongList="getSongList" :nowPage="nowPage" :playList="playList" :nowPlay="nowPlay" />
+    <sideBar class="sideBar_style" 
+      @logoutMain="logoutMain" 
+      @toPage="toPage" 
+      @toPlayList="toPlayList"
+      @getSongList="getSongList" 
+      @fullRandomPlay="fullRandomPlay"
+      :nowPage="nowPage" 
+      :fRandom="fRandom"
+      :playList="playList" 
+      :nowPlay="nowPlay" />
 
-    <playBar class="playbar" ref="player" :nowPlay="nowPlay" :random="random" @nextSong="nextSong" @backSong="backSong"
-      @toggleSong="toggleSong" @isPlaying="isPlaying" @changePlayMode="changePlayMode" @handlePause="handlePause" />
+    <playBar class="playbar" 
+      ref="player" 
+      @nextSong="nextSong" 
+      @backSong="backSong"
+      @toggleSong="toggleSong" 
+      @isPlaying="isPlaying" 
+      @changePlayMode="changePlayMode" 
+      @handlePause="handlePause" 
+      :fRandom="fRandom" 
+      :nowPlay="nowPlay" 
+      :random="random" />
 
     <!-- 主要内容在下面 -->
     <div class="mainSide">
       <aboutView v-show="nowPage == 'about'" />
 
-      <albumContentView v-show="nowPage == 'albums' && selectedAlbumId != ''" ref="albumContentRef"
-        @addToSongList="addToSongList" @playSong="playSong" @closeAlbumContent="closeAlbumContent" @loveSong="loveSong"
-        @deloveSong="deloveSong" :userInfo="userInfo" :songList="songList" :nowPage="nowPage" :lovedSongs="lovedSongs"
-        :nowPlay="nowPlay" :selectedAlbumId="selectedAlbumId" />
-      <albumView v-show="nowPage == 'albums' && selectedAlbumId == ''" @showAlbumContent="showAlbumContent"
+      <albumContentView 
+        v-show="nowPage == 'albums' && selectedAlbumId != ''" 
+        ref="albumContentRef"
+        @addToSongList="addToSongList" 
+        @playSong="playSong" 
+        @closeAlbumContent="closeAlbumContent" 
+        @loveSong="loveSong"
+        @deloveSong="deloveSong" 
+        :userInfo="userInfo" 
+        :songList="songList" 
+        :nowPage="nowPage" 
+        :lovedSongs="lovedSongs"
+        :nowPlay="nowPlay" 
+        :selectedAlbumId="selectedAlbumId" />
+      <albumView 
+        v-show="nowPage == 'albums' && selectedAlbumId == ''" 
+        @showAlbumContent="showAlbumContent"
         :userInfo="userInfo" />
-      <artistView v-show="nowPage == 'artists' && selectedArtistId == ''" @showArtistContent="showArtistContent"
+      <artistView 
+        v-show="nowPage == 'artists' && selectedArtistId == ''" 
+        @showArtistContent="showArtistContent"
         :userInfo="userInfo" />
-      <artistContentView v-show="nowPage == 'artists' && selectedArtistId != ''" ref="artistContentRef"
-        @closeArtistContent="closeArtistContent" @toAlbum="toAlbum" :selectedArtistId="selectedArtistId"
+      <artistContentView 
+        v-show="nowPage == 'artists' && selectedArtistId != ''" 
+        ref="artistContentRef"
+        @closeArtistContent="closeArtistContent" 
+        @toAlbum="toAlbum" 
+        :selectedArtistId="selectedArtistId"
         :userInfo="userInfo" />
-      <allSongsView v-show="nowPage == 'allSongs'" ref="allSongsRef" @playSong="playSong" @loveSong="loveSong"
-        @deloveSong="deloveSong" @addToSongList="addToSongList" @updateNowPlay="updateNowPlay" @reloadLoved="reloadLoved"
-        @stopAudio="stopAudio" :songList="songList" :nowPage="nowPage" :nowPlay="nowPlay" :lovedSongs="lovedSongs"
+      <allSongsView 
+        v-show="nowPage == 'allSongs'" 
+        ref="allSongsRef" 
+        @playSong="playSong" 
+        @loveSong="loveSong"
+        @deloveSong="deloveSong" 
+        @addToSongList="addToSongList" 
+        @updateNowPlay="updateNowPlay" 
+        @reloadLoved="reloadLoved"
+        @stopAudio="stopAudio" 
+        :songList="songList" 
+        :nowPage="nowPage" 
+        :nowPlay="nowPlay" 
+        :lovedSongs="lovedSongs"
         :userInfo="userInfo" />
-      <lovedSongsView v-show="nowPage == 'lovedSongs'" ref="lovedSongsRef" @addToSongList="addToSongList"
-        @playSong="playSong" @deloveSong="deloveSong" @reloadLoved="reloadLoved" :lovedSongs="lovedSongs"
-        :songList="songList" :nowPlay="nowPlay" />
-      <searchView v-show="nowPage == 'search'" ref="searchRef" @playSong="playSong" @deloveSong="deloveSong"
-        @loveSong="loveSong" @addToSongList="addToSongList" @toAlbum="toAlbum" @toArtist="toArtist" :songList="songList"
-        :nowPlay="nowPlay" :lovedSongs="lovedSongs" :userInfo="userInfo" />
-      <playListView ref="playListRef" v-show="nowPage == 'playList'" @playSong="playSong" @loveSong="loveSong"
-        @deloveSong="deloveSong" @addToSongList="addToSongList" @updateNowPlay="updateNowPlay" @reloadLoved="reloadLoved"
-        @stopAudio="stopAudio" @delFromList="delFromList" :songList="songList" :nowPage="nowPage" :lovedSongs="lovedSongs"
-        :nowPlay="nowPlay" :userInfo="userInfo" :playList="playList" />
+      <lovedSongsView 
+        v-show="nowPage == 'lovedSongs'" 
+        ref="lovedSongsRef" 
+        @addToSongList="addToSongList"
+        @playSong="playSong" 
+        @deloveSong="deloveSong" 
+        @reloadLoved="reloadLoved" 
+        :lovedSongs="lovedSongs"
+        :songList="songList" 
+        :nowPlay="nowPlay" />
+      <searchView 
+        v-show="nowPage == 'search'" 
+        ref="searchRef" 
+        @playSong="playSong" 
+        @deloveSong="deloveSong"
+        @loveSong="loveSong" 
+        @addToSongList="addToSongList" 
+        @toAlbum="toAlbum" 
+        @toArtist="toArtist" 
+        :songList="songList"
+        :nowPlay="nowPlay" 
+        :lovedSongs="lovedSongs" 
+        :userInfo="userInfo" />
+      <playListView
+        v-show="nowPage == 'playList'" 
+        ref="playListRef" 
+        @playSong="playSong" 
+        @loveSong="loveSong"
+        @deloveSong="deloveSong" 
+        @addToSongList="addToSongList" 
+        @updateNowPlay="updateNowPlay" 
+        @reloadLoved="reloadLoved"
+        @stopAudio="stopAudio" 
+        @delFromList="delFromList" 
+        :songList="songList" 
+        :nowPage="nowPage" 
+        :lovedSongs="lovedSongs"
+        :nowPlay="nowPlay" 
+        :userInfo="userInfo" 
+        :playList="playList" />
     </div>
   </div>
 </template>
@@ -101,9 +177,16 @@ export default {
 
       userInfo: {},
       lovedSongs: [],
+
+      fRandom: false,
     }
   },
   methods: {
+    fullRandomPlay(){
+      console.log("?");
+      this.fRandom=true;
+      this.random=true;
+    },
     toArtist(id) {
       this.nowPage = "artists";
       this.selectedArtistId = id;
