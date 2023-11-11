@@ -130,7 +130,7 @@ import playListView from './views/playListView.vue'
 import albumContentView from './views/albumContentView.vue';
 import artistContentView from './views/artistContentView.vue';
 
-var axios = require("axios");
+const axios = require("axios");
 
 export default {
   beforeDestroy() {
@@ -183,9 +183,28 @@ export default {
   },
   methods: {
     fullRandomPlay(){
-      console.log("?");
       this.fRandom=true;
       this.random=true;
+      // TODO 没有完成的内容: 
+      // 1. 点击下一首/上一首的操作
+      // 2. 保存完全随机播放的状态，下次打开后自动加载
+      // 3. 在点击其它歌曲的时候自动关闭完全随机播放的状态
+      axios.get(this.userInfo.url + "/rest/getRandomSongs?v=1.13.0&c=netPlayer&f=json&u=" + this.userInfo.username + "&s=" + this.userInfo.salt + "&t=" + this.userInfo.token + "&size=1")
+      .then((response)=>{
+        var songInfo=response.data['subsonic-response']['randomSongs']['song'][0];
+        var playInfo={
+          listName: "",
+          index: 0,
+          nowPlayList: [songInfo],
+          id: "",
+          isPlay: false,
+        };
+        this.playSong(playInfo);
+      })
+      .catch(()=>{
+        this.$message.error("加载随机歌曲出错")
+      })
+
     },
     toArtist(id) {
       this.nowPage = "artists";
