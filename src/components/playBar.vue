@@ -27,20 +27,16 @@
       <div class="playMode" @click="changePlayMode">
         <!-- <i class="bi bi-shuffle" v-if="random"></i> -->
         <!-- <i class="bi bi-repeat" v-else></i> -->
-        <svg v-if="random" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- <svg v-if="random" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M40 33L44 37L40 41" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
           <path d="M40 7L44 11L40 15" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
           <path d="M44 11H37C29.8203 11 24 16.8203 24 24C24 31.1797 29.8203 37 37 37H44" stroke="#000000" stroke-width="4"
             stroke-linecap="round" />
           <path d="M4 37H11C18.1797 37 24 31.1797 24 24C24 16.8203 18.1797 11 11 11H4" stroke="#000000" stroke-width="4"
             stroke-linecap="round" />
-        </svg>
-        <svg v-else width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M43.8233 25.2305C43.7019 25.9889 43.5195 26.727 43.2814 27.4395C42.763 28.9914 41.9801 30.4222 40.9863 31.6785C38.4222 34.9201 34.454 37 30 37H16C9.39697 37 4 31.6785 4 25C4 18.3502 9.39624 13 16 13H44"
-            stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M38 7L44 13L38 19" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
+        </svg> -->
+        <svg v-if="random" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30 42H42V30" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 18V6H30" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 6L6 42" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M31.5 31.5L34 34L39 39L41.5 41.5L42 42M24 24L6 6L24 24Z" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg v-else width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 25C4 18.3502 9.39624 13 16 13H44" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 7L44 13L38 19" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M44 23C44 29.6498 38.6038 35 32 35H4" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 41L4 35L10 29" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
       <div class="songBack" @click="backSong"><a-icon type="step-backward" /></div>
       <div class="songToggle" @click="toggleSong">
