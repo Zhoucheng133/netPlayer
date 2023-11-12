@@ -183,23 +183,33 @@ export default {
   },
   methods: {
     fullRandomPlay(){
+      localStorage.setItem("fRandom", true);
       this.fRandom=true;
       this.random=true;
       // TODO 没有完成的内容: 
-      // 1. 点击下一首/上一首的操作
-      // 2. 保存完全随机播放的状态，下次打开后自动加载
-      // 3. 在点击其它歌曲的时候自动关闭完全随机播放的状态
+      // [x] 点击下一首/上一首的操作
+      // [x] 保存完全随机播放的状态，下次打开后自动加载
+      // [x] 在点击其它歌曲的时候自动关闭完全随机播放的状态
       axios.get(this.userInfo.url + "/rest/getRandomSongs?v=1.13.0&c=netPlayer&f=json&u=" + this.userInfo.username + "&s=" + this.userInfo.salt + "&t=" + this.userInfo.token + "&size=1")
       .then((response)=>{
         var songInfo=response.data['subsonic-response']['randomSongs']['song'][0];
-        var playInfo={
+        var nowPlay={
           listName: "",
           index: 0,
           nowPlayList: [songInfo],
           id: "",
           isPlay: false,
         };
-        this.playSong(playInfo);
+        // this.playSong(playInfo);
+        
+        this.nowPlay = nowPlay;
+        this.$refs.player.playSong();
+        // console.log(this.nowPlay);
+        this.saveNowPlay();
+        var that = this;
+        this.$nextTick(() => {
+          that.$refs.player.setMedia();
+        });
       })
       .catch(()=>{
         this.$message.error("加载随机歌曲出错")
@@ -392,6 +402,30 @@ export default {
       });
     },
     backSong() {
+      if(this.fRandom){
+        axios.get(this.userInfo.url + "/rest/getRandomSongs?v=1.13.0&c=netPlayer&f=json&u=" + this.userInfo.username + "&s=" + this.userInfo.salt + "&t=" + this.userInfo.token + "&size=1")
+        .then((response)=>{
+          var songInfo=response.data['subsonic-response']['randomSongs']['song'][0];
+          var nowPlay={
+            listName: "",
+            index: 0,
+            nowPlayList: [songInfo],
+            id: "",
+            isPlay: false,
+          };
+          // this.playSong(playInfo);
+          
+          this.nowPlay = nowPlay;
+          this.$refs.player.playSong();
+          // console.log(this.nowPlay);
+          this.saveNowPlay();
+          var that = this;
+          this.$nextTick(() => {
+            that.$refs.player.setMedia();
+          });
+        })
+        return;
+      }
       this.nowPlay.index = (this.nowPlay.index - 1 + this.nowPlay.nowPlayList.length) % this.nowPlay.nowPlayList.length;
       this.$refs.player.playSong();
       this.nowPlay.isPlay = true;
@@ -402,8 +436,30 @@ export default {
       });
     },
     nextSong() {
-      // TODO 添加完全随机播放
-      if (!this.random) {
+      if(this.fRandom){
+        axios.get(this.userInfo.url + "/rest/getRandomSongs?v=1.13.0&c=netPlayer&f=json&u=" + this.userInfo.username + "&s=" + this.userInfo.salt + "&t=" + this.userInfo.token + "&size=1")
+        .then((response)=>{
+          var songInfo=response.data['subsonic-response']['randomSongs']['song'][0];
+          var nowPlay={
+            listName: "",
+            index: 0,
+            nowPlayList: [songInfo],
+            id: "",
+            isPlay: false,
+          };
+          // this.playSong(playInfo);
+          
+          this.nowPlay = nowPlay;
+          this.$refs.player.playSong();
+          // console.log(this.nowPlay);
+          this.saveNowPlay();
+          var that = this;
+          this.$nextTick(() => {
+            that.$refs.player.setMedia();
+          });
+        })
+        return;
+      }else if (!this.random) {
         this.nowPlay.index = (this.nowPlay.index + 1 + this.nowPlay.nowPlayList.length) % this.nowPlay.nowPlayList.length;
       } else {
         this.nowPlay.index = Math.floor(Math.random() * this.nowPlay.nowPlayList.length);
@@ -417,6 +473,9 @@ export default {
       });
     },
     playSong(nowPlay) {
+      this.fRandom=false;
+      this.random=false;
+      localStorage.setItem("fRandom", false);
       this.nowPlay = nowPlay;
       this.$refs.player.playSong();
       // console.log(this.nowPlay);
@@ -486,6 +545,11 @@ export default {
       salt: localStorage.getItem("salt"),
       token: localStorage.getItem("token"),
     };
+    var fRandom=localStorage.getItem("fRandom");
+    console.log(fRandom);
+    if(fRandom!=null){
+      this.fRandom=JSON.parse(fRandom);
+    }
     var playInfo=localStorage.getItem("nowPlay");
     if(playInfo!=null){
       this.nowPlay=JSON.parse(playInfo);
