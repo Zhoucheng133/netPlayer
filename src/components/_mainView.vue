@@ -549,6 +549,9 @@ export default {
     console.log(fRandom);
     if(fRandom!=null){
       this.fRandom=JSON.parse(fRandom);
+      if(this.fRandom==true){
+        this.random=true;
+      }
     }
     var playInfo=localStorage.getItem("nowPlay");
     if(playInfo!=null){
