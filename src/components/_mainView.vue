@@ -186,7 +186,6 @@ export default {
       localStorage.setItem("fRandom", true);
       this.fRandom=true;
       this.random=true;
-      // TODO 没有完成的内容: 
       // [x] 点击下一首/上一首的操作
       // [x] 保存完全随机播放的状态，下次打开后自动加载
       // [x] 在点击其它歌曲的时候自动关闭完全随机播放的状态
