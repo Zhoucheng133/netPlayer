@@ -19,6 +19,8 @@
       @isPlaying="isPlaying" 
       @changePlayMode="changePlayMode" 
       @handlePause="handlePause" 
+      @loveSong="loveSong"
+      @deloveSong="deloveSong" 
       :fRandom="fRandom" 
       :nowPlay="nowPlay" 
       :lovedSongs="lovedSongs" 
