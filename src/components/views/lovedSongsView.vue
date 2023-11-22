@@ -166,9 +166,17 @@ export default {
 		},
     playSong(index) {
 			var nowPlay = {};
+      var playIndex=index;
+      if(this.isSearch){
+        playIndex=this.lovedSongs.findIndex(obj => obj.id == this.searchList[index].id);
+        if(playIndex==-1){
+          this.$message.error("播放出错");
+          return;
+        }
+      }
 			nowPlay = {
         listName: "lovedSongs",
-        index: index,
+        index: playIndex,
         nowPlayList: this.lovedSongs,
         id: this.listID,
         isPlay: false,
