@@ -326,6 +326,10 @@ export default {
     deloveSong(item) {
       // console.log("不喜欢歌曲"+item);
       const id = item.id;
+      if(this.nowPlay.listName=="lovedSongs" && this.nowPlay.nowPlayList[this.nowPlay.index].id==item.id){
+        this.nextSong();
+      }
+
       axios.get(this.userInfo.url + "/rest/unstar?v=1.13.0&c=netPlayer&f=json&u=" + this.userInfo.username + "&s=" + this.userInfo.salt + "&t=" + this.userInfo.token + "&id=" + id).then((response) => {
         const resp = response.data['subsonic-response'];
         if (resp.status == "ok") {
