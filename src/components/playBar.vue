@@ -79,6 +79,10 @@ export default {
   },
   methods: {
     starController(){
+      if(this.nowPlay.nowPlayList.length==0){
+        this.$message.error("无效操作");
+        return;
+      }
       if(this.isLoved()){
         this.$emit("deloveSong", {id: this.nowPlay.nowPlayList[this.nowPlay.index].id});
       }else{
@@ -86,6 +90,9 @@ export default {
       }
     },
     isLoved() {
+      if(this.nowPlay.nowPlayList.length==0){
+        return false;
+      }
 			for (const obj of this.lovedSongs) {
 				if (obj.id == this.nowPlay.nowPlayList[this.nowPlay.index].id) {
 					return true;
