@@ -21,6 +21,7 @@
       @handlePause="handlePause" 
       :fRandom="fRandom" 
       :nowPlay="nowPlay" 
+      :lovedSongs="lovedSongs" 
       :random="random" />
 
     <!-- 主要内容在下面 -->

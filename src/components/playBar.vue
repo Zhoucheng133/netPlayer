@@ -9,8 +9,7 @@
         <div class="name">
           <div class="title">{{ nowPlay.nowPlayList.length == 0 ? " " : nowPlay.nowPlayList[nowPlay.index].title }}</div>
           <div class="artist">-</div>
-          <div class="artist">{{ nowPlay.nowPlayList.length == 0 ? " " : nowPlay.nowPlayList[nowPlay.index].artist }}
-          </div>
+          <div class="artist">{{ nowPlay.nowPlayList.length == 0 ? " " : nowPlay.nowPlayList[nowPlay.index].artist }}</div>
         </div>
         <div class="time">
           {{ showTime() }}
@@ -24,17 +23,15 @@
       @timeupdate="handleTimeUpdate" @play="handlePlay" @pause="handlePause"></audio>
 
     <div class="tools">
+      <div class="lovedSign">
+        <div class="sign" v-if="!isLoved()">
+          <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="sign" v-else>
+          <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none" stroke="#ff0000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </div>
+      </div>
       <div class="playMode" @click="changePlayMode">
-        <!-- <i class="bi bi-shuffle" v-if="random"></i> -->
-        <!-- <i class="bi bi-repeat" v-else></i> -->
-        <!-- <svg v-if="random" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M40 33L44 37L40 41" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M40 7L44 11L40 15" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M44 11H37C29.8203 11 24 16.8203 24 24C24 31.1797 29.8203 37 37 37H44" stroke="#000000" stroke-width="4"
-            stroke-linecap="round" />
-          <path d="M4 37H11C18.1797 37 24 31.1797 24 24C24 16.8203 18.1797 11 11 11H4" stroke="#000000" stroke-width="4"
-            stroke-linecap="round" />
-        </svg> -->
         <svg v-if="random" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30 42H42V30" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 18V6H30" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 6L6 42" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M31.5 31.5L34 34L39 39L41.5 41.5L42 42M24 24L6 6L24 24Z" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <svg v-else width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 25C4 18.3502 9.39624 13 16 13H44" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 7L44 13L38 19" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M44 23C44 29.6498 38.6038 35 32 35H4" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 41L4 35L10 29" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
@@ -61,7 +58,8 @@ export default {
   props: {
     nowPlay: Object,
     random: Boolean,
-    fRandom: Boolean
+    fRandom: Boolean,
+    lovedSongs: Array,
   },
   data() {
     return {
@@ -80,6 +78,15 @@ export default {
     }
   },
   methods: {
+    isLoved() {
+      console.log(this.nowPlay);
+			for (const obj of this.lovedSongs) {
+				if (obj.id == this.nowPlay.nowPlayList[this.nowPlay.index].id) {
+					return true;
+				}
+			}
+			return false;
+		},
     changePlayMode() {
       if(this.fRandom){
         return;
@@ -410,12 +417,23 @@ export default {
   overflow: hidden;
   /* background-color: white; */
 }
-
+.sign{
+  display: flex;
+  align-items: center;
+}
+.lovedSign:hover{
+  cursor: pointer;
+}
+.lovedSign{
+  margin-right: 25px;
+  display: flex;
+  align-items: center;
+}
 .bar {
   position: absolute;
   /* display: flex; */
   display: grid;
-  grid-template-columns: 80px auto 206px;
+  grid-template-columns: 80px auto 250px;
   align-items: center;
   padding-left: 10px;
   /* padding-bottom: 5px; */
