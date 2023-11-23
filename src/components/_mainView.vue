@@ -182,10 +182,13 @@ export default {
       lovedSongs: [],
 
       fRandom: false,
+
+      random_tmp: false,
     }
   },
   methods: {
     fullRandomPlay(){
+      this.random_tmp=this.random;
       localStorage.setItem("fRandom", true);
       this.fRandom=true;
       this.random=true;
@@ -480,7 +483,10 @@ export default {
     },
     playSong(nowPlay) {
       this.fRandom=false;
-      this.random=false;
+      if(this.random_tmp!=undefined){
+        this.random=this.random_tmp;
+        this.random_tmp=undefined;
+      }
       localStorage.setItem("fRandom", false);
       this.nowPlay = nowPlay;
       this.$refs.player.playSong();
