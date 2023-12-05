@@ -1,8 +1,14 @@
 <template>
   <div class="all">
-    <a-page-header 
-      title="所有歌曲"
-			:sub-title="subTitle">
+    <a-page-header title="所有歌曲">
+      <template slot="subTitle">
+        <div class="subTitleSlot">
+          <div>{{ subTitle }}</div>
+          <a-tooltip placement="bottom" :title="subTitleTip" v-if="shownList.length>=500">
+            <svg class="subTitleIcon" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 44C29.5228 44 34.5228 41.7614 38.1421 38.1421C41.7614 34.5228 44 29.5228 44 24C44 18.4772 41.7614 13.4772 38.1421 9.85786C34.5228 6.23858 29.5228 4 24 4C18.4772 4 13.4772 6.23858 9.85786 9.85786C6.23858 13.4772 4 18.4772 4 24C4 29.5228 6.23858 34.5228 9.85786 38.1421C13.4772 41.7614 18.4772 44 24 44Z" fill="none" stroke="#000000" stroke-width="4" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M24 37C25.3807 37 26.5 35.8807 26.5 34.5C26.5 33.1193 25.3807 32 24 32C22.6193 32 21.5 33.1193 21.5 34.5C21.5 35.8807 22.6193 37 24 37Z" fill="#000000"/><path d="M24 12V28" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a-tooltip>
+        </div>
+      </template>
 			<template slot="extra">
 				<div class="toolBar">
 					<a-input-search placeholder="输入搜索内容" style="width: 200px;margin-right: 20px;"
@@ -149,6 +155,8 @@ export default {
 			},
 
       searchList: [],
+
+      subTitleTip: `注意，鉴于Subsonic API限制，你所看到的500首歌曲是随机获取的500首歌曲经过排序得到的`,
     }
   },
   props: {
@@ -227,8 +235,11 @@ export default {
           return a.created>b.created ? -1 : 1;
         });
         this.shownList=tmp;
-        this.subTitle="合计"+this.shownList.length+"首歌";
-        // console.log(this.shownList);
+        if(this.shownList.length>=500){
+          this.subTitle="合计≥500首歌";
+        }else{
+          this.subTitle="合计"+this.shownList.length+"首歌";
+        }
       })
       .catch(()=>{
         this.$message.error("加载所有歌曲出错!");
@@ -262,7 +273,11 @@ export default {
           var index=tmp.findIndex(obj => obj.id==tmpId);
           if(index==-1){
             this.shownList=tmp;
-            this.subTitle="合计"+this.shownList.length+"首歌"
+            if(this.shownList.length>=500){
+              this.subTitle="合计≥500首歌";
+            }else{
+              this.subTitle="合计"+this.shownList.length+"首歌";
+            }
             this.$emit("stopAudio");
             this.$message.success("已刷新");
             return;
@@ -279,7 +294,11 @@ export default {
         this.shownList=tmp;
         this.$emit("reloadLoved");
         this.$message.success("已刷新");
-        this.subTitle="合计"+this.shownList.length+"首歌";
+        if(this.shownList.length>=500){
+          this.subTitle="合计≥500首歌";
+        }else{
+          this.subTitle="合计"+this.shownList.length+"首歌";
+        }
       })
       .catch(()=>{
         this.$message.error("重新加载出错!");
@@ -308,6 +327,17 @@ export default {
 </script>
 
 <style scoped>
+.subTitleIcon{
+  margin-left: 5px;
+  opacity: .45;
+}
+svg:focus{
+  outline: none;
+}
+.subTitleSlot{
+  display: flex;
+  align-items: center;
+}
 .container, .container_playing {
 	display: grid;
 	grid-template-columns: 50px calc(100vw - 200px - 48px - 50px - 150px - 70px - 50px - 50px) 150px 70px 50px 50px;
