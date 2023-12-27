@@ -405,6 +405,10 @@ export default {
   font-size: 15px;
   text-align: left;
   color: grey;
+  max-width: 250px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .title {
