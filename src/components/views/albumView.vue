@@ -96,6 +96,10 @@ export default {
 </script>
 
 <style scoped>
+.toolBar{
+  display: flex;
+  align-items: center;
+}
 .itemContent {
 	width: 100%;
 	overflow: hidden;

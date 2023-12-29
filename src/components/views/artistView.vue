@@ -109,6 +109,10 @@ export default {
 </script>
 
 <style scoped>
+.toolBar{
+  display: flex;
+  align-items: center;
+}
 .mainArea {
 	overflow-y: overlay;
 	overflow-x: hidden;
