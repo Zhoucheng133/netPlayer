@@ -6,8 +6,7 @@
       <div class="version">v{{ version }}&nbsp;Release</div>
       <div class="copyright">Developed by zhouc</div>
       <div class="showingit">
-        <div class="gitItem" style="margin-right: 10px;" @click="openWeb('github')">Show in Github</div>
-        <div class="gitItem" @click="openWeb('gitee')">Show in Gitee</div>
+        <div class="gitItem" style="margin-right: 10px;" @click="openWeb()">Show in Github</div>
       </div>
       <div class="opensource" @click="showLicenses">About the licenses</div>
     </div>
@@ -23,12 +22,8 @@ export default {
     }
   },
   methods: {
-    openWeb(val) {
-      if (val == 'gitee') {
-        shell.openExternal("https://gitee.com/Ryan-zhou/net-player")
-      } else {
-        shell.openExternal("https://github.com/Zhoucheng133/net-player")
-      }
+    openWeb() {
+      shell.openExternal("https://github.com/Zhoucheng133/net-player")
     },
     showLicenses() {
       const h = this.$createElement;
