@@ -1,5 +1,5 @@
 <template>
-  <div class="bar">
+  <div class="bar" ref="barRef">
     <div class="cover">
       <img :src="shownCoverLink == '' ? '' : shownCoverLink" alt="" width="80px">
     </div>
@@ -7,9 +7,9 @@
     <div class="textArea">
       <div class="infoArea">
         <div class="name">
-          <div class="title">{{ nowPlay.nowPlayList.length == 0 ? " " : nowPlay.nowPlayList[nowPlay.index].title }}</div>
+          <div class="title" :style="{'max-width': barWidth/2*0.6+'px'}">{{ nowPlay.nowPlayList.length == 0 ? " " : nowPlay.nowPlayList[nowPlay.index].title }}</div>
           <div class="artist">-</div>
-          <div class="artist">{{ nowPlay.nowPlayList.length == 0 ? " " : nowPlay.nowPlayList[nowPlay.index].artist }}</div>
+          <div class="artist" :style="{'max-width': barWidth/2*0.4+'px'}">{{ nowPlay.nowPlayList.length == 0 ? " " : nowPlay.nowPlayList[nowPlay.index].artist }}</div>
         </div>
         <div class="time">
           {{ showTime() }}
@@ -75,6 +75,8 @@ export default {
       sliderStep: 0.3,
 
       sliderTimeout: null,
+
+      barWidth: 820,
     }
   },
   methods: {
@@ -220,6 +222,9 @@ export default {
         this.$refs.audioPlayer.src = this.songStream;
       })
     },
+    updateBarWidth(){
+      this.barWidth=this.$refs.barRef.clientWidth;
+    },
     setMedia() {
       var username = localStorage.getItem("username");
       var salt = localStorage.getItem("salt");
@@ -265,6 +270,10 @@ export default {
     if (this.nowPlay.nowPlayList.length != 0) {
       this.getSongCover();
       this.getSongStream();
+    }
+    this.updateBarWidth();
+    window.onresize=()=>{
+      this.updateBarWidth();
     }
   },
   created() {
@@ -405,7 +414,7 @@ export default {
   font-size: 15px;
   text-align: left;
   color: grey;
-  max-width: 250px;
+  /* max-width: 250px; */
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -415,7 +424,7 @@ export default {
   font-size: 18px;
   font-weight: bold;
   text-align: left;
-  max-width: 250px;
+  /* max-width: 250px; */
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -463,4 +472,5 @@ export default {
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
   /* border: 1px solid; */
   overflow: hidden;
-}</style>
+}
+</style>
