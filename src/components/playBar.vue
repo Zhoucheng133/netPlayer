@@ -1,7 +1,7 @@
 <template>
   <div class="bar" ref="barRef">
     <div class="cover">
-      <img :src="shownCoverLink == '' ? '' : shownCoverLink" alt="" width="80px">
+      <img :src="shownCoverLink == '' ? '' : shownCoverLink" alt="" width="80px" draggable="false">
     </div>
 
     <div class="textArea">
