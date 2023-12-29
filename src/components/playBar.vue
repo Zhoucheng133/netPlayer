@@ -7,9 +7,9 @@
     <div class="textArea">
       <div class="infoArea">
         <div class="name">
-          <div class="title" :style="{'max-width': barWidth/2*0.6+'px'}">{{ nowPlay.nowPlayList.length == 0 ? " " : nowPlay.nowPlayList[nowPlay.index].title }}</div>
+          <div class="title" :style="{'max-width': (barWidth-250-80)*0.6+'px'}">{{ nowPlay.nowPlayList.length == 0 ? " " : nowPlay.nowPlayList[nowPlay.index].title }}</div>
           <div class="artist">-</div>
-          <div class="artist" :style="{'max-width': barWidth/2*0.4+'px'}">{{ nowPlay.nowPlayList.length == 0 ? " " : nowPlay.nowPlayList[nowPlay.index].artist }}</div>
+          <div class="artist" :style="{'max-width': (barWidth-250-80)*0.4+'px'}">{{ nowPlay.nowPlayList.length == 0 ? " " : nowPlay.nowPlayList[nowPlay.index].artist }}</div>
         </div>
         <div class="time">
           {{ showTime() }}
