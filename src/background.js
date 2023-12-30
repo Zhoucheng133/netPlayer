@@ -93,7 +93,7 @@ function createMenu() {
       label: "操作",
       submenu: [
         {
-          label: "暂停",
+          label: "暂停/播放",
           accelerator: "Space",
           click: () =>{
             win.webContents.send('toggleSong');
