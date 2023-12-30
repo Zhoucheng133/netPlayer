@@ -5,6 +5,7 @@ module.exports = {
     electronBuilder: {
       nodeIntegration: true,
       builderOptions: {
+        "extraResources": ["./build/**"],
         artifactName: '${productName}-${version}-${os}-${arch}.${ext}',
         mac: {
           target: {
