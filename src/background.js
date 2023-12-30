@@ -8,6 +8,7 @@ protocol.registerSchemesAsPrivileged([
 ])
 
 let win;
+let tray = null;
 
 async function createWindow() {
   const path = require('path');
@@ -294,13 +295,15 @@ const trayContextMenu = Menu.buildFromTemplate([
   },
   {
     label: '退出',
-    role: 'quit'
+    click: () => {
+      app.exit();
+    },
   }
 ])
 
 app.on('ready', async () => {
   if(process.platform == 'win32'){
-    const tray=new Tray('build/icon.png');
+    tray=new Tray('build/icon.png');
     tray.setToolTip("netPlayer");
     tray.on("click", ()=>{
       win.show();
