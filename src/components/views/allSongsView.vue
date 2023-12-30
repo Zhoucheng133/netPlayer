@@ -11,7 +11,7 @@
       </template>
 			<template slot="extra">
 				<div class="toolBar">
-          <svg v-if="nowPlay.nowPlayList.length != 0" class="locate" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="20" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M24 37V44V37Z" fill="none"/><path d="M24 37V44" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M36 24H44H36Z" fill="none"/><path d="M36 24H44" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M4 24H11H4Z" fill="none"/><path d="M4 24H11" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M24 11V4V11Z" fill="none"/><path d="M24 11V4" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg v-if="isNowPlayList()" class="locate" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="20" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M24 37V44V37Z" fill="none"/><path d="M24 37V44" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M36 24H44H36Z" fill="none"/><path d="M36 24H44" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M4 24H11H4Z" fill="none"/><path d="M4 24H11" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M24 11V4V11Z" fill="none"/><path d="M24 11V4" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <svg v-else class="locate_disabled" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="20" stroke="#c3c3c3" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M24 37V44V37Z" fill="none"/><path d="M24 37V44" stroke="#c3c3c3" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M36 24H44H36Z" fill="none"/><path d="M36 24H44" stroke="#c3c3c3" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M4 24H11H4Z" fill="none"/><path d="M4 24H11" stroke="#c3c3c3" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M24 11V4V11Z" fill="none"/><path d="M24 11V4" stroke="#c3c3c3" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
 					<a-input-search placeholder="输入搜索内容" style="width: 200px;margin-right: 20px;"
 						@search="onSearch" allowClear v-model="inputSearch" @change="onSearch" />
@@ -170,6 +170,14 @@ export default {
     songList: Array,
   },
   methods: {
+    isNowPlayList(){
+      if (this.isSearch == true) {
+				return false;
+			} else if (this.nowPlay.listName == "allSongs" && this.nowPlay.nowPlayList.length != 0) {
+				return true;
+			}
+			return false;
+    },
     love_menu(item) {
       this.$emit("loveSong", item);
 		},
