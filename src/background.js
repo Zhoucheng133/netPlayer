@@ -95,6 +95,9 @@ function createMenu() {
         {
           label: "暂停",
           accelerator: "Space",
+          click: () =>{
+            win.webContents.send('toggleSong');
+          }
         },
         {
           label: "下一首",
