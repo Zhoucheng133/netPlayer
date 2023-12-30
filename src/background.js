@@ -1,4 +1,4 @@
-import { app, protocol, BrowserWindow, ipcMain, Menu, globalShortcut } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain, Menu, globalShortcut, Tray } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 import axios from 'axios';
@@ -247,7 +247,8 @@ ipcMain.on("winMin", async (event) => {
 
 // 关闭窗口函数
 ipcMain.on("winClose", async (event) => {
-  app.exit();
+  // app.exit();
+  win.hide();
 })
 
 // 最大化窗口
@@ -269,7 +270,46 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow()
 })
 
+const trayContextMenu = Menu.buildFromTemplate([
+  {
+    label: "暂停",
+    click: () =>{
+      win.webContents.send('toggleSong');
+    }
+  },
+  {
+    label: "下一首",
+    click: () => {
+      win.webContents.send('nextSong');
+    },
+  },
+  {
+    label: "上一首",
+    click: () => {
+      win.webContents.send('forwSong');
+    },
+  },
+  {
+    type: 'separator'
+  },
+  {
+    label: '退出',
+    role: 'quit'
+  }
+])
+
 app.on('ready', async () => {
+  if(process.platform == 'win32'){
+    const tray=new Tray('build/icon.png');
+    tray.setToolTip("netPlayer");
+    tray.on("click", ()=>{
+      win.show();
+    })
+    tray.on('right-click', () => {
+      tray.popUpContextMenu(trayContextMenu)
+    })
+  }
+
   createWindow();
   createMenu();
 })
