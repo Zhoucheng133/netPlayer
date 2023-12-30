@@ -82,6 +82,7 @@
         @deloveSong="deloveSong" 
         @reloadLoved="reloadLoved" 
         :lovedSongs="lovedSongs"
+        :nowPage="nowPage"
         :songList="songList" 
         :nowPlay="nowPlay" />
       <searchView 
