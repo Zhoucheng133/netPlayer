@@ -303,7 +303,9 @@ const trayContextMenu = Menu.buildFromTemplate([
 
 app.on('ready', async () => {
   if(process.platform == 'win32'){
-    tray=new Tray('build/icon.png');
+    // tray=new Tray('build/icon.png');
+    const path = require('path');
+    tray=new Tray(path.join(__dirname, '../build/icon.png'));
     tray.setToolTip("netPlayer");
     tray.on("click", ()=>{
       win.show();
