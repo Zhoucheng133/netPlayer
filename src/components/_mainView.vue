@@ -587,6 +587,7 @@ export default {
     playList: function (newVal) {
       localStorage.setItem("playList", JSON.stringify(newVal));
       this.$refs.playListRef.getList();
+      // TODO 在这里添加获取歌词
     },
     nowPage: function (newVal, oldVal) {
       if (oldVal == 'about') {
