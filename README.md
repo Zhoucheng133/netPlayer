@@ -9,6 +9,7 @@
 ![Antd](https://img.shields.io/badge/Antd-1.7.8-blue)
 ![axios](https://img.shields.io/badge/axios-1.4-orange)
 ![crypto-js](https://img.shields.io/badge/crypto_js-4.1.1-yellow)
+![bootstrap-icons](https://img.shields.io/badge/bootstrap_icons-1.11.2-purple)
 
 ![License](https://img.shields.io/badge/License-MIT-dark_green)
 
