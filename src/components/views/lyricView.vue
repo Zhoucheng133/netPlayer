@@ -6,7 +6,7 @@
     </div>
     <div class="leftSide">
       <div class="leftInfo">
-        <img :src="shownCoverLink == '' ? '' : shownCoverLink" alt="" width="200px" draggable="false">
+        <img :src="shownCoverLink == '' ? '' : shownCoverLink" alt="" height="200px" draggable="false">
         <div class="title">{{ nowPlay.nowPlayList[nowPlay.index].title }}</div>
         <div class="artist">{{ nowPlay.nowPlayList.length == 0 ? " " : nowPlay.nowPlayList[nowPlay.index].artist }}</div>
         <div class="funcs">
@@ -196,11 +196,23 @@ export default {
   margin-top: 10px;
   color: grey;
   font-size: 16px;
+  max-width: 50vw;
+  overflow: hidden;
+  padding-left: 30px;
+  padding-right: 30px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .title{
   margin-top: 20px;
   font-size: 24px;
   font-weight: bold;
+  overflow: hidden;
+  max-width: 50vw;
+  padding-left: 30px;
+  padding-right: 30px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .closeIcon:hover{
   cursor: pointer;

@@ -255,6 +255,7 @@ export default {
         var that = this;
         this.$nextTick(() => {
           that.$refs.player.setMedia();
+          that.$refs.lyricRef.getSongCover();
         });
       })
       .catch(()=>{
@@ -540,6 +541,7 @@ export default {
       var that = this;
       this.$nextTick(() => {
         that.$refs.player.setMedia();
+        that.$refs.lyricRef.getSongCover();
       });
     },
     toPlayList(item) {
