@@ -472,6 +472,7 @@ export default {
           var that = this;
           this.$nextTick(() => {
             that.$refs.player.setMedia();
+            that.$refs.lyricRef.getSongCover();
           });
         })
         return;
@@ -507,6 +508,7 @@ export default {
           var that = this;
           this.$nextTick(() => {
             that.$refs.player.setMedia();
+            that.$refs.lyricRef.getSongCover();
           });
         })
         return;
