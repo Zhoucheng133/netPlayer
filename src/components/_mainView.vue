@@ -121,7 +121,11 @@
 
     <lyricView 
       class="lyricView" 
-      @hideLyric="hideLyric"
+      @hideLyric="hideLyric" 
+      :nowPlay="nowPlay" 
+      :lovedSongs="lovedSongs" 
+      :random="random"
+      :fRandom="fRandom" 
       :style="{'top': lyricTop}"
     />
   </div>
