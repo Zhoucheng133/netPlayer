@@ -12,7 +12,7 @@
 
 ![License](https://img.shields.io/badge/License-MIT-dark_green)
 
-
+**大幅修改中**
 
 **基于Subsonic API的桌面端播放器**
 
