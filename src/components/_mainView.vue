@@ -21,6 +21,7 @@
       @handlePause="handlePause" 
       @loveSong="loveSong"
       @deloveSong="deloveSong" 
+      @showLyric="showLyric"
       :fRandom="fRandom" 
       :nowPlay="nowPlay" 
       :lovedSongs="lovedSongs" 
@@ -116,6 +117,11 @@
         :userInfo="userInfo" 
         :playList="playList" />
     </div>
+
+    <lyricView 
+      class="lyricView" 
+      :style="{'top': lyricTop}"
+    />
   </div>
 </template>
 
@@ -124,6 +130,8 @@ import sideBar from './sideBar.vue';
 import aboutView from './aboutView.vue';
 // import listView from './listView.vue';
 import playBar from './playBar.vue';
+
+import lyricView from './views/lyricView.vue';
 
 import albumView from './views/albumView.vue';
 import artistView from './views/artistView.vue';
@@ -152,7 +160,9 @@ export default {
     searchView,
     playListView,
     albumContentView,
-    artistContentView
+    artistContentView,
+
+    lyricView
   },
   data() {
     return {
@@ -185,9 +195,14 @@ export default {
       fRandom: false,
 
       random_tmp: false,
+
+      lyricTop: '100vh',
     }
   },
   methods: {
+    showLyric(){
+      // TODO 显示歌词
+    },
     fullRandomPlay(){
       this.random_tmp=this.random;
       localStorage.setItem("fRandom", true);
@@ -606,6 +621,15 @@ export default {
 </script>
 
 <style scoped>
+.lyricView{
+  position: fixed;
+  /* top: 100vh; */
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 80;
+  transition: all ease-in-out .5s;
+}
 .playbar {
   position: fixed;
   bottom: 0;

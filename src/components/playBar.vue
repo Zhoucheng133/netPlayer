@@ -1,6 +1,6 @@
 <template>
   <div class="bar" ref="barRef">
-    <div class="cover">
+    <div class="cover" @click="showLyric">
       <img :src="shownCoverLink == '' ? '' : shownCoverLink" alt="" width="80px" draggable="false">
     </div>
 
@@ -81,6 +81,10 @@ export default {
     }
   },
   methods: {
+    showLyric(){
+      // 显示展开icon
+      this.$emit("showLyric");
+    },
     starController(){
       if(this.nowPlay.nowPlayList.length==0){
         this.$message.error("无效操作");
@@ -445,6 +449,7 @@ export default {
   border-radius: 10px;
   overflow: hidden;
   /* background-color: white; */
+  cursor: pointer;
 }
 .sign{
   display: flex;
