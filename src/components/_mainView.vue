@@ -121,6 +121,15 @@
 
     <lyricView 
       class="lyricView" 
+      ref="lyricRef"
+      @nextSong="nextSong" 
+      @backSong="backSong"
+      @toggleSong="toggleSong" 
+      @isPlaying="isPlaying" 
+      @changePlayMode="changePlayMode" 
+      @handlePause="handlePause" 
+      @loveSong="loveSong"
+      @deloveSong="deloveSong" 
       @hideLyric="hideLyric" 
       :nowPlay="nowPlay" 
       :lovedSongs="lovedSongs" 
@@ -474,6 +483,7 @@ export default {
       var that = this;
       this.$nextTick(() => {
         that.$refs.player.setMedia();
+        that.$refs.lyricRef.getSongCover();
       });
     },
     nextSong() {
@@ -511,6 +521,7 @@ export default {
       var that = this;
       this.$nextTick(() => {
         that.$refs.player.setMedia();
+        that.$refs.lyricRef.getSongCover();
       });
     },
     playSong(nowPlay) {
