@@ -145,6 +145,7 @@ export default {
       return realCurTime + "/" + realSongTime;
     },
     handleTimeUpdate() {
+      this.$emit("timeUpdate", this.audioPlayer.currentTime);
       this.curTime = this.audioPlayer.currentTime;
       this.nowSongTime = this.audioPlayer.duration;
       if (this.nowSongTime != 0) {

@@ -7,7 +7,7 @@
     <div class="leftSide">
       <div class="leftInfo">
         <img :src="shownCoverLink == '' ? '' : shownCoverLink" alt="" height="200px" draggable="false">
-        <div class="title">{{ nowPlay.nowPlayList[nowPlay.index].title }}</div>
+        <div class="title">{{ nowPlay.nowPlayList.length == 0 ? " " : nowPlay.nowPlayList[nowPlay.index].title }}</div>
         <div class="artist">{{ nowPlay.nowPlayList.length == 0 ? " " : nowPlay.nowPlayList[nowPlay.index].artist }}</div>
         <div class="funcs">
           <div class="lovedSign" @click="starController">
@@ -52,6 +52,19 @@ export default {
     }
   },
   methods: {
+    lyricUpdate(time){
+      console.log(Math.round(time*1000));
+    },
+    timeToMilliseconds(timestamp) {
+      var timeParts = timestamp.split(':');
+      var minutes = parseInt(timeParts[0], 10);
+      var secondsAndMilliseconds = timeParts[1].split('.');
+      var seconds = parseInt(secondsAndMilliseconds[0], 10);
+      var milliseconds = parseInt(secondsAndMilliseconds[1], 10) || 0;
+
+      var totalMilliseconds = (minutes * 60 + seconds) * 1000 + milliseconds;
+      return totalMilliseconds;
+    },
     changePlayMode() {
       if(this.fRandom){
         return;

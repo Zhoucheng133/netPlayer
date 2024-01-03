@@ -22,6 +22,7 @@
       @loveSong="loveSong"
       @deloveSong="deloveSong" 
       @showLyric="showLyric"
+      @timeUpdate="timeUpdate"
       :style="{'transform': 'translateY('+playBarTransY+')'}"
       :fRandom="fRandom" 
       :nowPlay="nowPlay" 
@@ -219,6 +220,10 @@ export default {
     }
   },
   methods: {
+    timeUpdate(data){
+      // console.log(data);
+      this.$refs.lyricRef.lyricUpdate(data);
+    },
     hideLyric(){
       this.lyricTop='100vh';
       this.playBarTransY='0';
