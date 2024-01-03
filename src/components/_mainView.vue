@@ -198,10 +198,11 @@ export default {
 
       random_tmp: false,
 
-      lyricTop: '100vh',
+      lyricTop: '0',
+      // lyricTop: '100vh',
 
-      // 120px
-      playBarTransY: '0',
+      playBarTransY: '120px',
+      // playBarTransY: '0',
     }
   },
   methods: {
