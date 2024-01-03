@@ -1,6 +1,6 @@
 <template>
   <div class="bg">
-    
+    <a-button @click="hideLyric">关闭</a-button>
   </div>
 </template>
 
@@ -9,6 +9,11 @@ export default {
   data() {
     return {
       
+    }
+  },
+  methods: {
+    hideLyric(){
+      this.$emit("hideLyric")
     }
   },
 }

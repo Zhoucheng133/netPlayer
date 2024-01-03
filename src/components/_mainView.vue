@@ -22,6 +22,7 @@
       @loveSong="loveSong"
       @deloveSong="deloveSong" 
       @showLyric="showLyric"
+      :style="{'transform': 'translateY('+playBarTransY+')'}"
       :fRandom="fRandom" 
       :nowPlay="nowPlay" 
       :lovedSongs="lovedSongs" 
@@ -120,6 +121,7 @@
 
     <lyricView 
       class="lyricView" 
+      @hideLyric="hideLyric"
       :style="{'top': lyricTop}"
     />
   </div>
@@ -197,11 +199,20 @@ export default {
       random_tmp: false,
 
       lyricTop: '100vh',
+
+      // 120px
+      playBarTransY: '0',
     }
   },
   methods: {
+    hideLyric(){
+      this.lyricTop='100vh';
+      this.playBarTransY='0';
+    },
     showLyric(){
       // TODO 显示歌词
+      this.lyricTop='0';
+      this.playBarTransY='120px';
     },
     fullRandomPlay(){
       this.random_tmp=this.random;
@@ -628,7 +639,7 @@ export default {
   width: 100vw;
   height: 100vh;
   z-index: 80;
-  transition: all ease-in-out .5s;
+  transition: all ease-in-out .4s !important;
 }
 .playbar {
   position: fixed;
@@ -636,6 +647,7 @@ export default {
   margin-left: 240px;
   margin-bottom: 10px;
   z-index: 100;
+  transition: transform .3s ease-in-out;
 }
 
 .mainSide {
