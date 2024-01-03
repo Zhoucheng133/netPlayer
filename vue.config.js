@@ -4,6 +4,7 @@ module.exports = {
   pluginOptions: {
     electronBuilder: {
       nodeIntegration: true,
+      customFileProtocol: "./",
       builderOptions: {
         "extraResources": ["./build/**"],
         artifactName: '${productName}-${version}-${os}-${arch}.${ext}',
