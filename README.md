@@ -13,8 +13,6 @@
 
 ![License](https://img.shields.io/badge/License-MIT-dark_green)
 
-**大幅修改中**
-
 **基于Subsonic API的桌面端播放器**
 
 **注意，鉴于Subsonic没有提供“获取所有歌曲”的API，因此“所有歌曲”是通过获取随机歌曲排序后得到的，只能获取500首歌曲**
@@ -26,7 +24,13 @@
 ## 截图
 <img src="./build/demo.png" height="400px"/>
 
+<img src="./build/demo2.png" height="400px"/>
+
 ## 更新日志
+
+### 1.4.0 (2024/1/4)
+- 添加歌词显示界面(点击歌曲封面图即可查看歌词)
+- 添加记住播放模式功能
 
 ### 1.3.4 (2023/12/30)
 - 添加查看播放位置
