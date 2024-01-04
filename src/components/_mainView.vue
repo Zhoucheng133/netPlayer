@@ -603,6 +603,13 @@ export default {
     }
   },
   created() {
+    if(localStorage.getItem("random")){
+      if(localStorage.getItem("random")=='true'){
+        this.random=true;
+      }else{
+        this.random=false;
+      }
+    }
     this.userInfo = {
       url: localStorage.getItem("url"),
       username: localStorage.getItem("username"),
@@ -635,6 +642,9 @@ export default {
       })
   },
   watch: {
+    random: function(newVal){
+      localStorage.setItem("random", newVal);
+    },
     playList: function (newVal) {
       localStorage.setItem("playList", JSON.stringify(newVal));
       this.$refs.playListRef.getList();
