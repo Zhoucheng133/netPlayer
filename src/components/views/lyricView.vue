@@ -106,7 +106,7 @@ export default {
         });
         // console.log(this.lyricData);
       }).catch(()=>{
-        this.$message.info("没有找到歌词");
+        // this.$message.info("没有找到歌词");
         this.lyricData=[{time: 0, content: '没找到歌词'}];
       })
     },
