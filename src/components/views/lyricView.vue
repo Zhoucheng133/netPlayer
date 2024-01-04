@@ -82,6 +82,10 @@ export default {
       return false;
     },
     getLyric(){
+      this.$refs.lyricAreaRef.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      })
       axios.get('https://lrclib.net/api/get',{
         params: {
           artist_name: this.nowPlay.nowPlayList[this.nowPlay.index].artist,
@@ -100,7 +104,7 @@ export default {
             content: item.slice(rightArr+2, item.length)
           }
         });
-        console.log(this.lyricData);
+        // console.log(this.lyricData);
       }).catch(()=>{
         this.$message.info("没有找到歌词");
         this.lyricData=[{time: 0, content: '没找到歌词'}];
