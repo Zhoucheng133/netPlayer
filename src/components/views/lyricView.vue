@@ -34,11 +34,20 @@
         </div>
       </div>
     </div>
-    <div class="rightSide"></div>
+    <div class="rightSide">
+      <div class="lyricArea">
+        <div class="topArea"></div>
+        <div class="lyricItem" v-for="(item, index) in lyricData" :key="index">
+          {{ item.content }}
+        </div>
+        <div class="bottomArea"></div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+const axios=require('axios');
 export default {
   props: {
     nowPlay: Object,
@@ -49,11 +58,40 @@ export default {
   data() {
     return {
       shownCoverLink: "",
+      lyricText: "",
+      lyricData: [],
     }
   },
   methods: {
+    getLyric(){
+      axios.get('https://lrclib.net/api/get',{
+        params: {
+          artist_name: this.nowPlay.nowPlayList[this.nowPlay.index].artist,
+          track_name: this.nowPlay.nowPlayList[this.nowPlay.index].title,
+          album_name: this.nowPlay.nowPlayList[this.nowPlay.index].album,
+          duration: this.nowPlay.nowPlayList[this.nowPlay.index].duration,
+        },
+      }).then((response)=>{
+        this.lyricText=response.data.syncedLyrics;
+        this.lyricData = this.lyricText.split(/\r?\n/).map((item)=>{
+          const match = item.match(/^\[(\d{2}:\d{2}.\d{2})\]\s(.+)$/);
+          // 如果匹配成功，创建对象
+          if (match) {
+            return {
+              time: match[1],
+              content: match[2]
+            };
+          }
+          // 如果不匹配，返回原始项
+          return item;
+        });
+      }).catch(()=>{
+        this.$message.error("加载歌词出错了!");
+      })
+    },
     lyricUpdate(time){
-      console.log(Math.round(time*1000));
+      var msec=time*1000;
+      console.log(msec);
     },
     timeToMilliseconds(timestamp) {
       var timeParts = timestamp.split(':');
@@ -123,6 +161,7 @@ export default {
       var token = localStorage.getItem("token");
       var url = localStorage.getItem("url");
       this.shownCoverLink = url + "/rest/getCoverArt?v=1.13.0&c=netPlayer&f=json&u=" + username + "&s=" + salt + "&t=" + token + "&id=" + this.nowPlay.nowPlayList[this.nowPlay.index].id;
+      this.getLyric();
     },
   },
   mounted() {
@@ -141,6 +180,23 @@ export default {
 </script>
 
 <style scoped>
+.bottomArea{
+  height: calc(50% - 15px);
+  /* background-color: red; */
+}
+.topArea{
+  height: calc(50% - 15px);
+  /* background-color: red; */
+}
+.lyricItem{
+  font-size: 20px;
+}
+.lyricArea{
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  overflow: auto;
+}
 .funcs{
   display: flex;
   margin-top: 20px;
@@ -249,7 +305,8 @@ export default {
 .rightSide{
   width: 100%;
   height: 100vh;
-  /* background-color: lightgray; */
+  background-color: rgb(241, 241, 241);
+  padding: 30px;
 }
 .leftSide{
   width: 100%;
