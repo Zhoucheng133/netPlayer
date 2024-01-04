@@ -2,6 +2,9 @@
   <div class="bar" ref="barRef">
     <div class="cover" @click="showLyric">
       <img :src="shownCoverLink == '' ? '' : shownCoverLink" alt="" width="80px" draggable="false">
+      <div class="lyricInfo">
+        <i class="bi bi-arrow-up-short"></i>
+      </div>
     </div>
 
     <div class="textArea">
@@ -82,7 +85,6 @@ export default {
   },
   methods: {
     showLyric(){
-      // 显示展开icon
       this.$emit("showLyric");
     },
     starController(){
@@ -308,6 +310,24 @@ export default {
 </style>
 
 <style scoped>
+.lyricInfo:hover{
+  opacity: 1;
+}
+.lyricInfo{
+  width: 80px;
+  height: 80px;
+  color: white;
+  font-size: 35px;
+  background-color: rgba(0, 0, 0, .4);
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity linear .2s;
+}
 .modeDisabled{
   cursor: not-allowed;
 }
@@ -451,6 +471,7 @@ export default {
   overflow: hidden;
   /* background-color: white; */
   cursor: pointer;
+  position: relative;
 }
 .sign{
   display: flex;
