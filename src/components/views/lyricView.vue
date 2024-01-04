@@ -82,6 +82,7 @@ export default {
       return false;
     },
     getLyric(){
+      this.lyricData=[{time: 0, content: '正在加载歌词...'}];
       this.$refs.lyricAreaRef.scrollTo({
         top: 0,
         behavior: 'smooth',
