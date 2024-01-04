@@ -39,6 +39,7 @@ export default {
           h('div', 'Ant Design Vue (MIT License)'),
           h('div', 'axios (MIT License)'),
           h('div', 'crypto-js (MIT License)'),
+          h('div', 'Bootstrap-icons (MIT License)'),
         ]),
         okText: "完成",
         onOk() { },
