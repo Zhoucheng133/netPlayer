@@ -68,13 +68,13 @@ export default {
     highlight(index){
       if(this.lyricData[index].time<=this.nowTime && index==this.lyricData.length-1){
         this.$refs.lyricAreaRef.scrollTo({
-          top: index*30,
+          top: index*40,
           behavior: 'smooth',
         })
         return true;
       }else if(this.lyricData[index].time<=this.nowTime && this.lyricData[index+1].time>this.nowTime){
         this.$refs.lyricAreaRef.scrollTo({
-          top: index*30,
+          top: index*40,
           behavior: 'smooth',
         })
         return true;
@@ -222,7 +222,12 @@ export default {
 }
 .lyricItem, .lyricItem_highlight{
   font-size: 20px;
-  height: 30px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .lyricArea{
   width: 100%;
