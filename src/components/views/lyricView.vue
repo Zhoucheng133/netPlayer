@@ -66,9 +66,17 @@ export default {
   },
   methods: {
     highlight(index){
-      if(index==this.lyricData.length-1){
+      if(this.lyricData[index].time<=this.nowTime && index==this.lyricData.length-1){
+        this.$refs.lyricAreaRef.scrollTo({
+          top: index*30,
+          behavior: 'smooth',
+        })
         return true;
       }else if(this.lyricData[index].time<=this.nowTime && this.lyricData[index+1].time>this.nowTime){
+        this.$refs.lyricAreaRef.scrollTo({
+          top: index*30,
+          behavior: 'smooth',
+        })
         return true;
       }
       return false;
@@ -189,6 +197,9 @@ export default {
 </script>
 
 <style scoped>
+::-webkit-scrollbar {
+  display: none !important;
+}
 .bottomArea{
   height: calc(50% - 15px);
   /* background-color: red; */
