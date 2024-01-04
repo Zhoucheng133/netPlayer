@@ -35,10 +35,10 @@
       </div>
     </div>
     <div class="rightSide">
-      <div class="lyricArea">
+      <div class="lyricArea" ref="lyricAreaRef">
         <div class="topArea"></div>
-        <div class="lyricItem" v-for="(item, index) in lyricData" :key="index">
-          {{ item.content }}
+        <div v-for="(item, index) in lyricData" :key="index" :class="highlight(index)?'lyricItem_highlight':'lyricItem'">
+          {{ item.content ? item.content : '\u00a0' }}
         </div>
         <div class="bottomArea"></div>
       </div>
@@ -60,9 +60,19 @@ export default {
       shownCoverLink: "",
       lyricText: "",
       lyricData: [],
+
+      nowTime: 0,
     }
   },
   methods: {
+    highlight(index){
+      if(index==this.lyricData.length-1){
+        return true;
+      }else if(this.lyricData[index].time<=this.nowTime && this.lyricData[index+1].time>this.nowTime){
+        return true;
+      }
+      return false;
+    },
     getLyric(){
       axios.get('https://lrclib.net/api/get',{
         params: {
@@ -73,25 +83,24 @@ export default {
         },
       }).then((response)=>{
         this.lyricText=response.data.syncedLyrics;
+        var that=this;
         this.lyricData = this.lyricText.split(/\r?\n/).map((item)=>{
-          const match = item.match(/^\[(\d{2}:\d{2}.\d{2})\]\s(.+)$/);
-          // 如果匹配成功，创建对象
-          if (match) {
-            return {
-              time: match[1],
-              content: match[2]
-            };
+          var leftArr=item.indexOf('[');
+          var rightArr=item.lastIndexOf(']');
+          return {
+            time: that.timeToMilliseconds(item.substring(leftArr+1, rightArr)),
+            content: item.slice(rightArr+2, item.length)
           }
-          // 如果不匹配，返回原始项
-          return item;
         });
+        console.log(this.lyricData);
       }).catch(()=>{
-        this.$message.error("加载歌词出错了!");
+        this.$message.info("没有找到歌词");
+        this.lyricText=[{time: 0, content: '没找到歌词'}];
       })
     },
     lyricUpdate(time){
       var msec=time*1000;
-      console.log(msec);
+      this.nowTime=msec;
     },
     timeToMilliseconds(timestamp) {
       var timeParts = timestamp.split(':');
@@ -188,8 +197,16 @@ export default {
   height: calc(50% - 15px);
   /* background-color: red; */
 }
+.lyricItem_highlight{
+  color: rgb(24, 144, 255);
+  font-weight: bold;
+}
 .lyricItem{
+  color: lightgrey;
+}
+.lyricItem, .lyricItem_highlight{
   font-size: 20px;
+  height: 30px;
 }
 .lyricArea{
   width: 100%;
@@ -305,7 +322,7 @@ export default {
 .rightSide{
   width: 100%;
   height: 100vh;
-  background-color: rgb(241, 241, 241);
+  /* background-color: rgb(241, 241, 241); */
   padding: 30px;
 }
 .leftSide{
