@@ -213,6 +213,7 @@ export default {
   left: 0;
   height: 30px;
   width: 100%;
+  z-index: 500;
   /* -webkit-app-region: drag; */
 }
 </style>
