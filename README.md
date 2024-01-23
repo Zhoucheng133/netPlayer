@@ -28,6 +28,50 @@
 
 <img src="./build/demo2.png" height="400px"/>
 
+## 在你的设备上配置netPlayer
+
+由于本项目没有区分`正在开发的版本`和`发布的版本`，如果你需要获取可以正确执行的代码，**不要直接下载最新的代码! 请在Tag中选择最新的版本下载（或者在Release中下载Source code）**
+
+### 环境配置
+
+- node@16.18.0，**新版本可能无法运行**
+
+- yarn包管理器<sup>*</sup>
+
+  ```bash
+  npm install -g yarn
+  ```
+
+  
+
+<sup>*</sup>**如果你处于国内的网络环境，注意配置yarn和Electron的镜像地址或者代理**
+
+### 运行或Debug
+
+1. 进入项目文件夹
+
+   ```bash
+   cd net-player
+   ```
+
+2. 下载依赖文件
+
+   ```bash
+   yarn install
+   ```
+
+3. 运行和Debug
+
+   ```bash
+   # Debug模式
+   yarn run electron:serve
+   # 发布模式
+   yarn run electron:build
+   ```
+
+   
+
+
 ## 更新日志
 
 ### 1.5.0 (开发中)
