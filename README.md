@@ -42,8 +42,6 @@
   npm install -g yarn
   ```
 
-  
-
 <sup>*</sup>**如果你处于国内的网络环境，注意配置yarn和Electron的镜像地址或者代理**
 
 ### 运行或Debug
