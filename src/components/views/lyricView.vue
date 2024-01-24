@@ -37,7 +37,7 @@
     <div class="rightSide">
       <div class="lyricArea" ref="lyricAreaRef">
         <div class="topArea"></div>
-        <div v-for="(item, index) in lyricData" :key="index" :class="highlight(index)?'lyricItem_highlight':'lyricItem'">
+        <div v-for="(item, index) in lyricData" :key="index" :class="highlight(index) ? 'lyricItem_highlight':'lyricItem'">
           {{ item.content ? item.content : '\u00a0' }}
         </div>
         <div class="bottomArea"></div>
@@ -62,21 +62,21 @@ export default {
       lyricData: [],
 
       nowTime: 0,
+
+      // 注意从1开始
+      lyricLine: 0,
     }
   },
   methods: {
+    clearLyricLine(){
+      this.lyricLine=0;
+    },
     highlight(index){
       if(this.lyricData[index].time<=this.nowTime && index==this.lyricData.length-1){
-        this.$refs.lyricAreaRef.scrollTo({
-          top: index*40,
-          behavior: 'smooth',
-        })
         return true;
       }else if(this.lyricData[index].time<=this.nowTime && this.lyricData[index+1].time>this.nowTime){
-        this.$refs.lyricAreaRef.scrollTo({
-          top: index*40,
-          behavior: 'smooth',
-        })
+        return true;
+      }else if(this.lyricData.length==1){
         return true;
       }
       return false;
@@ -197,7 +197,52 @@ export default {
     var token = localStorage.getItem("token");
     var url = localStorage.getItem("url");
     this.shownCoverLink = url + "/rest/getCoverArt?v=1.13.0&c=netPlayer&f=json&u=" + username + "&s=" + salt + "&t=" + token;
-  }
+  },
+  watch: {
+    shownCoverLink: function(){
+      this.clearLyricLine();
+    },
+    nowTime: function(newVal){
+      // console.log(newVal);
+      if(this.lyricData.length==0 || this.lyricData.length==1){
+        return;
+      }
+      try {
+        for(var i=0;i<this.lyricData.length;i++){
+          if(this.lyricData[i].time<=newVal && i==this.lyricData.length-1){
+            this.lyricLine=this.lyricData.length;
+          }else if(this.lyricData[i].time<=newVal && this.lyricData[i+1].time>newVal){
+            this.lyricLine=i+1;
+          }
+        }
+      } catch (error) {
+        return;
+      }
+    },
+    lyricLine: function(newVal){
+      if(this.lyricData.length==1 || newVal==this.lyricData.length){
+        return;
+      }
+      var scrollLength=0;
+
+      for(var i=0;i<newVal;i++){
+        scrollLength+=document.getElementsByClassName("lyricItem")[i].offsetHeight+15;
+      }
+      // var tmp=0
+      // for(var j=0;j<newVal-1;j++){
+      //   tmp+=document.getElementsByClassName("lyricItem")[j].offsetHeight+15;
+      // }
+      // console.log("滚动距离:"+(scrollLength-tmp));
+
+      scrollLength-=45;
+      // console.log(scrollLength);
+
+      this.$refs.lyricAreaRef.scrollTo({
+        top: scrollLength,
+        behavior: 'smooth',
+      })
+    }
+  },
 }
 </script>
 
@@ -222,12 +267,14 @@ export default {
 }
 .lyricItem, .lyricItem_highlight{
   font-size: 20px;
-  height: 40px;
-  display: flex;
+  /* height: 40px; */
+  margin-bottom: 15px;
+  text-align: center;
+  /* display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  white-space: nowrap;
+  white-space: nowrap; */
 }
 .lyricArea{
   width: 100%;
@@ -344,7 +391,10 @@ export default {
   width: 100%;
   height: 100vh;
   /* background-color: rgb(241, 241, 241); */
-  padding: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 100px;
+  padding-bottom: 100px;
 }
 .leftSide{
   width: 100%;
