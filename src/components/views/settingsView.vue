@@ -24,6 +24,13 @@
           <a-button style="margin-top: 5px;" @click="openURL">用浏览器打开</a-button>
         </div>
       </div>
+      <div class="item">
+        <div class="title">netPlayer版本</div>
+        <div class="content">
+          <div>{{version}}</div>
+          <div class="checkUpdate">检查更新</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -44,6 +51,7 @@ export default {
         closeHide: true,
       },
       disableHide: false,
+      version: ''
     }
   },
   methods: {
@@ -63,11 +71,21 @@ export default {
       this.settingsData.closeHide=false;
       this.disableHide=true;
     }
+    this.version=process.env.VUE_APP_VERSION;
   },
 }
 </script>
 
 <style scoped>
+.checkUpdate:hover{
+  color: #1890ff;
+}
+.checkUpdate{
+  text-align: left;
+  margin-top: 5px;
+  cursor: pointer;
+  transition: all linear .2s;
+}
 .content{
   display: flex;
   /* justify-content: flex-start; */
