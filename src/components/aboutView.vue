@@ -33,7 +33,7 @@ export default {
         content: h('div', {}, [
           h('div', 'netPlayer (MIT License)'),
           h('hr'),
-          h('div', 'API from © Subsonic AS'),
+          h('div', 'API from © Subsonic AS & lrclib.net'),
           h('div', 'Vue.js (MIT License)'),
           h('div', 'Electron (MIT License)'),
           h('div', 'Ant Design Vue (MIT License)'),
