@@ -33,6 +33,8 @@
     <div class="mainSide">
       <aboutView v-show="nowPage == 'about'" />
 
+      <settingsView v-show="nowPage == 'settings'"/>
+
       <albumContentView 
         v-show="nowPage == 'albums' && selectedAlbumId != ''" 
         ref="albumContentRef"
@@ -144,7 +146,7 @@
 <script>
 import sideBar from './sideBar.vue';
 import aboutView from './aboutView.vue';
-// import listView from './listView.vue';
+import settingsView from './views/settingsView.vue';
 import playBar from './playBar.vue';
 
 import lyricView from './views/lyricView.vue';
@@ -167,7 +169,7 @@ export default {
   components: {
     sideBar,
     aboutView,
-    // listView,
+    settingsView,
     playBar,
     albumView,
     artistView,
@@ -650,15 +652,15 @@ export default {
       this.$refs.playListRef.getList();
       // TODO 在这里添加获取歌词
     },
-    nowPage: function (newVal, oldVal) {
-      if (oldVal == 'about') {
-        var that = this;
-        this.$nextTick(() => {
-          that.$refs.listPart.pageTurn();
-        })
-        return;
-      }
-      if (newVal != 'about') {
+    nowPage: function (newVal) {
+      // if (oldVal == 'about') {
+      //   var that = this;
+      //   this.$nextTick(() => {
+      //     that.$refs.listPart.pageTurn();
+      //   })
+      //   return;
+      // }
+      if (newVal != 'about' && newVal != 'settings' ) {
         localStorage.setItem("nowPage", newVal);
       }
     }

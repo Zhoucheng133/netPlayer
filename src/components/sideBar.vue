@@ -10,7 +10,7 @@
       <div class="name">{{ username }}</div>
     </div>
     <div class="userOp">
-      <div class="openInBrower" @click="openBrower">浏览器打开</div>
+      <div class="settings" @click="toPage('settings')">设置</div>
       <div class="logoutButton" @click="logoutController">注销</div>
     </div>
 
@@ -129,7 +129,7 @@
 </template>
 
 <script>
-const { ipcRenderer, shell } = require('electron')
+const { ipcRenderer } = require('electron')
 export default {
   beforeDestroy() {
     ipcRenderer.removeAllListeners('playlistResult');
@@ -222,9 +222,9 @@ export default {
     requestList() {
       ipcRenderer.send('playlistRequest', localStorage.getItem("url"), localStorage.getItem("username"), localStorage.getItem("salt"), localStorage.getItem("token"));
     },
-    openBrower() {
-      shell.openExternal(localStorage.getItem("url"));
-    },
+    // openBrower() {
+    //   shell.openExternal(localStorage.getItem("url"));
+    // },
     renameListResult(event, resp) {
       if (resp.status != 'ok') {
         this.$message.error('重命名失败!');
@@ -374,17 +374,17 @@ export default {
   text-overflow: ellipsis;
 }
 
-.openInBrower:hover {
+.settings:hover {
   color: #1890ff;
 }
 
 .logoutButton:hover,
-.openInBrower:hover {
+.settings:hover {
   cursor: pointer;
 }
 
 .logoutButton,
-.openInBrower {
+.settings {
   user-select: none;
   transition: all ease-in-out .3s;
 }
