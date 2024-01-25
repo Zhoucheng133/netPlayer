@@ -115,9 +115,28 @@ export default {
       });
 
       if (response == null) {
-        this.$message.error('请求失败，请检查服务器状态');
-        localStorage.clear();
-        this.isLogin = false;
+        // this.$message.error('请求失败，请检查服务器状态');
+        // localStorage.clear();
+        // this.isLogin = false;
+        var that=this;
+        this.$confirm({
+          title: '请求失败',
+          content: '音乐服务器没有响应或者响应超时',
+          okText: "重试",
+          cancelText: "退出登录",
+          centered: true,
+          onOk(){
+            var username = localStorage.getItem("username");
+            var salt = localStorage.getItem("salt");
+            var token = localStorage.getItem("token");
+            var url = localStorage.getItem("url");
+            that.autoLogin(url, username, salt, token);
+          },
+          onCancel(){
+            localStorage.clear();
+            that.isLogin = false;
+          }
+        });
         return;
       }
       var status = response['subsonic-response'].status;
