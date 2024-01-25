@@ -7,7 +7,18 @@
       <div class="form">
         <div class="formItem">
           <div class="f_label">URL地址</div>
-          <a-input placeholder="输入URL地址" v-model="inputArea.url" />
+          <!-- <a-input placeholder="输入URL地址" v-model="inputArea.url" /> -->
+          <a-input-group compact>
+            <a-select default-value="http://" @change="selectorChange">
+              <a-select-option value="http://">
+                http://
+              </a-select-option>
+              <a-select-option value="https://">
+                https://
+              </a-select-option>
+            </a-select>
+            <a-input v-model="inputArea.url"  placeholder="输入URL地址" style="width: calc(100% - 85px); text-align: left;"/>
+          </a-input-group>
         </div>
         <div class="formItem">
           <div class="f_label">用户名</div>
@@ -44,9 +55,14 @@ export default {
       },
       loading: false,
       bgOpacity: 0,
+
+      selectHeader: 'http://'
     }
   },
   methods: {
+    selectorChange(value){
+      this.selectHeader=value;
+    },
     // 生成随机数
     generateRandomString(length) {
       const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -62,9 +78,6 @@ export default {
     loginController() {
       if (this.inputArea.url == "") {
         this.$message.error('URL地址不能为空');
-        return;
-      } else if (!(this.inputArea.url.startsWith("http://") || (this.inputArea.url.startsWith("https://")))) {
-        this.$message.error('不合法的URL地址');
         return;
       } else if (this.inputArea.username == "") {
         this.$message.error('用户名不能为空');
@@ -84,7 +97,7 @@ export default {
       const token = CryptoJS.MD5(this.inputArea.password + salt).toString();
 
       // ipcRenderer.send('loginRequest', this.inputArea.url, this.inputArea.username, salt, token);
-      axios.post(this.inputArea.url + "/rest/ping.view?v=1.13.0&c=netPlayer&f=json&u=" + this.inputArea.username + "&s=" + salt + "&t=" + token)
+      axios.post(this.selectHeader+this.inputArea.url + "/rest/ping.view?v=1.13.0&c=netPlayer&f=json&u=" + this.inputArea.username + "&s=" + salt + "&t=" + token)
         .then((response) => {
           this.loading = false;
           response = response.data;
@@ -104,7 +117,7 @@ export default {
             localStorage.setItem("username", this.inputArea.username);
             localStorage.setItem("salt", salt);
             localStorage.setItem("token", token);
-            localStorage.setItem("url", this.inputArea.url)
+            localStorage.setItem("url", this.selectHeader+this.inputArea.url);
           } else {
             this.$message.error('用户名或者密码错误!');
             return;
@@ -142,6 +155,12 @@ export default {
   },
 }
 </script>
+
+<style>
+.ant-select{
+  width: 85px !important;
+}
+</style>
 
 <style scoped>
 .loginButton_loading:hover {
