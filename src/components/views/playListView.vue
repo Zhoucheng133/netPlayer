@@ -320,6 +320,13 @@ export default {
       });
     }
   },
+  watch: {
+    nowPage: function(newVal){
+      if(newVal=='playList'){
+        this.getList();
+      }
+    }
+  },
 }
 </script>
 
