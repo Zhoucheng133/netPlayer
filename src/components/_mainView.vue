@@ -33,7 +33,7 @@
     <div class="mainSide">
       <aboutView v-show="nowPage == 'about'" />
 
-      <settingsView v-show="nowPage == 'settings'"/>
+      <settingsView v-show="nowPage == 'settings'" :userInfo="userInfo" />
 
       <albumContentView 
         v-show="nowPage == 'albums' && selectedAlbumId != ''" 
