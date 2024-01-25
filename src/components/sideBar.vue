@@ -340,7 +340,7 @@ export default {
 }
 
 .itemSelected:hover {
-  cursor: not-allowed;
+  cursor: pointer;
 }
 
 .itemSelected {
