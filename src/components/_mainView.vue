@@ -617,7 +617,6 @@ export default {
       token: localStorage.getItem("token"),
     };
     var fRandom=localStorage.getItem("fRandom");
-    console.log(fRandom);
     if(fRandom!=null){
       this.fRandom=JSON.parse(fRandom);
       if(this.fRandom==true){
