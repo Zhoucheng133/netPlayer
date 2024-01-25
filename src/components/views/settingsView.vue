@@ -14,6 +14,10 @@
         <div class="content"><a-switch v-model="settingsData.autoLogin" @change="settingsChanged" /></div>
       </div>
       <div class="item">
+        <div class="title">关闭窗口时状态栏保留<br/>(Windows系统)</div>
+        <div class="content"><a-switch v-model="settingsData.closeHide" @change="settingsChanged" :disabled="disableHide" /></div>
+      </div>
+      <div class="item">
         <div class="title">服务器地址</div>
         <div class="content">
           <a-input v-model="settingsData.urlLink" disabled />
@@ -29,6 +33,7 @@ const { shell } = require('electron');
 export default {
   props: {
     userInfo: Object,
+    isWindows: Boolean,
   },
   data() {
     return {
@@ -36,7 +41,9 @@ export default {
         savePlay: true,
         autoLogin: true,
         urlLink: "",
-      }
+        closeHide: true,
+      },
+      disableHide: false,
     }
   },
   methods: {
@@ -51,6 +58,10 @@ export default {
     this.settingsData.urlLink=this.userInfo.url;
     if(localStorage.getItem('settings')!=null){
       this.settingsData=JSON.parse(localStorage.getItem('settings'));
+    }
+    if(!this.isWindows){
+      this.settingsData.closeHide=false;
+      this.disableHide=true;
     }
   },
 }
@@ -68,6 +79,7 @@ export default {
   display: flex;
   justify-content: flex-end;
   /* align-items: center; */
+  text-align: right;
 }
 .item{
   display: grid;

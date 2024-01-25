@@ -33,7 +33,7 @@
     <div class="mainSide">
       <aboutView v-show="nowPage == 'about'" />
 
-      <settingsView v-show="nowPage == 'settings'" :userInfo="userInfo" />
+      <settingsView v-show="nowPage == 'settings'" :userInfo="userInfo" :isWindows="isWindows"/>
 
       <albumContentView 
         v-show="nowPage == 'albums' && selectedAlbumId != ''" 
@@ -163,6 +163,9 @@ import artistContentView from './views/artistContentView.vue';
 const axios = require("axios");
 
 export default {
+  props: {
+    isWindows: Boolean,
+  },
   beforeDestroy() {
     window.removeEventListener('keydown', this.handleKeyDown);
   },

@@ -24,7 +24,7 @@
         </svg>
       </div>
     </div>
-    <mainView v-if="isLogin == true" @logoutApp="logoutApp" ref="mainView" />
+    <mainView v-if="isLogin == true" @logoutApp="logoutApp" ref="mainView" :isWindows="shownWindowBar" />
     <loginView v-else-if="isLogin == false" @getLogin="getLogin" />
   </div>
 </template>
