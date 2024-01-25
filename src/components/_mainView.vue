@@ -408,6 +408,7 @@ export default {
       this.$refs.lovedSongsRef.handleClose();
       this.$refs.searchRef.handleClose();
       this.$refs.albumContentRef.handleClose();
+      this.$refs.playListRef.handleClose();
     },
     changePlayMode() {
       this.random = !this.random;
