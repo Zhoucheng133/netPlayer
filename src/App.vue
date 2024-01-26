@@ -176,7 +176,15 @@ export default {
     var salt = localStorage.getItem("salt");
     var token = localStorage.getItem("token");
     var url = localStorage.getItem("url");
-    if (token != null && username != null && salt != null && url != null) {
+
+    var loginAuto=true;
+    if(localStorage.getItem('settings')!=null){
+      if(JSON.parse(localStorage.getItem('settings')).autoLogin==false){
+        loginAuto=false;
+      }
+    }
+
+    if (token != null && username != null && salt != null && url != null && loginAuto) {
       // 自动登录
       this.autoLogin(url, username, salt, token);
     } else {
