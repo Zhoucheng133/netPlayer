@@ -28,7 +28,7 @@
         <div class="title">netPlayer版本</div>
         <div class="content">
           <div>{{version}}</div>
-          <div class="checkUpdate">检查更新</div>
+          <div class="checkUpdate" @click="checkUpdateHandler">检查更新<a-icon v-show="loading" type="loading" class="loadingIcon" /></div>
         </div>
       </div>
     </div>
@@ -37,6 +37,7 @@
 
 <script>
 const { shell } = require('electron');
+const axios=require("axios");
 export default {
   props: {
     userInfo: Object,
@@ -51,10 +52,38 @@ export default {
         closeHide: true,
       },
       disableHide: false,
-      version: ''
+      version: '',
+      loading: false,
     }
   },
   methods: {
+    checkUpdateHandler(){
+      if(this.loading){
+        return;
+      }
+      this.loading=true;
+      axios.get("https://api.github.com/repos/Zhoucheng133/net-player/releases/latest")
+      .then((response)=>{
+        // console.log(response.data.name);
+        if(response.data.name!='v'+this.version){
+          this.$confirm({
+            title: '检查到有新版本，是否前往下载？',
+            okText: '前往下载更新',
+            cancelText: '忽略',
+            centered: true,
+            onOk() {
+              shell.openExternal('https://github.com/Zhoucheng133/net-player/releases');
+            },
+            onCancel() {
+              return;
+            },
+          });
+        }else{
+          this.$message.success("已经是最新版本了")
+        }
+        this.loading=false;
+      })
+    },
     openURL(){
       shell.openExternal(this.settingsData.urlLink);
     },
@@ -77,6 +106,9 @@ export default {
 </script>
 
 <style scoped>
+.loadingIcon{
+  margin-left: 5px;
+}
 .checkUpdate:hover{
   color: #1890ff;
 }
