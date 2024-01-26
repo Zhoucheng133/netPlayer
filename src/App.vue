@@ -58,11 +58,18 @@ export default {
       isLogin: undefined,
 
       isMax: false,
+
+      closeHide: true,
     }
   },
   methods: {
     closeWin() {
-      ipcRenderer.send('winClose');
+      if(localStorage.getItem('settings')!=null){
+        if(JSON.parse(localStorage.getItem('settings')).closeHide==false){
+          this.closeHide=false;
+        }
+      }
+      ipcRenderer.send('winClose', this.closeHide);
     },
     maxWin() {
       if (this.isMax == false) {

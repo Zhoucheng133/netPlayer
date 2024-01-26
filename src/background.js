@@ -247,9 +247,12 @@ ipcMain.on("winMin", async (event) => {
 }),
 
 // 关闭窗口函数
-ipcMain.on("winClose", async (event) => {
-  // app.exit();
-  win.hide();
+ipcMain.on("winClose", async (event, closeHide) => {
+  if(closeHide){
+    win.hide();
+  }else{
+    app.exit();
+  }
 })
 
 // 最大化窗口
