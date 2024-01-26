@@ -596,7 +596,14 @@ export default {
     }
     window.addEventListener('keydown', this.handleKeyDown);
 
-    if (localStorage.getItem('nowPlay') != null) {
+    var savePlay=true;
+    if(localStorage.getItem('settings')!=null){
+      if(JSON.parse(localStorage.getItem('settings')).savePlay==false){
+        savePlay=false;
+      }
+    }
+
+    if (localStorage.getItem('nowPlay') != null && savePlay) {
       var tmp = JSON.parse(localStorage.getItem('nowPlay'));
       if (tmp.listName != 'allSongs') {
         this.nowPlay = tmp;
@@ -629,8 +636,15 @@ export default {
         this.random=true;
       }
     }
+
+    var savePlay=true;
+    if(localStorage.getItem('settings')!=null){
+      if(JSON.parse(localStorage.getItem('settings')).savePlay==false){
+        savePlay=false;
+      }
+    }
     var playInfo=localStorage.getItem("nowPlay");
-    if(playInfo!=null){
+    if(playInfo!=null && savePlay){
       this.nowPlay=JSON.parse(playInfo);
       this.nowPlay.isPlay=false;
     }
