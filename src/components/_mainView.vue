@@ -1,5 +1,5 @@
 <template>
-  <div class="bg" :style="{ 'opacity': bgOpacity }">
+  <div :class="logoutHanlder ? 'bg_off' : 'bg'">
     <sideBar class="sideBar_style" 
       @logoutMain="logoutMain" 
       @toPage="toPage" 
@@ -187,7 +187,6 @@ export default {
   },
   data() {
     return {
-      bgOpacity: 0,
 
       nowPage: '',
 
@@ -222,6 +221,8 @@ export default {
 
       // playBarTransY: '120px',
       playBarTransY: '0',
+
+      logoutHanlder: false,
     }
   },
   methods: {
@@ -563,29 +564,13 @@ export default {
       this.nowPage = pageName;
     },
     logoutMain() {
-      this.bgOpacity = 0;
+      this.logoutHanlder=true;
       setTimeout(() => {
         this.$emit("logoutApp")
       }, 300);
     },
-    startAnimation() {
-      const duration = 300;
-      const interval = 10;
-      const steps = duration / interval;
-      let step = 0;
-      const increment = 1 / steps;
-      const animateOpacity = setInterval(() => {
-        step++;
-        this.bgOpacity += increment;
-
-        if (step >= steps) {
-          clearInterval(animateOpacity);
-        }
-      }, interval);
-    }
   },
   mounted() {
-    this.startAnimation();
     if (localStorage.getItem("nowPage") != null) {
       this.nowPage = localStorage.getItem("nowPage");
       if (this.nowPage == 'playList') {
@@ -714,7 +699,33 @@ export default {
   top: 0;
 }
 
+@keyframes show {
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+@keyframes hide {
+  0%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+
+.bg_off{
+  animation: hide .3s forwards linear;
+}
+
 .bg {
+  animation: show .3s forwards linear;
+}
+
+.bg, .bg_off{
   height: 100vh;
   width: 100vw;
   background-color: white;

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg" :style="{ 'opacity': bgOpacity }">
+  <div :class="setLoginHandler? 'bg_off':'bg'">
     <div class="container">
       <div class="title">
         <a-icon type="right" style="margin-right: 5px;" /> 连接到你的音乐库
@@ -54,9 +54,10 @@ export default {
         password: "",
       },
       loading: false,
-      bgOpacity: 0,
 
-      selectHeader: 'http://'
+      selectHeader: 'http://',
+
+      setLoginHandler: false,
     }
   },
   methods: {
@@ -108,8 +109,7 @@ export default {
           var status = response['subsonic-response'].status;
           if (status == 'ok') {
             this.$message.success("登录成功!")
-            this.bgOpacity = 0;
-
+            this.setLoginHandler=true;
             setTimeout(() => {
               this.$emit("getLogin", true);
             }, 300);
@@ -131,24 +131,6 @@ export default {
     toHelp() {
       shell.openExternal("https://gitee.com/Ryan-zhou/net-player/blob/master/HELP.md");
     },
-    startAnimation() {
-      const duration = 300;
-      const interval = 10;
-      const steps = duration / interval;
-      let step = 0;
-      const increment = 1 / steps;
-      const animateOpacity = setInterval(() => {
-        step++;
-        this.bgOpacity += increment;
-
-        if (step >= steps) {
-          clearInterval(animateOpacity);
-        }
-      }, interval);
-    }
-  },
-  mounted() {
-    this.startAnimation();
   },
   created() {
 
@@ -264,8 +246,33 @@ export default {
   position: relative;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
+@keyframes show {
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
 
-.bg {
+@keyframes hide {
+  0%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+
+.bg_off{
+  animation: hide .3s forwards linear;
+}
+
+.bg{
+  animation: show .3s forwards linear;
+}
+
+.bg, .bg_off {
   padding-top: 30px;
   height: 100vh;
   width: 100vw;
