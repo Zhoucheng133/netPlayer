@@ -65,8 +65,8 @@
         </svg>
         搜索
       </div>
-      <div class="divLine"></div>
-      <div @click="fullRandomPlay" class="item" :style="{'color': fRandom ? 'rgb(24, 144, 255)' : 'black', 'transition': 'none'}">
+      <!-- <div class="divLine"></div> -->
+      <!-- <div @click="fullRandomPlay" class="item" :style="{'color': fRandom ? 'rgb(24, 144, 255)' : 'black', 'transition': 'none'}">
         <svg class="icon" v-if="!fRandom" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30 42H42V30" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 18V6H30" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 6L6 42" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M31.5 31.5L34 34L39 39L41.5 41.5L42 42M24 24L6 6L24 24Z" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <svg class="icon" v-else width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30 42H42V30" stroke="#1890ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 18V6H30" stroke="#1890ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 6L6 42" stroke="#1890ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M31.5 31.5L34 34L39 39L41.5 41.5L42 42M24 24L6 6L24 24Z" stroke="#1890ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         随机播放
@@ -81,11 +81,27 @@
           <path d="M35 28L35 38" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         新建歌单
+      </div> -->
+      <div class="functions">
+        <div class="gridContent" @click="addList">
+          <svg width="18" class="icon" height="18" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 28H24" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M8 37H24" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M8 19H40" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M8 10H40" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M30 33H40" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M35 28L35 38" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <div class="gridContent" @click="fullRandomPlay">
+          <svg class="icon" v-if="!fRandom" width="14" height="14" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30 42H42V30" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 18V6H30" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 6L6 42" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M31.5 31.5L34 34L39 39L41.5 41.5L42 42M24 24L6 6L24 24Z" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg class="icon" v-else width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30 42H42V30" stroke="#1890ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 18V6H30" stroke="#1890ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 6L6 42" stroke="#1890ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M31.5 31.5L34 34L39 39L41.5 41.5L42 42M24 24L6 6L24 24Z" stroke="#1890ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
       </div>
       <a-modal v-model="createListPanel" title="新建歌单" centered cancelText='取消' okText='确定' @ok="createNewList">
         <a-input v-model="newListName" placeholder="输入新建歌单的名称" />
       </a-modal>
-      <div class="divLine"></div>
+      <!-- <div class="divLine"></div> -->
       <div class="listText">创建的歌单</div>
       <div v-for="(item, index) in playlist" :key="index" @click="toPage('playList', item)">
         <a-dropdown :trigger="['contextmenu']">
@@ -279,6 +295,30 @@ export default {
 </script>
 
 <style scoped>
+.gridContent:hover{
+  background-color: rgb(220, 220, 220);
+}
+.gridContent{
+  cursor: pointer;
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all .3s ease-in-out;
+}
+.functions{
+  display: grid;
+  width: 100%;
+  padding-right: 20px;
+  padding-left: 20px;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
 .aboutButton:hover {
   color: #1890ff;
   cursor: pointer;
