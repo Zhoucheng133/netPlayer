@@ -19,7 +19,7 @@
 
 **注意，鉴于Subsonic没有提供“获取所有歌曲”的API，因此“所有歌曲”是通过获取随机歌曲排序后得到的，只能获取500首歌曲**
 
-提示：`2.0.0`之后的版本的源代码见[**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next)
+提示：`2.0.0`之后的版本的源代码见[**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next) (正在测试中)
 
 ## 截图
 <img src="./build/demo.png" height="400px"/>
@@ -71,14 +71,6 @@
 
 
 ## 更新日志
-
-### 2.0.0 (开发中)
-- 使用Flutter重构了整个项目
-- 添加单曲循环播放模式
-- 添加记住播放模式功能
-- 添加了歌曲项中右键菜单
-- 改进歌曲显示的布局
-- 改进滚动到播放歌曲
 
 ### ~~1.5.1 (2024/2/20)~~
 - ~~改进侧栏显示方式~~
