@@ -15,9 +15,11 @@
 
 **基于Subsonic API的桌面端播放器**
 
-注意，**可能**从下一个版本开始使用Flutter重构netPlayer
+[**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next) | ★ netPlayer | [**netPlayer Mobile**](https://github.com/Zhoucheng133/netPlayer-Mobile)
 
 **注意，鉴于Subsonic没有提供“获取所有歌曲”的API，因此“所有歌曲”是通过获取随机歌曲排序后得到的，只能获取500首歌曲**
+
+提示：`2.0.0`之后的版本的源代码见[**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next)
 
 关于移动版的netPlayer，你可以在这里查看：[Github](https://github.com/Zhoucheng133/netPlayer-Mobile)  
 关于PWA版本的netPlayer，你可以在这里查看：[Github](https://github.com/Zhoucheng133/netPlayer-PWA)  
