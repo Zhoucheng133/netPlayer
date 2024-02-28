@@ -19,10 +19,12 @@
 
 **注意，鉴于Subsonic没有提供“获取所有歌曲”的API，因此“所有歌曲”是通过获取随机歌曲排序后得到的，只能获取500首歌曲**
 
-提示：`2.0.0`之后的版本的源代码见[**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next) (正在测试中)
+提示：`2.0.0`之后的版本的源代码见[**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next)
+
+⚠️对于Windows用户如果你发现了使用上的兼容性问题或者稳定性问题，建议直接退回1.5.0版本
 
 ## 截图
-<img src="./build/demo.png" height="400px"/>
+<img src="./build/demo1.png" height="400px"/>
 
 **点击歌曲封面可以查看歌词**
 
