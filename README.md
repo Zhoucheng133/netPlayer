@@ -28,7 +28,7 @@
 
 **点击歌曲封面可以查看歌词**
 
-<img src="./build/demo2.png" height="400px"/>
+<img src="./build/demo3.png" height="400px"/>
 
 ## 在你的设备上配置netPlayer
 
