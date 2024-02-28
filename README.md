@@ -21,7 +21,9 @@
 
 提示：`2.0.0`之后的版本的源代码见[**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next)
 
-⚠️对于Windows用户如果你发现了使用上的兼容性问题或者稳定性问题，建议直接退回1.5.0版本
+⚠️对于Windows用户如果你发现了使用上的兼容性问题或者稳定性问题，建议直接退回`1.5.0`版本；
+
+`2.0.0`之后的版本不支持在Windows系统上隐藏到任务栏，如有需要使用`1.5.0`版本
 
 ## 截图
 <img src="./build/demo1.png" height="400px"/>
