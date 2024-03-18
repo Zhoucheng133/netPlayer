@@ -21,8 +21,6 @@
 
 提示：`2.0.0`之后的版本的源代码见[**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next)
 
-`2.0.0`之后的版本不支持在Windows系统上隐藏到任务栏，如有需要使用`1.5.0`版本
-
 ## 截图
 <img src="./build/demo1.png" height="400px"/>
 
@@ -67,12 +65,14 @@
    yarn run electron:serve
    # 发布模式
    yarn run electron:build
-   ```
-
-   
+   ```   
 
 
 ## 更新日志
+
+### 2.0.5 (2024/3/18)
+- 添加了托盘功能和Windows上的关闭隐藏窗口的功能
+- 修复没有登录时歌曲操作的问题
 
 ### 2.0.4 (补充更新) (2024/3/10)
 - 添加清理封面图片缓存的功能(macOS系统)
