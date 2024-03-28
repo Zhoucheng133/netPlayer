@@ -28,7 +28,16 @@
 
 <img src="./build/demo3.png" height="400px"/>
 
+## 快捷键
+
+- `空格`：**播放/暂停**
+- `command →`(macOS)或`Ctrl ➡︎`(Windows)：**下一首** (仅适用于`v2.0.6`或更新的版本)
+- `command ←`(macOS)或`Ctrl ←`(Windows)：**上一首** (仅适用于`v2.0.6`或更新的版本)
+- `command L`(macOS)或`Ctrl L`(Windows)：**显示/隐藏歌词** (仅适用于`v2.0.6`或更新的版本)
+
 ## 在你的设备上配置netPlayer
+
+如果你想要查找`v2.0.0`及之后版本的代码和配置指南，跳转到[**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next)，下文的的配置适用于`v1.x`版本
 
 由于本项目没有区分`正在开发的版本`和`发布的版本`，如果你需要获取可以正确执行的代码，**不要直接下载最新的代码! 请在Tag中选择最新的版本下载（或者在Release中下载Source code）**
 
