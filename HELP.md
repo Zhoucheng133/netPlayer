@@ -12,7 +12,7 @@
 2. 安装Navidrome，可以[从这里获取](https://github.com/navidrome/navidrome/releases)
 3. 打开Navidrome服务，完成初始化设置，注册账号并绑定服务器中的音乐路径等操作，如果你不是使用Docker创建的服务，那么你需要使用下面的命令绑定音乐文件夹，默认为操作系统的音乐文件夹
    ```bash
-   [Navidrome程序] --configfile [音乐文件夹]
+   [Navidrome程序] --musicfolder [音乐文件夹]
    ```
 5. 使用本软件，打开后输入服务器地址，用户名和密码即可
 
