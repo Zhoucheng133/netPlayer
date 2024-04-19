@@ -17,9 +17,9 @@
 
 [**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next) | **★ netPlayer** | [**netPlayer Mobile**](https://github.com/Zhoucheng133/netPlayer-Mobile)
 
-**注意，鉴于Subsonic没有提供“获取所有歌曲”的API，因此“所有歌曲”是通过获取随机歌曲排序后得到的，只能获取500首歌曲**
+提示：这个版本的netPlayer `v1.x` **不会**再添加功能性更新了，如果软件本身存在致命性的问题我会更新这个仓库，新功能和特性将会在netPlayer Next `v2.0+` 中更新，其源代码见[**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next)
 
-提示：`2.0.0`之后的版本的源代码见[**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next)
+**注意，鉴于Subsonic没有提供“获取所有歌曲”的API，因此“所有歌曲”是通过获取随机歌曲排序后得到的，只能获取500首歌曲**
 
 ## 截图
 <img src="./build/demo1.png" height="400px"/>
