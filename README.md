@@ -17,8 +17,11 @@
 
 [**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next) | **★ netPlayer** | [**netPlayer Mobile**](https://github.com/Zhoucheng133/netPlayer-Mobile)
 
-注意，这是一个停止更新的仓库，**如果你要寻找最新的桌面版netPlayer**，请转至[**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next)。  
-但是新版本的netPlayer (v2.0.0~)不支持Windows 7系统，**如果你想寻找兼容Windows 7的netPlayer，可以在本仓库Release页寻找v1版本的netPlayer**
+> [!WARNING]
+> 注意，这是一个停止更新的仓库，**如果你要寻找最新的桌面版netPlayer**，请转至[**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next)。  
+
+> [!WARNING]
+新版本的netPlayer (v2.0.0~)不支持Windows 7系统，**如果你想寻找兼容Windows 7的netPlayer，可以在本仓库Release页寻找v1版本的netPlayer**
 
 ||v1 (当前仓库) |v2|v3|
 |-|-|-|-|
@@ -31,11 +34,14 @@
 
 \* 由于本人换电脑，macOS没法打包，如果你有需要可以在自己的设备上打包v3版本(所以也不清楚macOS版本的运行情况，欢迎给予反馈!)
 
-**注意，鉴于Subsonic没有提供“获取所有歌曲”的API，因此“所有歌曲”是通过获取随机歌曲排序后得到的，只能获取500首歌曲**
+> [!NOTE]
+> 受限于Subsonic API，“所有歌曲”和“专辑”只能显示500首/张（随机的500首歌曲排序展示）
+
 
 ## 在你的设备上配置netPlayer
 
-如果你想要查找`v2.0.0`及之后版本的代码和配置指南，跳转到[**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next)，下文的的配置适用于`v1.x`版本
+> [!NOTE]
+> 如果你想要查找`v2.0.0`及之后版本的代码和配置指南，跳转到[**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next)，下文的的配置适用于`v1.x`版本
 
 由于本项目没有区分`正在开发的版本`和`发布的版本`，如果你需要获取可以正确执行的代码，**不要直接下载最新的代码! 请在Tag中选择最新的版本下载（或者在Release中下载Source code）**
 
