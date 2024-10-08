@@ -1,24 +1,17 @@
 # netPlayer
 
+> [!WARNING]
+> 注意，这是一个停止更新的仓库，**如果你要寻找最新的桌面版netPlayer**，请转至[**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next)。
+
 ## 简介
 
 <img src="build/icon.png" width="100px">
-
-![vue](https://img.shields.io/badge/vue.js-2.6.14-green?logo=vue.js)
-![Electron](https://img.shields.io/badge/Electron-13-white)
-![Antd](https://img.shields.io/badge/Antd-1.7.8-blue)
-![axios](https://img.shields.io/badge/axios-1.4-orange)
-![crypto-js](https://img.shields.io/badge/crypto_js-4.1.1-yellow)
-![bootstrap-icons](https://img.shields.io/badge/bootstrap_icons-1.11.2-purple)
 
 ![License](https://img.shields.io/badge/License-MIT-dark_green)
 
 **基于Subsonic API的桌面端播放器**
 
 [**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next) | **★ netPlayer** | [**netPlayer Mobile**](https://github.com/Zhoucheng133/netPlayer-Mobile)
-
-> [!WARNING]
-> 注意，这是一个停止更新的仓库，**如果你要寻找最新的桌面版netPlayer**，请转至[**netPlayer Next**](https://github.com/Zhoucheng133/netPlayer-Next)。  
 
 > [!WARNING]
 新版本的netPlayer (v2.0.0~)不支持Windows 7系统，**如果你想寻找兼容Windows 7的netPlayer，可以在本仓库Release页寻找v1版本的netPlayer**
